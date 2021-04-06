@@ -3,10 +3,10 @@
         <div class="col-6">
             <div class="row horario" *ngFor="let horario of hoursInTheMorning">
                 <div class="col-4 text-center hora">
-                    <h3>{{horario}}</h3>
+                    <h3>{{horario}} hrs.</h3>
                 </div>
-                <div class="col-8">
-                    <h1>Disponible</h1>
+                <div class="col-8 datos">
+                    <h3>Disponible</h3>
                     <button class="btn btn-primary">Agendar</button>
                 </div>
             </div>
@@ -14,10 +14,10 @@
         <div class="col-6">
             <div class="row horario" *ngFor="let horario of hoursInTheEvening">
                 <div class="col-4 text-center hora">
-                    <h3>{{horario}}</h3>
+                    <h3>{{horario}} hrs.</h3>
                 </div>
-                <div class="col-8">
-                    <h1>Disponible</h1>
+                <div class="col-8 datos">
+                    <h3>Disponible</h3>
                     <button class="btn btn-primary">Agendar</button>
                 </div>
             </div>

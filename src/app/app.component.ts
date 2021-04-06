@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'soiap-frontend';
+  title = 'Sistema de organización de info. y atención psicológica';
+  fechaActual: Date = new Date();
 }
 
 
