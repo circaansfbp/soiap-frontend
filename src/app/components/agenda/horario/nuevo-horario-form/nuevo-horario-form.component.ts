@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HorarioAtencionService } from 'src/app/services/horario-atencion.service';
 
 @Component({
   selector: 'app-nuevo-horario-form',
@@ -9,8 +10,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class NuevoHorarioFormComponent implements OnInit {
 
   nuevoHorarioForm: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) {
+  
+  constructor(private formBuilder: FormBuilder,
+    private horarioAtencionService: HorarioAtencionService) {
+    
     this.nuevoHorarioForm = this.formBuilder.group({
       nombrePaciente: ['', Validators.required],
       apellidoPaciente: ['', Validators.required],
@@ -52,8 +55,14 @@ export class NuevoHorarioFormComponent implements OnInit {
     return this.nuevoHorarioForm.get('fechaAtencion');
   }
 
+  get horaAtencion() {
+    return this.nuevoHorarioForm.get('horaAtencion');
+  }
+
   // Guardar los datos
   guardarNuevoHorario() {
-    console.log(this.nuevoHorarioForm.value);
+    this.horarioAtencionService.crearNuevoHorarioAtencion(this.nuevoHorarioForm.value).subscribe((res: any) => {
+      console.log(res);
+    })
   }
 }

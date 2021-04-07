@@ -80,6 +80,17 @@
               Debes ingresar la fecha de la atención!
             </div>
           </div>
+
+          <!-- Hora de la atención -->
+          <div class="col-5">
+            <label for="horaAtencion" class="form-label">Hora de la atención</label>
+            <input formControlName="horaAtencion" type="time" class="form-control"
+              id="horaAtencion" name="horaAtencion">
+            <div *ngIf="horaAtencion?.invalid && horaAtencion?.touched"
+              class="alert alert-danger col-12">
+              Debes ingresar la hora de la atención!
+            </div>
+          </div>
         </div>
 
         <button [disabled]="nuevoHorarioForm.invalid" (click)="guardarNuevoHorario()" type="submit"

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HorarioComponent } from './components/horario/horario.component';
-import { NuevoHorarioFormComponent } from './components/horario/nuevo-horario-form/nuevo-horario-form.component';
+import { HorarioComponent } from './components/agenda/horario/horario.component';
+import { NuevoHorarioFormComponent } from './components/agenda/horario/nuevo-horario-form/nuevo-horario-form.component';
 import { AgendaComponent } from './components/agenda/agenda.component';
 
 const routes = [
@@ -24,6 +25,7 @@ const routes = [
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
 
