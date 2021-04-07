@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="nuevoHorarioForm" (ngSubmit)="guardarNuevoHorario()" novalidate>
+
+        <div class="row">
+          <!-- Nombre paciente -->
+          <div class="col-6">
+            <label for="nombre" class="form-label">Nombre paciente</label>
+            <input formControlName="nombrePaciente" type="text" class="form-control" id="nombre" name="nombre">
+            <div *ngIf="nombrePaciente?.invalid && nombrePaciente?.touched" class="alert alert-danger col-12">
+              Debes ingresar el nombre del paciente!
+            </div>
+          </div>
+
+          <!-- Apellido paciente -->
+          <div class="col-6">
+            <label for="apellido" class="form-label">Apellido paciente</label>
+            <input formControlName="apellidoPaciente" type="text" class="form-control" id="apellido" name="apellido">
+            <div *ngIf="apellidoPaciente?.invalid && apellidoPaciente?.touched" class="alert alert-danger col-12">
+              Debes ingresar el nombre del paciente!
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Teléfono paciente -->
+          <div class="col-6">
+            <label for="telefonoPaciente" class="form-label">Teléfono paciente</label>
+            <div class="input-group">
+              <span class="input-group-text" id="digitosPrevios">+56 9</span>
+              <input formControlName="telefonoPaciente" type="text" class="form-control"
+                aria-describedby="digitosPrevios">
+              <div *ngIf="telefonoPaciente?.invalid && telefonoPaciente?.touched" class="alert alert-danger col-12">
+                <div *ngIf="telefonoPaciente?.errors?.required">
+                  Debes ingresar el número de teléfono del paciente!
+                </div>
+                <div *ngIf="telefonoPaciente?.errors?.pattern">
+                  No se pueden ingresar letras y/o caracteres!
+                </div>
+                <div *ngIf="telefonoPaciente?.errors">
+                  El número de teléfono debe tener un total de 8 dígitos!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Afiliación de salud del paciente -->
+          <div class="col-6">
+            <label for="afiliacionSaludPaciente" class="form-label">Afiliación de salud</label>
+            <input formControlName="afiliacionSaludPaciente" type="text" class="form-control"
+              id="afiliacionSaludPaciente" name="afiliacionSaludPaciente">
+            <div *ngIf="afiliacionSaludPaciente?.invalid && afiliacionSaludPaciente?.touched"
+              class="alert alert-danger col-12">
+              Debes ingresar la afiliación de salud del paciente!
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <!-- Número de consulta a la que asiste el paciente -->
+          <div class="col-2">
+            <label for="nroConsulta" class="form-label">N° consulta</label>
+            <input formControlName="nroConsulta" type="number" class="form-control"
+              id="nroConsulta" name="nroConsulta">
+            <div *ngIf="nroConsulta?.invalid && nroConsulta?.touched"
+              class="alert alert-danger col-12">
+              Debes ingresar un N° válido!
+            </div>
+          </div>
+
+          <!-- Fecha de la atención -->
+          <div class="col-5">
+            <label for="fechaAtencion" class="form-label">Fecha de la atención</label>
+            <input formControlName="fechaAtencion" type="date" class="form-control"
+              id="fechaAtencion" name="fechaAtencion">
+            <div *ngIf="fechaAtencion?.invalid && fechaAtencion?.touched"
+              class="alert alert-danger col-12">
+              Debes ingresar la fecha de la atención!
+            </div>
+          </div>
+        </div>
+
+        <button [disabled]="nuevoHorarioForm.invalid" (click)="guardarNuevoHorario()" type="submit"
+          class="btn btn-primary">Guardar horario</button>
+
+      </form>
+    </div>
+  </div>
+</div>
