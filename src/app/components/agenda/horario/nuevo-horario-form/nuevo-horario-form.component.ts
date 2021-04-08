@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
+import { Paciente } from 'src/app/classes/paciente/paciente';
 import { HorarioAtencionService } from 'src/app/services/horario-atencion.service';
 
 @Component({
@@ -10,10 +12,12 @@ import { HorarioAtencionService } from 'src/app/services/horario-atencion.servic
 export class NuevoHorarioFormComponent implements OnInit {
 
   nuevoHorarioForm: FormGroup;
-  
+  nuevaHoraAtencion!: HorarioAtencion;
+  nuevoPaciente!: Paciente;
+
   constructor(private formBuilder: FormBuilder,
     private horarioAtencionService: HorarioAtencionService) {
-    
+
     this.nuevoHorarioForm = this.formBuilder.group({
       nombrePaciente: ['', Validators.required],
       apellidoPaciente: ['', Validators.required],
@@ -26,7 +30,7 @@ export class NuevoHorarioFormComponent implements OnInit {
       fechaAtencion: ['', Validators.required],
       horaAtencion: ['', Validators.required]
     });
-   }
+  }
 
   ngOnInit(): void { }
 
@@ -61,7 +65,32 @@ export class NuevoHorarioFormComponent implements OnInit {
 
   // Guardar los datos
   guardarNuevoHorario() {
-    this.horarioAtencionService.crearNuevoHorarioAtencion(this.nuevoHorarioForm.value).subscribe((res: any) => {
+
+    // Crear el nuevo paciente asociado a la hora de atención
+    this.nuevoPaciente = {
+      "nombre": this.nuevoHorarioForm.get('nombrePaciente')?.value,
+      "apellido": this.nuevoHorarioForm.get('apellidoPaciente')?.value,
+      "telefono": `+569${this.nuevoHorarioForm.get('telefonoPaciente')?.value}`,
+      "fechaNacimiento": new Date(),
+      "ocupacion": "",
+      "institucion": "",
+      "afiliacionSalud": this.nuevoHorarioForm.get('afiliacionSaludPaciente')?.value,
+      "estadoCivil": "",
+      "familiaNuclear": ""
+    }
+
+    // Crear la nueva hora de atención
+    this.nuevaHoraAtencion = {
+      "asistencia": false,
+      "confirmaAsistencia": false,
+      "horaAtencion": this.nuevoHorarioForm.get('horaAtencion')?.value,
+      "fechaAtencion": this.nuevoHorarioForm.get('fechaAtencion')?.value,
+      "nroConsulta": this.nuevoHorarioForm.get('nroConsulta')?.value,
+      "disponible": false,
+      "paciente": this.nuevoPaciente
+    };
+
+    this.horarioAtencionService.crearNuevoHorarioAtencion(this.nuevaHoraAtencion).subscribe((res: any) => {
       console.log(res);
     })
   }
