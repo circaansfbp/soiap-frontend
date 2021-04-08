@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="row">
+    <div class="row" *ngFor="let horario of horasFechaDelDia">
         <div class="col-12 horario">
             <div class="row">
                 <div class="col-4 text-center hora">
-                    <h3> Hora de la atención </h3>
+                    <h3>{{horario.horaAtencion}} hrs.</h3>
                 </div>
                 <div class="col-8 datos">
-                    <h3> Agregar datos de la hora de atención </h3>
+                    <h3>Paciente: {{horario.paciente.nombre}} {{horario.paciente.apellido}} </h3>
                     <button class="btn btn-primary" (click)="nuevoHorario()">Agendar</button>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HorarioAtencion } from '../classes/horario-atencion/horario-atencion';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,10 @@ export class HorarioAtencionService {
   constructor( private http: HttpClient ) { }
 
   crearNuevoHorarioAtencion(horarioAtencion: HorarioAtencion) {
-    return this.http.post<HorarioAtencion>("${url}atenciones", horarioAtencion);
+    return this.http.post<HorarioAtencion>(`${this.url}atenciones`, horarioAtencion);
   }
   
-  obtenerHorariosDelDía(fechaActual: Date) {
-    return this.http.get<HorarioAtencion[]>(`${this.url}atenciones/get/${fechaActual}`).subscribe((res: any) => {
-      console.log(res);
-    })
+  obtenerHorariosDelDía(fechaActual: string): Observable<HorarioAtencion[]> {
+    return this.http.get<HorarioAtencion[]>(`${this.url}atenciones/get/${fechaActual}`);
   }
 }
