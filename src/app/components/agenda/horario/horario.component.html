@@ -3,34 +3,56 @@
         <div class="col-12 horario">
             <div class="row">
                 <div class="col-4 text-center hora">
+                    <!-- LA HORA DE ATENCIÓN NO DEBIESE DESPLEGAR LOS SEGUNDOS -->
                     <h3>{{horario.horaAtencion}} hrs.</h3>
                 </div>
                 <div class="col-8 datos">
-                    <h3>Paciente: {{horario.paciente.nombre}} {{horario.paciente.apellido}} </h3>
-                    <button class="btn btn-primary" (click)="nuevoHorario()">Agendar</button>
-                </div>
-            </div>
-
-            <!-- <div class="row horario" *ngFor="let horario of hoursInTheMorning">
-                <div class="col-4 text-center hora">
-                    <h3> {{horario}} hrs.</h3>
-                </div>
-                <div class="col-8 datos">
-                    <h3>Disponible</h3>
-                    <button class="btn btn-primary" (click)="nuevoHorario()">Agendar</button>
+                    <h3>{{horario.paciente.nombre}} {{horario.paciente.apellido}} </h3>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
+                        (click)="verDetalle(this.horario)">Ver detalle</button>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="row horario" *ngFor="let horario of hoursInTheEvening">
-                <div class="col-4 text-center hora">
-                    <h3>{{horario}} hrs.</h3>
+    </div>
+</div>
+
+<!-- Modal que muestra el detalle (datos) de una hora de atención específica -->
+<!-- FALTA AGREGAR SI LA HORA FUE CANCELADA O NO Y MODALIDAD DE PAGO -->
+<!-- AGREGAR BOTÓN PARA MODIFICAR LOS DATOS EN MODAL ?-->
+<div class="modal fade" id="detalleHora" tabindex="-1" role="dialog" aria-labelledby="detalleHoraLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleHoraLabel">Paciente:
+                    {{detalleHora.paciente.nombre}}
+                    {{detalleHora.paciente.apellido}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <h5>N° de sesión: {{detalleHora.nroConsulta}}</h5>
+                    </div>
+                    <div class="col-6">
+                        <h5>
+                            Afiliación de salud: {{detalleHora.paciente.afiliacionSalud}}
+                        </h5>
+                    </div>
                 </div>
-                <div class="col-8 datos">
-                    <h3>Disponible</h3>
-                    <button class="btn btn-primary" (click)="nuevoHorario()">Agendar</button>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h5 *ngIf="detalleHora.confirmaAsistencia">Asistencia confirmada por el paciente
+                        </h5>
+                        <h5 *ngIf="!detalleHora.confirmaAsistencia">El paciente no confirmó su asistencia</h5>
+                    </div>
                 </div>
-            </div> -->
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
     </div>
 </div>

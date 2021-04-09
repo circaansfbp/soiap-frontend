@@ -1,7 +1,10 @@
 <div class="container card" id="main">
     <div class="row">
-        <div class="col-6 text-center" id="date">
+        <div class="col-6 text-center date">
             <h1>{{fechaActual}}</h1>
+        </div>
+        <div class="col-6 text-center date">
+            <h1>Agendar horas</h1>
         </div>
     </div>
     <div class="row">
@@ -9,7 +12,21 @@
             <app-horario></app-horario>
         </div>
         <div class="col-6">
-            <!-- AQUÍ FALTA AGREGAR HORARIOS DISPONIBLES CON HORA PRE ESTABLECIDA -->
+            <div class="row" *ngFor="let hora of horas">
+                <div class="col-12 horario">
+                    <div class="row">
+                        <div class="col-4 text-center hora">
+                            <h3>{{hora}} hrs.</h3>
+                        </div>
+                        <div class="col-8 datos">
+                            <h3>Disponible</h3>
+                            <!-- AL AGENDAR UN HORARIO DISPONIBLE, LA HORA SELECCIONADA 
+                                DEBIESE ESTAR YA SELECCIONADA-->
+                            <button class="btn btn-primary" (click)="nuevoHorario()">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

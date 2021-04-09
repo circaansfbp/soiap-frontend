@@ -90,8 +90,9 @@ export class NuevoHorarioFormComponent implements OnInit {
       "paciente": this.nuevoPaciente
     };
 
+    // AGREGAR CONFIRMACIÓN DE LA OPERACIÓN SWEET ALERT
     this.horarioAtencionService.crearNuevoHorarioAtencion(this.nuevaHoraAtencion).subscribe((res: any) => {
       console.log(res);
-    })
+    });
   }
 }
