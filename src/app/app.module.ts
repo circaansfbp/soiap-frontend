@@ -5,13 +5,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HorarioComponent } from './components/agenda/horario/horario.component';
-import { NuevoHorarioFormComponent } from './components/agenda/horario/nuevo-horario-form/nuevo-horario-form.component';
-import { AgendaComponent } from './components/agenda/agenda.component';
+import { HorarioComponent } from './components/hora-atencion/agenda/horario/horario.component';
+import { NuevoHorarioFormComponent } from './components/hora-atencion/agenda/horario/nuevo-horario-form/nuevo-horario-form.component';
+import { AgendaComponent } from './components/hora-atencion/agenda/agenda.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
-  { path: 'nuevo-horario', component: NuevoHorarioFormComponent }
+  { path: 'nuevo-horario', component: NuevoHorarioFormComponent },
+  { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent }
 ];
 
 @NgModule({

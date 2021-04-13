@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <form [formGroup]="nuevoHorarioForm" (ngSubmit)="guardarNuevoHorario()" novalidate>
+      <form [formGroup]="nuevoHorarioForm" novalidate>
 
         <div class="row">
           <!-- Nombre paciente -->
@@ -89,8 +89,14 @@
           </div>
         </div>
 
-        <button [disabled]="nuevoHorarioForm.invalid" type="submit" class="btn btn-primary">Guardar horario</button>
+        <button [disabled]="nuevoHorarioForm.invalid" type="submit" class="btn btn-primary"
+          (click)="guardarNuevoHorario()" *ngIf="!horarioAtencion.idAtencion;else updateButton">Guardar
+          horario</button>
 
+        <ng-template #updateButton>
+          <button [disabled]="nuevoHorarioForm.invalid" type="submit" class="btn btn-primary"
+            (click)="updateHorarioAtencion()">Guardar cambios</button>
+        </ng-template>
       </form>
     </div>
   </div>

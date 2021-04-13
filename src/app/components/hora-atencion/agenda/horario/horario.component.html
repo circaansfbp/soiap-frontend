@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row" *ngFor="let horario of horasFechaDelDia">
-        <div class="col-12 horario">
+        <div class="col-12 horario" *ngIf="!horario.disponible">
             <div class="row">
                 <div class="col-4 text-center hora">
                     <!-- LA HORA DE ATENCIÓN NO DEBIESE DESPLEGAR LOS SEGUNDOS -->
@@ -10,6 +10,9 @@
                     <h3>{{horario.paciente.nombre}} {{horario.paciente.apellido}} </h3>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
                         (click)="verDetalle(this.horario)">Ver detalle</button>
+                    <button class="btn btn-warning" [routerLink]="['/nuevo-horario', horario.idAtencion]">Modificar
+                        datos</button>
+                    <button class="btn btn-danger" (click)="eliminarHorario(horario.idAtencion, horario)">Eliminar horario</button>
                 </div>
             </div>
         </div>
@@ -25,8 +28,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detalleHoraLabel">Paciente:
-                    {{detalleHora.paciente.nombre}}
-                    {{detalleHora.paciente.apellido}}</h5>
+                    {{horario.paciente.nombre}}
+                    {{horario.paciente.apellido}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -34,19 +37,19 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <h5>N° de sesión: {{detalleHora.nroConsulta}}</h5>
+                        <h5>N° de sesión: {{horario.nroConsulta}}</h5>
                     </div>
                     <div class="col-6">
                         <h5>
-                            Afiliación de salud: {{detalleHora.paciente.afiliacionSalud}}
+                            Afiliación de salud: {{horario.paciente.afiliacionSalud}}
                         </h5>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 text-center">
-                        <h5 *ngIf="detalleHora.confirmaAsistencia">Asistencia confirmada por el paciente
+                        <h5 *ngIf="horario.confirmaAsistencia">Asistencia confirmada por el paciente
                         </h5>
-                        <h5 *ngIf="!detalleHora.confirmaAsistencia">El paciente no confirmó su asistencia</h5>
+                        <h5 *ngIf="!horario.confirmaAsistencia">El paciente no confirmó su asistencia</h5>
                     </div>
                 </div>
             </div>
