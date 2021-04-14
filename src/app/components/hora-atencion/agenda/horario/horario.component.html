@@ -1,19 +1,28 @@
 <div class="container">
-    <div class="row" *ngFor="let horario of horasFechaDelDia">
-        <div class="col-12 horario" *ngIf="!horario.disponible">
+    <div class="row" *ngFor="let horario of horasAtencion">
+        <div class="col-lg-12 horario">
             <div class="row">
-                <div class="col-4 text-center hora">
+                <div class="col-lg-4 text-center hora">
                     <!-- LA HORA DE ATENCIÓN NO DEBIESE DESPLEGAR LOS SEGUNDOS -->
                     <h3>{{horario.horaAtencion}} hrs.</h3>
                 </div>
-                <div class="col-8 datos">
+                <!-- Si es un horario ocupado -->
+                <div class="col-lg-8 datos" *ngIf="!horario.disponible;else disponible">
                     <h3>{{horario.paciente.nombre}} {{horario.paciente.apellido}} </h3>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
                         (click)="verDetalle(this.horario)">Ver detalle</button>
                     <button class="btn btn-warning" [routerLink]="['/nuevo-horario', horario.idAtencion]">Modificar
                         datos</button>
-                    <button class="btn btn-danger" (click)="eliminarHorario(horario.idAtencion, horario)">Eliminar horario</button>
+                    <button class="btn btn-danger" (click)="eliminarHorario(horario.idAtencion, horario)">Eliminar
+                        horario</button>
                 </div>
+                <ng-template #disponible> <!-- Si el horario está disponible -->
+                    <div class="col-lg-8 datos">
+                        <h3>Disponible!</h3>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
+                        [routerLink]="['/nuevo-horario']">Agregar</button>
+                    </div>
+                  </ng-template>
             </div>
         </div>
     </div>

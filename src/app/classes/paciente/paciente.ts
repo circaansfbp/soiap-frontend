@@ -1,6 +1,7 @@
 import { HorarioAtencion } from '../horario-atencion/horario-atencion';
 
 export class Paciente {
+  idPaciente!: number;
   nombre!: string;
   apellido!: string;
   telefono!: string;

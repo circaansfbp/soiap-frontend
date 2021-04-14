@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HorarioAtencion } from '../classes/horario-atencion/horario-atencion';
+import { HorarioAtencion } from '../../classes/horario-atencion/horario-atencion';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

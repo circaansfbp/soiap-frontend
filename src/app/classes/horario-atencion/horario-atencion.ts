@@ -5,7 +5,7 @@ export class HorarioAtencion {
   asistencia!: boolean;
   confirmaAsistencia!: boolean;
   horaAtencion!: any;
-  fechaAtencion!: Date;
+  fechaAtencion!: string;
   nroConsulta!: number;
   disponible!: boolean;
   paciente!: Paciente;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import * as moment from 'moment';
 moment.locale('es');
 
@@ -9,20 +10,30 @@ moment.locale('es');
   styleUrls: ['./agenda.component.css']
 })
 export class AgendaComponent implements OnInit {
+  titleDate = moment().format('dddd Do MMMM YYYY'); // Fecha actual para desplegar como título
+  actualDate = moment().format("YYYY[-]M[-]D"); // Fecha a pasar al componente horario para búsquedas en BD
 
-  horas: string[] = ["8:00", "8:50", "9:40", "10:30", "11:20", "12:10", "13:00",
-    "15:00", "15:50", "16:40", "17:30", "18:20", "19:10", "20:00"];
-  
-  fechaActual = moment().format('dddd Do MMMM YYYY'); // Formatear fecha?
+  changeDay: number = 0;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-
+    this.changeDay = 0;
   }
 
-  nuevoHorario() {
-    this.router.navigate(['nuevo-horario']);
+  nextDay() {
+    this.changeDay++;
+    let next = moment().add(this.changeDay, 'd');
+    this.actualDate = next.format("YYYY[-]M[-]D");
+    this.titleDate = next.format('dddd Do MMMM YYYY');
+    console.log(this.actualDate);
   }
 
+  previosDay() {
+    this.changeDay--;
+    let previous = moment().add(this.changeDay, 'd');
+    this.actualDate = previous.format("YYYY[-]M[-]D");
+    this.titleDate = previous.format('dddd Do MMMM YYYY');
+    console.log(this.actualDate);
+  }
 }

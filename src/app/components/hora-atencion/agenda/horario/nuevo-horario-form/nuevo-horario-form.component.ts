@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 import { Paciente } from 'src/app/classes/paciente/paciente';
-import { HorarioAtencionService } from 'src/app/services/horario-atencion.service';
+import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
+import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -17,9 +18,11 @@ export class NuevoHorarioFormComponent implements OnInit {
   horarioAtencion: HorarioAtencion = new HorarioAtencion();
   paciente!: Paciente;
   idAtencion!: number;
+  idPaciente!: number;
 
   constructor(private formBuilder: FormBuilder,
     private horarioAtencionService: HorarioAtencionService,
+    private pacienteService: PacienteService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
 
@@ -76,6 +79,7 @@ export class NuevoHorarioFormComponent implements OnInit {
   objetosHorarioAtencionPaciente() {
     // Crea el nuevo paciente asociado a la hora de atención
     this.paciente = {
+      "idPaciente": this.idPaciente,
       "nombre": this.nuevoHorarioForm.get('nombrePaciente')?.value,
       "apellido": this.nuevoHorarioForm.get('apellidoPaciente')?.value,
       "telefono": `+569${this.nuevoHorarioForm.get('telefonoPaciente')?.value}`,
@@ -102,7 +106,6 @@ export class NuevoHorarioFormComponent implements OnInit {
 
   // Guardar los datos
   guardarNuevoHorario() {
-    // AGREGAR CONFIRMACIÓN DE LA OPERACIÓN SWEET ALERT
     this.objetosHorarioAtencionPaciente();
     this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe((res: any) => {
       console.log(res);
@@ -129,7 +132,10 @@ export class NuevoHorarioFormComponent implements OnInit {
             });
 
             //ARREGLAR NRO DE TELÉFONO (SACAR +569)
+
+            // Guardar los ID para realizar la actualización 
             this.idAtencion = res.idAtencion;
+            this.idPaciente = res.paciente.idPaciente;
 
             // Necesario para que la vista sepa cuál botón mostrar
             this.horarioAtencion.idAtencion = res.idAtencion;
@@ -152,15 +158,21 @@ export class NuevoHorarioFormComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        swal.fire(
-          'Datos actualizados!',
-          'La información ha sido actualizada exitosamente.',
-          'success'
-        );
-
         this.objetosHorarioAtencionPaciente();
-        this.horarioAtencionService.modificarHorario(this.horarioAtencion).subscribe(horario => console.log(horario));
-        this.router.navigate(['']);
+        
+        this.horarioAtencionService.modificarHorario(this.horarioAtencion).subscribe(horario => {
+          this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
+            console.log(horario);
+            console.log(paciente);
+            this.router.navigate(['']);
+
+            swal.fire(
+              'Datos actualizados!',
+              'La información ha sido actualizada exitosamente.',
+              'success'
+            );
+          })
+        });
       }
     });
   }

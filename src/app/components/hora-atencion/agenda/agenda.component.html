@@ -1,32 +1,16 @@
+<!-- Agenda (Horas del día + agendar horas disponibles)-->
 <div class="container card" id="main">
     <div class="row">
-        <div class="col-6 text-center date">
-            <h1>{{fechaActual}}</h1>
-        </div>
-        <div class="col-6 text-center date">
-            <h1>Agendar horas</h1>
+        <div class="col-sm-12 text-center date">
+            <h1><button class="btn btn-dark btn-lg" (click)="previosDay()"><i
+                        class="bi bi-arrow-left-circle-fill"></i></button>{{titleDate}}<button
+                    class="btn btn-dark btn-lg" (click)="nextDay()"><i
+                        class="bi bi-arrow-right-circle-fill"></i></button></h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
-            <app-horario></app-horario>
-        </div>
-        <div class="col-6">
-            <div class="row" *ngFor="let hora of horas">
-                <div class="col-12 horario">
-                    <div class="row">
-                        <div class="col-4 text-center hora">
-                            <h3>{{hora}} hrs.</h3>
-                        </div>
-                        <div class="col-8 datos">
-                            <h3>Disponible</h3>
-                            <!-- AL AGENDAR UN HORARIO DISPONIBLE, LA HORA SELECCIONADA 
-                                DEBIESE ESTAR YA SELECCIONADA-->
-                            <button class="btn btn-primary" (click)="nuevoHorario()">Agendar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-sm-12">
+            <app-horario [fechaActual]="actualDate"></app-horario>
         </div>
     </div>
 </div>
