@@ -1,90 +1,116 @@
 <div class="container">
+  <div class="row" id="title">
+    <div class="col-lg-12">
+      <h2>Nuevo horario de atención</h2>
+      <h5>Complete los siguientes campos: </h5>
+    </div>
+  </div>
   <div class="row">
-    <div class="col-12">
+    <div class="col-lg-12">
       <form [formGroup]="nuevoHorarioForm" novalidate>
 
-        <div class="row">
+        <div class="row input">
           <!-- Nombre paciente -->
-          <div class="col-6">
-            <label for="nombre" class="form-label">Nombre paciente</label>
-            <input formControlName="nombrePaciente" type="text" class="form-control" id="nombre" name="nombre">
-            <div *ngIf="nombrePaciente?.invalid && nombrePaciente?.touched" class="alert alert-danger col-12">
-              Debes ingresar el nombre del paciente!
+          <div class="col-lg-5">
+            <label for="nombre" class="form-label">Nombre</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input formControlName="nombrePaciente" type="text" class="form-control" id="nombre" name="nombre">
+              <div *ngIf="nombrePaciente?.invalid && nombrePaciente?.touched" class="col-lg-12">
+                <small class="text-danger">Debes ingresar el nombre del paciente!</small>
+              </div>
             </div>
           </div>
 
           <!-- Apellido paciente -->
-          <div class="col-6">
-            <label for="apellido" class="form-label">Apellido paciente</label>
-            <input formControlName="apellidoPaciente" type="text" class="form-control" id="apellido" name="apellido">
-            <div *ngIf="apellidoPaciente?.invalid && apellidoPaciente?.touched" class="alert alert-danger col-12">
-              Debes ingresar el nombre del paciente!
+          <div class="col-lg-5">
+            <label for="apellido" class="form-label">Apellido</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input formControlName="apellidoPaciente" type="text" class="form-control" id="apellido" name="apellido">
+              <div *ngIf="apellidoPaciente?.invalid && apellidoPaciente?.touched" class="col-lg-12">
+                <small class="text-danger">Debes ingresar el apellido del paciente!</small>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row input">
           <!-- Teléfono paciente -->
-          <div class="col-6">
-            <label for="telefonoPaciente" class="form-label">Teléfono paciente</label>
+          <div class="col-lg-5">
+            <label for="telefonoPaciente" class="form-label">Teléfono</label>
             <div class="input-group">
-              <span class="input-group-text" id="digitosPrevios">+56 9</span>
+              <span class="input-group-text"><i class="bi bi-telephone-forward-fill"></i></span>
+              <span class="input-group-text" id="digitosPrevios">+569</span>
               <input formControlName="telefonoPaciente" type="text" class="form-control"
                 aria-describedby="digitosPrevios">
-              <div *ngIf="telefonoPaciente?.invalid && telefonoPaciente?.touched" class="alert alert-danger col-12">
+              <div *ngIf="telefonoPaciente?.invalid && telefonoPaciente?.touched" class="col-lg-12">
                 <div *ngIf="telefonoPaciente?.errors?.required">
-                  Debes ingresar el número de teléfono del paciente!
+                  <small class="text-danger">Debes ingresar el número de teléfono del paciente!</small>
                 </div>
                 <div *ngIf="telefonoPaciente?.errors?.pattern">
-                  No se pueden ingresar letras y/o caracteres!
+                  <small class="text-danger">No se pueden ingresar letras y/o caracteres!</small>
                 </div>
                 <div *ngIf="telefonoPaciente?.errors">
-                  El número de teléfono debe tener un total de 8 dígitos!
+                  <small class="text-danger">El número de teléfono debe tener un total de 8 dígitos!</small>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Afiliación de salud del paciente -->
-          <div class="col-6">
+          <div class="col-lg-5">
             <label for="afiliacionSaludPaciente" class="form-label">Afiliación de salud</label>
-            <input formControlName="afiliacionSaludPaciente" type="text" class="form-control"
-              id="afiliacionSaludPaciente" name="afiliacionSaludPaciente">
-            <div *ngIf="afiliacionSaludPaciente?.invalid && afiliacionSaludPaciente?.touched"
-              class="alert alert-danger col-12">
-              Debes ingresar la afiliación de salud del paciente!
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
+              <input formControlName="afiliacionSaludPaciente" type="text" class="form-control"
+                id="afiliacionSaludPaciente" name="afiliacionSaludPaciente">
+              <div *ngIf="afiliacionSaludPaciente?.invalid && afiliacionSaludPaciente?.touched" class="col-lg-12">
+                <small class="text-danger">Debes ingresar la afiliación de salud del paciente!</small>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="row">
-
-          <!-- Número de consulta a la que asiste el paciente -->
-          <div class="col-2">
-            <label for="nroConsulta" class="form-label">N° consulta</label>
-            <input formControlName="nroConsulta" type="number" class="form-control" id="nroConsulta" name="nroConsulta">
-            <div *ngIf="nroConsulta?.invalid && nroConsulta?.touched" class="alert alert-danger col-12">
-              Debes ingresar un N° válido!
-            </div>
-          </div>
-
+        <div class="row input">
           <!-- Fecha de la atención -->
-          <div class="col-5">
+          <div class="col-lg-5">
             <label for="fechaAtencion" class="form-label">Fecha de la atención</label>
-            <input formControlName="fechaAtencion" type="date" class="form-control" id="fechaAtencion"
-              name="fechaAtencion">
-            <div *ngIf="fechaAtencion?.invalid && fechaAtencion?.touched" class="alert alert-danger col-12">
-              Debes ingresar la fecha de la atención!
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
+              <input formControlName="fechaAtencion" type="date" class="form-control" id="fechaAtencion"
+                name="fechaAtencion">
+              <div *ngIf="fechaAtencion?.invalid && fechaAtencion?.touched" class="col-lg-12">
+                <small class="text-danger">Debes ingresar la fecha de la atención!</small>
+              </div>
             </div>
           </div>
 
           <!-- Hora de la atención -->
-          <div class="col-5">
+          <div class="col-lg-5">
             <label for="horaAtencion" class="form-label">Hora de la atención</label>
-            <input formControlName="horaAtencion" type="time" class="form-control" id="horaAtencion"
-              name="horaAtencion">
-            <div *ngIf="horaAtencion?.invalid && horaAtencion?.touched" class="alert alert-danger col-12">
-              Debes ingresar la hora de la atención!
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-clock-fill"></i></span>
+              <input formControlName="horaAtencion" type="time" class="form-control" id="horaAtencion"
+                name="horaAtencion">
+              <div *ngIf="horaAtencion?.invalid && horaAtencion?.touched" class="col-lg-12">
+                <small class="text-danger">Debes ingresar la hora de la atención!</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row input">
+          <!-- Número de consulta a la que asiste el paciente -->
+          <div class="col-lg-2">
+            <label for="nroConsulta" class="form-label">N° consulta</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-hash"></i></span>
+              <input formControlName="nroConsulta" type="text" class="form-control" id="nroConsulta"
+                name="nroConsulta">
+              <div *ngIf="nroConsulta?.invalid && nroConsulta?.touched" class="col-lg-12">
+                <small class="text-danger">Debes ingresar un N° válido!</small>
+              </div>
             </div>
           </div>
         </div>

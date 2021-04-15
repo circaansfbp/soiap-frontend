@@ -28,14 +28,14 @@ export class NuevoHorarioFormComponent implements OnInit {
 
     // ReactiveForm que valida los campos 
     this.nuevoHorarioForm = this.formBuilder.group({
-      nombrePaciente: ["", Validators.required],
+      nombrePaciente: ["", Validators.required], // VALIDAR QUE NO HAYAN NÚMEROS EN EL NOMBRE, APELLIDO, AFILIACIÓN
       apellidoPaciente: ["", Validators.required],
       telefonoPaciente: ["", [
         Validators.required, Validators.pattern(/^[0-9]+$/),
         Validators.minLength(8), Validators.maxLength(8)
       ]],
       afiliacionSaludPaciente: ["", Validators.required],
-      nroConsulta: ["", Validators.pattern(/^[0-9]+$/)],
+      nroConsulta: ["", Validators.pattern(/^[0-9]+$/)], // VALIDAR QUE EL NÚMERO NO SOBREPASE EL 10
       fechaAtencion: ["", Validators.required],
       horaAtencion: ["", Validators.required]
     });
