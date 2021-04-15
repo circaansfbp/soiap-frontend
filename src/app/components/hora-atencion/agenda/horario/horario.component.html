@@ -4,8 +4,9 @@
             <div class="row">
                 <div class="col-lg-4 text-center hora">
                     <!-- LA HORA DE ATENCIÓN NO DEBIESE DESPLEGAR LOS SEGUNDOS -->
-                    <h3>{{horario.horaAtencion}} hrs.</h3>
+                    <h3><i class="bi bi-clock"></i><br>{{horario.horaAtencion.slice(0, 5)}} <br>hrs.</h3>
                 </div>
+
                 <!-- Si es un horario ocupado -->
                 <div class="col-lg-8 datos" *ngIf="!horario.disponible;else disponible">
                     <h3>{{horario.paciente.nombre}} {{horario.paciente.apellido}} </h3>
@@ -16,11 +17,13 @@
                     <button class="btn btn-danger" (click)="eliminarHorario(horario.idAtencion, horario)">Eliminar
                         horario</button>
                 </div>
-                <ng-template #disponible> <!-- Si el horario está disponible -->
-                    <div class="col-lg-8 datos">
-                        <h3>Disponible!</h3>
+
+                <!-- Si el horario está disponible -->
+                <ng-template #disponible> 
+                    <div class="col-lg-8 datos text-center">
+                        <h2>Horario disponible</h2>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
-                        [routerLink]="['/nuevo-horario']">Agregar</button>
+                        [routerLink]="['/nuevo-horario']"><i class="bi bi-calendar-check"></i>Agendar</button>
                     </div>
                   </ng-template>
             </div>

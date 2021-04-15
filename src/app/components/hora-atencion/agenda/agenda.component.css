@@ -1,32 +1,24 @@
 #main {
     margin-top: 100px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-    background-color: #fefae0;
+    background-color: #fff;
     border-radius: 30px;
 }
 
+#subtitles {
+    padding-bottom: 20px;
+    border-bottom: 5px solid #284b63;
+}
 .date {
     margin-top: 40px;
-}
-
-.datos, .hora {
-    padding: 40px;
-}
-
-.hora {
-    background-color: #606c38;
-    border-radius: 15px;
-    color: white;
-}
-
-.horario {
-    margin-top: 50px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    border-radius: 15px;
 }
 
 button {
     border-radius: 100%;
     margin: 0 20px;
+    background-color: #284b63;
+    border-color: #284b63;
 }
+
+
 

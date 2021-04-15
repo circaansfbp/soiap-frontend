@@ -1,15 +1,25 @@
 <!-- Agenda (Horas del día + agendar horas disponibles)-->
 <div class="container card" id="main">
     <div class="row">
-        <div class="col-sm-12 text-center date">
-            <h1><button class="btn btn-dark btn-lg" (click)="previosDay()"><i
-                        class="bi bi-arrow-left-circle-fill"></i></button>{{titleDate}}<button
-                    class="btn btn-dark btn-lg" (click)="nextDay()"><i
-                        class="bi bi-arrow-right-circle-fill"></i></button></h1>
+        <div class="col-lg-12 text-center date">
+            <h1><button class="btn btn-dark" (click)="previosDay()"><i
+                        class="bi bi-arrow-left-circle-fill"></i></button>{{titleDate}}<button class="btn btn-dark"
+                    (click)="nextDay()"><i class="bi bi-arrow-right-circle-fill"></i></button></h1>
+        </div>
+    </div>
+    <div class="row" id="subtitles">
+        <div class="col-lg-5 text-center date" id="sobrecupos">
+            <h2>Sobrecupos</h2>
+        </div>
+        <div class="col-lg-7 text-center date">
+            <h2>Horarios del día</h2>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-lg-5">
+
+        </div>
+        <div class="col-lg-7">
             <app-horario [fechaActual]="actualDate"></app-horario>
         </div>
     </div>

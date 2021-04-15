@@ -13,7 +13,7 @@ moment.locale("es");
   templateUrl: './horario.component.html',
   styleUrls: ['./horario.component.css']
 })
-export class HorarioComponent implements OnInit {
+export class HorarioComponent implements OnInit, OnChanges {
 
   // Fecha del día (obtenida desde componente agenda)
   @Input() fechaActual!: string; 
