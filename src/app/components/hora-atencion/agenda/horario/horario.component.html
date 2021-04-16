@@ -9,7 +9,7 @@
 
                 <!-- Si es un horario ocupado -->
                 <div class="col-lg-8 datos" *ngIf="!horario.disponible;else disponible">
-                    <h3>{{horario.paciente.nombre}} {{horario.paciente.apellido}} </h3>
+                    <h4>{{horario.paciente.nombre}} {{horario.paciente.apellido}} </h4>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
                         (click)="verDetalle(this.horario)">Ver detalle</button>
                     <button class="btn btn-warning" [routerLink]="['/nuevo-horario', horario.idAtencion]">Modificar
@@ -21,8 +21,8 @@
                 <!-- Si el horario está disponible -->
                 <ng-template #disponible> 
                     <div class="col-lg-8 datos text-center">
-                        <h2>Horario disponible</h2>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
+                        <h3>Horario disponible</h3>
+                        <button class="btn btn-primary"
                         [routerLink]="['/nuevo-horario']"><i class="bi bi-calendar-check"></i>Agendar</button>
                     </div>
                   </ng-template>

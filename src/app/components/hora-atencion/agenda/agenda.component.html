@@ -1,26 +1,51 @@
 <!-- Agenda (Horas del día + agendar horas disponibles)-->
 <div class="container card" id="main">
+    <div class="row" id="title">
+        <div class="col-lg-6 date">
+            <h1>Agenda</h1>
+        </div>
+        <div class="col-lg-6" id="search-date-input">
+            <form>
+                <div class="form-group">
+                    <label for="fecha-atencion">Buscar horarios para la fecha:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
+                        <input required type="date" class="form-control" id="fecha-atencion" ngModel
+                            name="fecha-atencion" #fechaAtencion="ngModel">
+                    </div>
+                </div>
+                <button [disabled]="fechaAtencion.invalid" type="submit" class="btn btn-primary"
+                    (click)="searchBySpecificDate(fechaAtencion.value)">Buscar</button>
+            </form>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-lg-12 text-center date">
-            <h1><button class="btn btn-dark" (click)="previosDay()"><i
-                        class="bi bi-arrow-left-circle-fill"></i></button>{{titleDate}}<button class="btn btn-dark"
-                    (click)="nextDay()"><i class="bi bi-arrow-right-circle-fill"></i></button></h1>
+        <div class="col-lg-12 date">
+            <h2>
+                <!--<button class="btn btn-dark" (click)="previosDay()"><i
+                        class="bi bi-arrow-left-circle-fill"></i></button>-->{{titleDate}}
+                <!--<button class="btn btn-dark" 
+                    (click)="nextDay()"><i class="bi bi-arrow-right-circle-fill"></i></button>-->
+            </h2>
         </div>
     </div>
     <div class="row" id="subtitles">
-        <div class="col-lg-5 text-center date" id="sobrecupos">
-            <h2>Sobrecupos</h2>
+        <div class="col-lg-6 date" id="sobrecupos">
+            <h3>Horarios del día</h3>
         </div>
-        <div class="col-lg-7 text-center date">
-            <h2>Horarios del día</h2>
+        <div class="col-lg-3 date">
+            <h3>Sobrecupos</h3>
+        </div>
+        <div class="col-lg-3" id="button-div">
+            <button class="btn btn-primary" [routerLink]="['/nuevo-horario']">Agendar un sobrecupo</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-5">
-
-        </div>
-        <div class="col-lg-7">
+        <div class="col-lg-6">
             <app-horario [fechaActual]="actualDate"></app-horario>
+        </div>
+        <div class="col-lg-6">
+
         </div>
     </div>
 </div>
