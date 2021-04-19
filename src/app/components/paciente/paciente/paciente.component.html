@@ -1,0 +1,46 @@
+<div class="container card" id="main">
+    <div class="row" id="title">
+        <div class="col-lg-6 date">
+            <h1>Pacientes</h1>
+        </div>
+        <div class="col-lg-6" id="search-by-name-input">
+            <form>
+                <div class="form-group">
+                    <label for="nombre-paciente">Buscar paciente por su nombre:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
+                        <input required maxlength="30" minlength="3" type="text" class="form-control"
+                            id="nombre-paciente" ngModel name="nombre-paciente" #nombrePaciente="ngModel">
+                    </div>
+                </div>
+                <button [disabled]="nombrePaciente.invalid" type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive-lg">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Número de contacto</th>
+                            <th>Afiliación de salud</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let paciente of pacientes">
+                            <td>{{paciente.nombre + " " + paciente.apellido}}</td>
+                            <td>CALCULAR EDAD</td>
+                            <td>{{paciente.telefono}}</td>
+                            <td>{{paciente.afiliacionSalud}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <app-paginador *ngIf="paginador" [paginador]='paginador'></app-paginador>
+            </div>
+        </div>
+    </div>
+</div>
