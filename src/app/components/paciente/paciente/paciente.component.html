@@ -13,7 +13,8 @@
                             id="nombre-paciente" ngModel name="nombre-paciente" #nombrePaciente="ngModel">
                     </div>
                 </div>
-                <button [disabled]="nombrePaciente.invalid" type="submit" class="btn btn-primary">Buscar</button>
+                <button [disabled]="nombrePaciente.invalid" type="submit" class="btn btn-primary"
+                (click)="getPatientsByName(nombrePaciente.value)">Buscar</button>
             </form>
         </div>
     </div>
@@ -24,16 +25,15 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Nombre</th>
-                            <th>Edad</th>
                             <th>Número de contacto</th>
                             <th>Afiliación de salud</th>
+                            <th>Atenciones</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let paciente of pacientes">
                             <td>{{paciente.nombre + " " + paciente.apellido}}</td>
-                            <td>CALCULAR EDAD</td>
                             <td>{{paciente.telefono}}</td>
                             <td>{{paciente.afiliacionSalud}}</td>
                         </tr>

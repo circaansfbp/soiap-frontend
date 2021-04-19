@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -22,6 +22,12 @@ export class PacienteService {
         (response.content as Paciente[]).forEach(paciente => console.log(paciente.nombre));
       }
     )); 
+  }
+
+  // Obtener pacientes por nombre, paginados
+  obtenerPacientesPorNombre(nombre: string, page: number): Observable<any> {
+    let params = new HttpParams().set('nombre', nombre);
+    return this.http.get<any>(`${this.url}pacientes/get/by-name/page/${page}`, {params});
   }
   
   // Actualizar un paciente
