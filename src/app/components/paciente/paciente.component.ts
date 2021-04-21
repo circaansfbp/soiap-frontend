@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import swal from 'sweetalert2';
 
@@ -20,7 +19,13 @@ export class PacienteComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
+  // Al iniciar el ciclo de vida, se obtienen todos los pacientes, paginados.
   ngOnInit(): void {
+    this.init();
+  }
+
+  // Obtiene todos los pacientes con estado 'Activo'
+  init() {
     this.activatedRoute.paramMap.subscribe(params => {
       let page: number = +params.get('page')!;
 
@@ -35,6 +40,7 @@ export class PacienteComponent implements OnInit {
     });
   }
 
+  // Permite la búsqueda de pacientes mediante su nombre; los retorna paginados.
   getPatientsByName(name: string) {
     this.activatedRoute.paramMap.subscribe(params => {
       let page: number = +params.get('params')!;
@@ -47,7 +53,7 @@ export class PacienteComponent implements OnInit {
       },
         error => {
           if (error.status == 404) {
-            this.router.navigate(['pacientes']);
+            this.router.navigate(['pacientes/page/0']);
             swal.fire(
               "No encontrado!",
               "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
@@ -56,6 +62,38 @@ export class PacienteComponent implements OnInit {
           }
         });
     });
+  }
+
+  // Permite la eliminación lógica de un paciente
+  deletePatient(paciente: Paciente) {
+    swal.fire({
+      title: '¿Eliminar paciente?',
+      text: 'Esta acción es irreversible!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pacienteService.eliminarPaciente(paciente, paciente.idPaciente).subscribe(res => {
+          console.log(res);
+
+          // Para refrescar componente
+          let currentUrl = this.router.url;
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([currentUrl]);
+          });
+
+          swal.fire(
+            'Paciente eliminado!',
+            'El registro del paciente ha sido eliminado.',
+            'success'
+          );
+        });
+      }
+    })
   }
 }
 

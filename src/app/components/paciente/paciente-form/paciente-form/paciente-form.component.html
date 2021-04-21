@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <form>
+            <form (ngSubmit)="updatePaciente()">
                 <div class="row">
 
                     <!-- Nombre paciente -->
@@ -18,7 +18,7 @@
                                 <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
                                 <input id="nombre-paciente" name="nombre-paciente" type="text" class="form-control"
                                     [(ngModel)]="paciente.nombre" ngModel #nombrePaciente="ngModel" required
-                                    minlength="3" maxlength="30" pattern="^[a-zA-Z]+$">
+                                    minlength="3" maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
                                 <!-- Manejo de errores -->
                                 <div *ngIf="nombrePaciente?.invalid && (nombrePaciente?.touched || nombrePaciente?.dirty)"
@@ -47,7 +47,7 @@
                                 <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
                                 <input id="apellido-paciente" name="apellido-paciente" type="text" class="form-control"
                                     [(ngModel)]="paciente.apellido" ngModel #apellidoPaciente="ngModel" required
-                                    minlength="3" maxlength="30" pattern="^[a-zA-Z]+$">
+                                    minlength="3" maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
                                 <!-- Manejo de errores -->
                                 <div *ngIf="apellidoPaciente?.invalid && (apellidoPaciente?.touched || apellidoPaciente?.dirty)"
@@ -141,7 +141,8 @@
                                 <span class="input-group-text"><i class="bi bi-briefcase-fill"></i></span>
                                 <input id="ocupacion-paciente" name="ocupacion-paciente" type="text"
                                     class="form-control" [(ngModel)]="paciente.ocupacion" ngModel
-                                    #ocupacionPaciente="ngModel" required maxlength="30" pattern="^[a-zA-Z]+$">
+                                    #ocupacionPaciente="ngModel" required maxlength="30"
+                                    pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
                                 <!-- Manejo de errores -->
                                 <div *ngIf="ocupacionPaciente?.invalid && (ocupacionPaciente?.touched || ocupacionPaciente?.dirty)"
@@ -212,20 +213,63 @@
                         <div class="form-group">
                             <label for="estado-civil-paciente">Estado civil:</label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
-                                <select class="form-control" name="estado-civil-paciente" id="estado-civil-paciente"
-                                    ngModel [(ngModel)]="paciente.estadoCivil" #estadoCivil="ngModel" required>
-                                    <option value="" selected>Escoger...</option>
-                                    <option value="Soltero/a">Soltero/a</option>
-                                    <option value="Casado/a">Casado/a</option>
-                                    <option value="Separado/a">Separado/a</option>
-                                    <option value="Divorciado/a">Divorciado/a</option>
-                                    <option value="Viudo/a">Viudo/a</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input id="estado-civil-paciente" name="estado-civil-paciente" type="text"
+                                    class="form-control" [(ngModel)]="paciente.estadoCivil" ngModel
+                                    #estadoCivilPaciente="ngModel" required maxlength="30"
+                                    pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="estadoCivilPaciente?.invalid && (estadoCivilPaciente?.touched || estadoCivilPaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="estadoCivilPaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar el estado civil del
+                                            paciente!</small>
+                                    </div>
+                                    <div *ngIf="estadoCivilPaciente.errors?.pattern">
+                                        <small class="text-danger">No se permite el ingreso de dígitos o caracteres
+                                            especiales!</small>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Grupo familiar del paciente -->
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="grupo-familiar-paciente">Grupo familiar del paciente:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                                <textarea name="grupo-familiar-paciente" id="grupo-familiar-paciente" cols="12" rows="3"
+                                    class="form-control" ngModel [(ngModel)]="paciente.familiaNuclear"
+                                    #familiaNuclear="ngModel" required maxlength="255"></textarea>
+                            </div>
+                            <div *ngIf="familiaNuclear?.invalid && (familiaNuclear?.touched || familiaNuclear?.dirty)"
+                                class="col-lg-12">
+                                <div *ngIf="familiaNuclear.errors?.required">
+                                    <small class="text-danger">Se debe ingresar el grupo familiar del paciente!</small>
+                                </div>
+                            </div>
+                            <div *ngIf="familiaNuclear && familiaNuclear.value?.length > 205 && familiaNuclear.value?.length < 255"
+                                class="col-lg-12">
+                                <small class="text-secondary">Quedan {{familiaNuclear.errors?.maxLength.requiredLength -
+                                    familiaNuclear.value.length}} caracteres.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg text-center">
+                    <button [disabled]="nombrePaciente.invalid && apellidoPaciente.invalid && telefonoPaciente.invalid 
+                    && fechaNacimientoPaciente.invalid && ocupacionPaciente.invalid && institucionPaciente.invalid
+                    && afiliacionSaludPaciente.invalid && estadoCivilPaciente.invalid && familiaNuclear.invalid" type="submit"
+                        class="btn btn-primary">Guardar cambios</button>
                 </div>
             </form>
         </div>

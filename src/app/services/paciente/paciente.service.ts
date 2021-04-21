@@ -14,6 +14,11 @@ export class PacienteService {
 
   constructor(private http: HttpClient) { }
 
+  // Obtener un paciente por su ID
+  obtenerPacientePorId(idPaciente: number): Observable<Paciente> {
+    return this.http.get<Paciente>(`${this.url}pacientes/${idPaciente}`);
+  }
+
   // Obtener los pacientes, paginados
   obtenerPacientes(page: number): Observable<any> {
     return this.http.get<any>(`${this.url}pacientes/get/page/${page}`).pipe(tap(
@@ -33,5 +38,10 @@ export class PacienteService {
   // Actualizar un paciente
   actualizarPaciente(paciente: Paciente): Observable<Paciente> {
     return this.http.put<Paciente>(`${this.url}pacientes/update/${paciente.idPaciente}`, paciente);
+  }
+
+  // Eliminar un paciente
+  eliminarPaciente(paciente: Paciente, idPaciente: number): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.url}pacientes/delete/${idPaciente}`, paciente);
   }
 }
