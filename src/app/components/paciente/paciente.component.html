@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <button [disabled]="nombrePaciente.invalid" type="submit" class="btn btn-primary"
-                (click)="getPatientsByName(nombrePaciente.value)">Buscar</button>
+                    (click)="getPatientsByName(nombrePaciente.value)">Buscar</button>
             </form>
         </div>
     </div>
@@ -36,6 +36,11 @@
                             <td>{{paciente.nombre + " " + paciente.apellido}}</td>
                             <td>{{paciente.telefono}}</td>
                             <td>{{paciente.afiliacionSalud}}</td>
+                            <td>ATENCIONES</td>
+                            <td>
+                                <button [routerLink]="['form']" class="btn btn-primary"
+                                    type="submit">Modificar datos</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

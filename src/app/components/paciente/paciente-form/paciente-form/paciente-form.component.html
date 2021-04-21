@@ -1,0 +1,233 @@
+<div class="container card" id="main">
+    <div class="row" id="title">
+        <div class="col-lg-12 date">
+            <h2>{{title}}</h2>
+            <h5>{{subtitle}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <form>
+                <div class="row">
+
+                    <!-- Nombre paciente -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="nombre-paciente">Nombre:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input id="nombre-paciente" name="nombre-paciente" type="text" class="form-control"
+                                    [(ngModel)]="paciente.nombre" ngModel #nombrePaciente="ngModel" required
+                                    minlength="3" maxlength="30" pattern="^[a-zA-Z]+$">
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="nombrePaciente?.invalid && (nombrePaciente?.touched || nombrePaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="nombrePaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar el nombre del paciente!</small>
+                                    </div>
+                                    <div *ngIf="nombrePaciente.errors?.minlength">
+                                        <small class="text-danger">El nombre debe poseer un mínimo de tres
+                                            caracteres!</small>
+                                    </div>
+                                    <div *ngIf="nombrePaciente.errors?.pattern">
+                                        <small class="text-danger">El nombre no debe contener dígitos ni caracteres
+                                            especiales!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Apellido del paciente -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="apellido-paciente">Apellidos:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input id="apellido-paciente" name="apellido-paciente" type="text" class="form-control"
+                                    [(ngModel)]="paciente.apellido" ngModel #apellidoPaciente="ngModel" required
+                                    minlength="3" maxlength="30" pattern="^[a-zA-Z]+$">
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="apellidoPaciente?.invalid && (apellidoPaciente?.touched || apellidoPaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="apellidoPaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar el/los apellido(s) del
+                                            paciente!</small>
+                                    </div>
+                                    <div *ngIf="apellidoPaciente.errors?.minlength">
+                                        <small class="text-danger">El/los apellido(s) debe(n) poseer un mínimo de tres
+                                            caracteres!</small>
+                                    </div>
+                                    <div *ngIf="apellidoPaciente.errors?.pattern">
+                                        <small class="text-danger">El/los apellido(s) no debe(n) contener dígitos ni
+                                            caracteres especiales!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Teléfono del paciente -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="telefono-paciente">Telefono:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-telephone-forward-fill"></i></span>
+                                <span class="input-group-text">+569</span>
+                                <input id="telefono-paciente" name="telefono-paciente" type="text" class="form-control"
+                                    [(ngModel)]="paciente.telefono" ngModel #telefonoPaciente="ngModel" required
+                                    minlength="8" maxlength="8" pattern="^[0-9]+$">
+                                <div class="col-lg-12">
+                                    <small class="form-text text-secondary">No es necesario que ingrese "+569"</small>
+                                </div>
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="telefonoPaciente?.invalid && (telefonoPaciente?.touched || telefonoPaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="telefonoPaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar el número de teléfono del
+                                            paciente!</small>
+                                    </div>
+                                    <div *ngIf="telefonoPaciente.errors?.minlength">
+                                        <small class="text-danger">El número de teléfono debe poseer un total de 8
+                                            dígitos!</small>
+                                    </div>
+                                    <div *ngIf="telefonoPaciente.errors?.pattern">
+                                        <small class="text-danger">El número de teléfono solo debe contener
+                                            dígitos!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fecha de nacimiento -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="fecha-nacimiento-paciente">Fecha de nacimiento:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
+                                <input id="fecha-nacimiento-paciente" name="fecha-nacimiento-paciente" type="date"
+                                    class="form-control" [(ngModel)]="paciente.fechaNacimiento" ngModel
+                                    #fechaNacimientoPaciente="ngModel" required>
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="fechaNacimientoPaciente?.invalid && (fechaNacimientoPaciente?.touched || fechaNacimientoPaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="telefonoPaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar la fecha de nacimiento del
+                                            paciente!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Ocupación del paciente -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="ocupacion-paciente">Profesión u ocupación:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-briefcase-fill"></i></span>
+                                <input id="ocupacion-paciente" name="ocupacion-paciente" type="text"
+                                    class="form-control" [(ngModel)]="paciente.ocupacion" ngModel
+                                    #ocupacionPaciente="ngModel" required maxlength="30" pattern="^[a-zA-Z]+$">
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="ocupacionPaciente?.invalid && (ocupacionPaciente?.touched || ocupacionPaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="ocupacionPaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar la profesión u ocupación del
+                                            paciente!</small>
+                                    </div>
+                                    <div *ngIf="ocupacionPaciente.errors?.pattern">
+                                        <small class="text-danger">No se permite el ingreso de dígitos o caracteres
+                                            especiales!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Institución del paciente -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="institucion-paciente">Institución:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
+                                <input id="institucion-paciente" name="institucion-paciente" type="text"
+                                    class="form-control" [(ngModel)]="paciente.institucion" ngModel
+                                    #institucionPaciente="ngModel" required maxlength="30">
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="institucionPaciente?.invalid && (institucionPaciente?.touched || institucionPaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="ocupacionPaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar la institución en la que se
+                                            desempeña el paciente!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Afiliación de salud del paciente -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="afiliacion-salud-paciente">Afiliación de salud:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
+                                <input id="afiliacion-salud-paciente" name="afiliacion-salud-paciente" type="text"
+                                    class="form-control" [(ngModel)]="paciente.afiliacionSalud" ngModel
+                                    #afiliacionSaludPaciente="ngModel" required maxlength="30">
+
+                                <!-- Manejo de errores -->
+                                <div *ngIf="afiliacionSaludPaciente?.invalid && (afiliacionSaludPaciente?.touched || afiliacionSaludPaciente?.dirty)"
+                                    class="col-lg-12">
+                                    <div *ngIf="ocupacionPaciente.errors?.required">
+                                        <small class="text-danger">Se debe ingresar la afiliación de salud del
+                                            paciente!</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado civil del paciente -->
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="estado-civil-paciente">Estado civil:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
+                                <select class="form-control" name="estado-civil-paciente" id="estado-civil-paciente"
+                                    ngModel [(ngModel)]="paciente.estadoCivil" #estadoCivil="ngModel" required>
+                                    <option value="" selected>Escoger...</option>
+                                    <option value="Soltero/a">Soltero/a</option>
+                                    <option value="Casado/a">Casado/a</option>
+                                    <option value="Separado/a">Separado/a</option>
+                                    <option value="Divorciado/a">Divorciado/a</option>
+                                    <option value="Viudo/a">Viudo/a</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

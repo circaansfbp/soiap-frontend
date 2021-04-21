@@ -8,15 +8,17 @@ import { AppComponent } from './app.component';
 import { HorarioComponent } from './components/hora-atencion/agenda/horario/horario.component';
 import { NuevoHorarioFormComponent } from './components/hora-atencion/agenda/horario/nuevo-horario-form/nuevo-horario-form.component';
 import { AgendaComponent } from './components/hora-atencion/agenda/agenda.component';
-import { PacienteComponent } from './components/paciente/paciente/paciente.component';
+import { PacienteComponent } from './components/paciente/paciente.component';
 import { PaginadorComponent } from './components/paginador/paginador.component';
+import { PacienteFormComponent } from './components/paciente/paciente-form/paciente-form/paciente-form.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
   { path: 'nuevo-horario', component: NuevoHorarioFormComponent },
   { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent },
   { path: 'pacientes', component: PacienteComponent },
-  { path: 'pacientes/page/:page', component: PacienteComponent}
+  { path: 'pacientes/page/:page', component: PacienteComponent },
+  { path: 'pacientes/form', component: PacienteFormComponent }
 ];
 
 @NgModule({
@@ -26,7 +28,8 @@ const routes = [
     NuevoHorarioFormComponent,
     AgendaComponent,
     PacienteComponent,
-    PaginadorComponent
+    PaginadorComponent,
+    PacienteFormComponent
   ],
 
   imports: [
