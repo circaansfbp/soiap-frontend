@@ -13,6 +13,12 @@
     padding-bottom: 80px;
 }
 
+#no-patients {
+    font-size: 150px;
+    background-color: #fff;
+    color: #284b63;
+}
+
 #search-date-input {
     margin-top: 7px;
 }
@@ -28,6 +34,21 @@
     border-bottom: 5px solid #284b63;
 }
 
+.btn-icons {
+    width: 60%;
+}
+
+.icon-row {
+    height: 190px;
+}
+
+.icons {
+    font-size: 150px;
+    background-color: #fff;
+    color: #284b63;
+    margin-left: 35px;
+}
+
 .date {
     margin-top: 30px;
 }
@@ -36,16 +57,31 @@
     margin-right: 0%;
 }
 
-button, button:disabled, button:focus {
+.modal-content {
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 60px;
+}
+
+.modal-header {
+    border-bottom: 5px solid #284b63;
+}
+
+.table-dark {
+    background-color: #284b63;
+}
+
+button, button:disabled, button:focus, button:hover {
     background-color: #284b63;
     border-color: #284b63;
 }
 
-button:hover {
+/* button:hover {
     background-color: #d9d9d9;
     border-color: #d9d9d9;
     color: #353535;
-}
+} */
 
 i, span {
     background-color: #284b63;

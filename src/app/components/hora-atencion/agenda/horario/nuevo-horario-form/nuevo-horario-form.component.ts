@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 import { Paciente } from 'src/app/classes/paciente/paciente';
@@ -17,9 +17,8 @@ export class NuevoHorarioFormComponent implements OnInit {
   horarioAtencion: HorarioAtencion = new HorarioAtencion();
 
   // Para guardar/actualizar un paciente
-  paciente: Paciente = new Paciente();
+  paciente!: Paciente;
 
-  // Contiene los resultados de la búsqueda de pacientes
   pacientes!: Paciente[];
 
   idAtencion!: number;
@@ -52,21 +51,6 @@ export class NuevoHorarioFormComponent implements OnInit {
     });
   }
 
-  // Buscar paciente para cargar sus datos en el formulario 
-  searchPatients(nombrePaciente: string) {
-    this.pacienteService.obtenerPacientesPorNombreSinPaginar(nombrePaciente).subscribe(res => {
-      this.pacientes = res as Paciente[];
-    }, error => {
-      if (error.status == 404) {
-        swal.fire(
-          "No encontrado!",
-          "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
-          "error"
-        );
-      }
-    });
-  }
-
   // Cargar datos de un horario específico para permitir su actualización
   loadHorarioAtencionData() {
     this.activatedRoute.params.subscribe(params => {
@@ -83,15 +67,6 @@ export class NuevoHorarioFormComponent implements OnInit {
           }
         );
       }
-    });
-  }
-
-  loadPatientData(idPaciente: number) {
-    this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
-      paciente.telefono = paciente.telefono.slice(4, 12);
-      this.paciente = paciente;
-
-      swal.fire("Paciente encontrado!", "Los datos del paciente han sido cargados exitosamente.", "success");
     });
   }
 
@@ -121,6 +96,31 @@ export class NuevoHorarioFormComponent implements OnInit {
             );
           })
         });
+      }
+    });
+  }
+
+  // Carga los datos de un paciente
+  loadPatientData(idPaciente: number) {
+    this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
+      this.paciente = paciente;
+
+      swal.fire("Paciente seleccionado!", "Ahora puede proceder a agendar la hora de atención para " + paciente.nombre + " " + paciente.apellido, "success");
+    });
+  }
+
+  // Buscar paciente para cargar sus datos en el formulario 
+  searchPatients(nombrePaciente: string) {
+    this.pacienteService.obtenerPacientesPorNombreSinPaginar(nombrePaciente).subscribe(res => {
+      this.pacientes = res as Paciente[];
+      console.log(this.pacientes);
+    }, error => {
+      if (error.status == 404) {
+        swal.fire(
+          "No encontrado!",
+          "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
+          "error"
+        );
       }
     });
   }

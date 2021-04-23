@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PacienteService } from 'src/app/services/paciente/paciente.service';
+import { Paciente } from 'src/app/classes/paciente/paciente';
+
+import swal from 'sweetalert2';
 
 import * as moment from 'moment';
 moment.locale('es');
@@ -14,8 +18,10 @@ export class AgendaComponent implements OnInit {
   actualDate = moment().format("YYYY[-]M[-]D"); // Fecha a pasar al componente horario para búsquedas en BD
 
   changeDay: number = 0; // Variable que maneja la adición y sustracción de días 
+  
+  paciente: Paciente = new Paciente();
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.changeDay = 0;

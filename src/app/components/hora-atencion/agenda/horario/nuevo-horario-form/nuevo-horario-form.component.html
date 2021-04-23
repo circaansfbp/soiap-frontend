@@ -1,19 +1,57 @@
 <div class="container" id="main">
   <div class="row" id="title">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
       <h2>Nuevo horario de atención</h2>
       <h5>Complete los siguientes campos: </h5>
     </div>
-    <div class="col-lg-6 text-right">
-      <button class="btn btn-primary" type="button" id="search-button" data-toggle="modal"
-        data-target="#searchPatient">Buscar paciente</button>
-    </div>
   </div>
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-6" *ngIf="!paciente">
+      <div class="row">
+        <div class="col-lg-12">
+          <app-busqueda-paciente (searchPatientEvent)="searchPatients($event)"></app-busqueda-paciente>
+        </div>
+      </div>
+      <div class="row" id="results">
+          <div class="col-lg-12 text-center" *ngIf="!pacientes">
+            <i class="bi bi-people-fill" id="no-patients"></i>
+            <h3>Los pacientes encontrados serán desplegados aquí</h3>
+          </div>
+          <div class="col-lg-12 text-center" *ngIf="pacientes">
+            <table class="table table-bordered">
+              <thead class="table-dark">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Afiliación</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let paciente of pacientes">
+                  <td>{{paciente.nombre + " " + paciente.apellido}}</td>
+                  <td>{{paciente.afiliacionSalud}}</td>
+                  <td>
+                    <div class="row">
+                      <div class="col-lg text-center">
+                        <button (click)="loadPatientData(paciente.idPaciente)" class="btn btn-primary" type="button"
+                          data-dismiss="modal">Seleccionar</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-6" *ngIf="paciente">
+      <h5>Paciente: {{paciente.nombre + " " + paciente.apellido}}</h5><br>
+      <h5>Número de contacto: {{paciente.telefono}}</h5>
+      <h5>Afiliación de salud: {{paciente.afiliacionSalud}}</h5>
+    </div>
+    <div class="col-lg-6">
       <form>
-        <div class="row">
-          <!-- Nombre paciente -->
+        <!-- Nombre paciente
           <div class="col-lg-6">
             <label for="nombre" class="form-label">Nombre</label>
             <div class="input-group">
@@ -21,7 +59,7 @@
               <input type="text" class="form-control" id="nombre" name="nombre" ngModel [(ngModel)]="paciente.nombre"
                 #nombrePaciente="ngModel" required minlength="3" maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
-              <!-- Manejo de errores del campo -->
+               Manejo de errores del campo 
               <div *ngIf="nombrePaciente?.invalid && (nombrePaciente?.touched || nombrePaciente?.dirty)"
                 class="col-lg-12">
                 <div *ngIf="nombrePaciente.errors?.required">
@@ -39,7 +77,7 @@
             </div>
           </div>
 
-          <!-- Apellido paciente -->
+           Apellido paciente 
           <div class="col-lg-6">
             <div class="form-group">
               <label for="apellido-paciente">Apellidos:</label>
@@ -49,7 +87,7 @@
                   [(ngModel)]="paciente.apellido" ngModel #apellidoPaciente="ngModel" required minlength="3"
                   maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
-                <!-- Manejo de errores -->
+                Manejo de errores 
                 <div *ngIf="apellidoPaciente?.invalid && (apellidoPaciente?.touched || apellidoPaciente?.dirty)"
                   class="col-lg-12">
                   <div *ngIf="apellidoPaciente.errors?.required">
@@ -71,7 +109,7 @@
         </div>
 
         <div class="row">
-          <!-- Teléfono paciente -->
+          Teléfono paciente 
           <div class="col-lg-6">
             <div class="form-group">
               <label for="telefono-paciente">Telefono:</label>
@@ -85,7 +123,7 @@
                   <small class="form-text text-secondary">No es necesario que ingrese "+569"</small>
                 </div>
 
-                <!-- Manejo de errores -->
+                Manejo de errores 
                 <div *ngIf="telefonoPaciente?.invalid && (telefonoPaciente?.touched || telefonoPaciente?.dirty)"
                   class="col-lg-12">
                   <div *ngIf="telefonoPaciente.errors?.required">
@@ -105,7 +143,7 @@
             </div>
           </div>
 
-          <!-- Afiliación de salud del paciente -->
+          Afiliación de salud del paciente
           <div class="col-lg-6">
             <div class="form-group">
               <label for="afiliacion-salud-paciente">Afiliación de salud:</label>
@@ -115,7 +153,7 @@
                   [(ngModel)]="paciente.afiliacionSalud" ngModel #afiliacionSaludPaciente="ngModel" required
                   maxlength="30">
 
-                <!-- Manejo de errores -->
+                Manejo de errores 
                 <div
                   *ngIf="afiliacionSaludPaciente?.invalid && (afiliacionSaludPaciente?.touched || afiliacionSaludPaciente?.dirty)"
                   class="col-lg-12">
@@ -126,18 +164,16 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
+          </div> -->
         <div class="row">
           <!-- Fecha de la atención -->
-          <div class="col-lg-6">
+          <div class="col-lg-12">
             <div class="form-group">
               <label for="fecha-atencion" class="form-label">Fecha de la atención:</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
-                <input type="date" class="form-control" id="fecha-atencion" name="fecha-atencion" ngModel
-                  [(ngModel)]="horarioAtencion.fechaAtencion" #fechaAtencion="ngModel" required>
+                <input [disabled]="!paciente" type="date" class="form-control" id="fecha-atencion" name="fecha-atencion"
+                  ngModel [(ngModel)]="horarioAtencion.fechaAtencion" #fechaAtencion="ngModel" required>
                 <div *ngIf="fechaAtencion?.invalid && (fechaAtencion?.touched || fechaAtencion?.dirty)"
                   class="col-lg-12">
                   <small class="text-danger">Se debe ingresar la fecha de la atención!</small>
@@ -145,15 +181,17 @@
               </div>
             </div>
           </div>
+        </div>
 
+        <div class="row">
           <!-- Hora de la atención -->
-          <div class="col-lg-6">
+          <div class="col-lg-12">
             <div class="form-group">
               <label for="hora-atencion" class="form-label">Hora de la atención:</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-clock-fill"></i></span>
-                <input type="time" class="form-control" id="hora-atencion" name="hora-atencion" ngModel
-                  [(ngModel)]="horarioAtencion.horaAtencion" #horaAtencion="ngModel" required>
+                <input [disabled]="!paciente" type="time" class="form-control" id="hora-atencion" name="hora-atencion"
+                  ngModel [(ngModel)]="horarioAtencion.horaAtencion" #horaAtencion="ngModel" required>
                 <div *ngIf="horaAtencion?.invalid && (horaAtencion?.touched || horaAtencion?.dirty)" class="col-lg-12">
                   <small class="text-danger">Se debe ingresar la hora de la atención!</small>
                 </div>
@@ -164,12 +202,13 @@
 
         <div class="row">
           <!-- Número de consulta a la que asiste el paciente -->
-          <div class="col-lg-2">
+          <div class="col-lg-4">
             <label for="nro-consulta" class="form-label">N° consulta:</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-hash"></i></span>
-              <input type="number" class="form-control" id="nro-consulta" name="nro-consulta" ngModel
-                [(ngModel)]="horarioAtencion.nroConsulta" #nroConsulta="ngModel" pattern="^[0-9]+$" min="1" max="10">
+              <input [disabled]="!paciente" type="number" class="form-control" id="nro-consulta" name="nro-consulta"
+                ngModel [(ngModel)]="horarioAtencion.nroConsulta" #nroConsulta="ngModel" pattern="^[0-9]+$" min="1"
+                max="10">
               <div *ngIf="nroConsulta?.invalid && (nroConsulta?.touched || nroConsulta?.dirty)" class="col-lg-12">
                 <div *ngIf="nroConsulta.errors?.pattern">
                   <small class="text-danger">Solo se permite el ingreso de 2 dígitos!</small>
@@ -182,27 +221,23 @@
           </div>
         </div>
 
-        <div class="col-lg text-center">
-          <!-- Si se desea crear una atención, se muestra este botón -->
-          <button [disabled]="nombrePaciente.invalid || apellidoPaciente.invalid || telefonoPaciente.invalid ||
-        afiliacionSaludPaciente.invalid || fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid"
-            type="submit" class="btn btn-primary" (click)="guardarNuevoHorario()"
-            *ngIf="!horarioAtencion.idAtencion;else updateButton">Guardar
-            horario</button>
+        <!-- Si se desea crear una atención, se muestra este botón -->
+        <button [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid || !paciente"
+          type="submit" class="btn btn-primary" (click)="guardarNuevoHorario()"
+          *ngIf="!horarioAtencion.idAtencion;else updateButton">Guardar
+          horario</button>
 
-          <!-- Si se desea actualizar una atención, se muestra este botón -->
-          <ng-template #updateButton>
-            <button [disabled]="nombrePaciente.invalid || apellidoPaciente.invalid || telefonoPaciente.invalid ||
-          afiliacionSaludPaciente.invalid || fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid"
-              type="submit" class="btn btn-primary" (click)="updateHorarioAtencion()">Guardar cambios</button>
-          </ng-template>
-        </div>
+        <!-- Si se desea actualizar una atención, se muestra este botón -->
+        <ng-template #updateButton>
+          <button [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid || !paciente"
+            type="submit" class="btn btn-primary" (click)="updateHorarioAtencion()">Guardar cambios</button>
+        </ng-template>
+
       </form>
     </div>
   </div>
 </div>
 
-<!-- Modal para buscar pacientes -->
 <div class="modal fade bd-example-modal-lg" id="searchPatient" tabindex="-1" role="dialog"
   aria-labelledby="searchPatientLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
