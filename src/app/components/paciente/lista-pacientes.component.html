@@ -26,11 +26,13 @@
                             <td>{{paciente.telefono}}</td>
                             <td>{{paciente.afiliacionSalud}}</td>
                             <td>
-                                <button (click)="getAtencionesDeUnPaciente(paciente)" class="btn btn-primary" type="button">Ver atenciones</button>
+                                <button (click)="getAtencionesDeUnPaciente(paciente)" class="btn btn-primary"
+                                    type="button">Ver atenciones</button>
                             </td>
                             <td>
                                 <div class="row">
-                                    <button [routerLink]="['form', paciente.idPaciente]" class="btn btn-primary"
+                                    <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary" type="button">Ver</button>
+                                    <button [routerLink]="['../../form', paciente.idPaciente]" class="btn btn-primary"
                                         type="button">Modificar</button>
                                     <button class="btn btn-primary" type="button"
                                         (click)="deletePatient(paciente)">Eliminar</button>

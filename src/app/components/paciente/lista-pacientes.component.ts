@@ -7,10 +7,10 @@ import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-paciente',
-  templateUrl: './paciente.component.html',
-  styleUrls: ['./paciente.component.css']
+  templateUrl: './lista-pacientes.component.html',
+  styleUrls: ['./lista-pacientes.component.css']
 })
-export class PacienteComponent implements OnInit {
+export class ListaPacientesComponent implements OnInit {
 
   pacientes!: Paciente[];
   paginador!: any;

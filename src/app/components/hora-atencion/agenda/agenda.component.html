@@ -34,7 +34,7 @@
             <h3>Horarios del día</h3>
         </div>
         <div class="col-lg-3" id="button-div">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#agendarHora">Agendar horario</button>
+            <button class="btn btn-primary" [routerLink]="['nuevo-horario']">Agendar horario</button>
         </div>
     </div>
     <div class="row">
@@ -43,52 +43,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal para agendar un nuevo horario de atención dependiendo de si es un
-     paciente permanente o uno nuevo -->
-<div class="modal fade bd-example-modal-lg" id="agendarHora" tabindex="-1" role="dialog"
-    aria-labelledby="agendarHoraLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-
-            <!-- Modal header -->
-            <div class="modal-header">
-                <div class="col-lg-12">
-                    <h3 class="modal-title" id="agendarHoraLabel">Nuevo horario de atención</h3>
-                    <h6 class="modal-title">
-                        Seleccione el tipo de paciente. Si este es nuevo en la consulta, se le permitirá agregar sus
-                        datos.
-                    </h6>
-                </div>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="row icon-row">
-                    <div class="col-lg-6 text-center">
-                        <i class="bi bi-person-plus-fill icons"></i>
-                    </div>
-                    <div class="col-lg-6 text-center">
-                        <i class="bi bi-person-check-fill icons"></i>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 text-center">
-                        <button class="btn btn-primary btn-icons" type="button">Nuevo paciente</button>
-                    </div>
-                    <div class="col-lg-6 text-center">
-                        <button class="btn btn-primary btn-icons" type="button" data-toggle="modal"
-                            [routerLink]="['nuevo-horario']" data-dismiss="modal">Paciente permanente</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <div class="col-lg text-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>  

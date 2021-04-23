@@ -14,6 +14,11 @@ export class PacienteService {
 
   constructor(private http: HttpClient) { }
 
+  // Crear un paciente
+  crearPaciente(paciente: Paciente): Observable<Paciente> {
+    return this.http.post<Paciente>(`${this.url}pacientes`, paciente);
+  }
+
   // Obtener un paciente por su ID
   obtenerPacientePorId(idPaciente: number): Observable<Paciente> {
     return this.http.get<Paciente>(`${this.url}pacientes/${idPaciente}`);

@@ -19,7 +19,17 @@ export class NuevoHorarioFormComponent implements OnInit {
   // Para guardar/actualizar un paciente
   paciente!: Paciente;
 
+  // Para guardar los pacientes encontrados al realizar su búsqueda
   pacientes!: Paciente[];
+
+  // Para saber si el paciente es uno permanente o nuevo.
+  pacientePermanente!: boolean;
+
+  // Atributos del paciente
+  nombre!: string;
+  apellido!: string;
+  nroTelefono!: string;
+  afiliacion!: string;
 
   idAtencion!: number;
   idPaciente!: number;
@@ -34,20 +44,36 @@ export class NuevoHorarioFormComponent implements OnInit {
     this.loadHorarioAtencionData();
   }
 
-  // Guardar los datos
+  // Crear un nuevo horario de atención
   guardarNuevoHorario() {
-    this.paciente.fechaNacimiento = new Date();
-    this.paciente.estadoCivil = "";
-    this.paciente.familiaNuclear = "";
-    this.paciente.institucion = "";
-    this.paciente.ocupacion = "";
-
     this.horarioAtencion.paciente = this.paciente;
 
     this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe((res: any) => {
       console.log(res);
       this.router.navigate(['']);
       swal.fire('Horario creado!', 'La hora de atención ha sido guardada exitosamente.', 'success');
+    });
+  }
+
+  // Crear nuevo paciente
+  guardarNuevoPaciente() {
+    this.paciente = {
+      "idPaciente": 0,
+      "nombre": this.nombre,
+      "apellido": this.apellido,
+      "telefono": this.nroTelefono,
+      "afiliacionSalud": this.afiliacion,
+      "fechaNacimiento": new Date(),
+      "ocupacion": "",
+      "institucion": "",
+      "estadoCivil": "",
+      "familiaNuclear": "",
+      "atenciones": []
+    }
+
+    this.pacienteService.crearPaciente(this.paciente).subscribe(paciente => {
+      this.paciente = paciente;
+      swal.fire("Paciente creado!", "Ahora puede proceder a agendar la hora de atención.", "success");
     });
   }
 
@@ -100,15 +126,6 @@ export class NuevoHorarioFormComponent implements OnInit {
     });
   }
 
-  // Carga los datos de un paciente
-  loadPatientData(idPaciente: number) {
-    this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
-      this.paciente = paciente;
-
-      swal.fire("Paciente seleccionado!", "Ahora puede proceder a agendar la hora de atención para " + paciente.nombre + " " + paciente.apellido, "success");
-    });
-  }
-
   // Buscar paciente para cargar sus datos en el formulario 
   searchPatients(nombrePaciente: string) {
     this.pacienteService.obtenerPacientesPorNombreSinPaginar(nombrePaciente).subscribe(res => {
@@ -123,5 +140,20 @@ export class NuevoHorarioFormComponent implements OnInit {
         );
       }
     });
+  }
+
+  // Carga los datos de un paciente
+  loadPatientData(idPaciente: number) {
+    this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
+      this.paciente = paciente;
+
+      swal.fire("Paciente seleccionado!", "Ahora puede proceder a agendar la hora de atención.", "success");
+    });
+  }
+
+  // Para saber si es un paciente permanente o uno nuevo
+  permanentOrNewPatient(type: boolean) {
+    if (type) this.pacientePermanente = true;
+    else this.pacientePermanente = false;
   }
 }

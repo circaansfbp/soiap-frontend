@@ -20,9 +20,14 @@
 }
 
 #title {
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     margin-bottom: 10px;
     border-bottom: 5px solid #284b63;
+}
+
+.btn-icons {
+    width: 60%;
+    margin-right: 30px;
 }
 
 .form-control.ng-touched.ng-invalid {
@@ -31,6 +36,17 @@
 
 .form-control.ng-valid {
     border: 2px solid green;
+}
+
+.icon-row {
+    height: 200px;
+}
+
+.icons {
+    font-size: 160px;
+    background-color: #fff;
+    color: #284b63;
+    margin-left: 35px;
 }
 
 .table-dark {

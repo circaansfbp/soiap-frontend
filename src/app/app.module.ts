@@ -8,17 +8,19 @@ import { AppComponent } from './app.component';
 import { HorarioComponent } from './components/hora-atencion/agenda/horario/horario.component';
 import { NuevoHorarioFormComponent } from './components/hora-atencion/agenda/horario/nuevo-horario-form/nuevo-horario-form.component';
 import { AgendaComponent } from './components/hora-atencion/agenda/agenda.component';
-import { PacienteComponent } from './components/paciente/paciente.component';
+import { ListaPacientesComponent } from './components/paciente/lista-pacientes.component';
 import { PaginadorComponent } from './components/paginador/paginador.component';
-import { PacienteFormComponent } from './components/paciente/paciente-form/paciente-form/paciente-form.component';
-import { BusquedaPacienteComponent } from './components/busqueda/busqueda-pacientes/busqueda-paciente/busqueda-paciente.component';
+import { PacienteFormComponent } from './components/paciente/paciente-form/paciente-form.component';
+import { BusquedaPacienteComponent } from './components/busqueda/busqueda-pacientes/busqueda-paciente.component';
+import { PacienteComponent } from './components/paciente/paciente/paciente.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
   { path: 'nuevo-horario', component: NuevoHorarioFormComponent },
   { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent },
-  { path: 'pacientes/page/:page', component: PacienteComponent },
-  { path: 'pacientes/page/:page/form/:idPaciente', component: PacienteFormComponent }
+  { path: 'pacientes/page/:page', component: ListaPacientesComponent },
+  { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent },
+  { path: 'pacientes/:idPaciente', component: PacienteComponent}
 ];
 
 @NgModule({
@@ -27,10 +29,11 @@ const routes = [
     HorarioComponent,
     NuevoHorarioFormComponent,
     AgendaComponent,
-    PacienteComponent,
+    ListaPacientesComponent,
     PaginadorComponent,
     PacienteFormComponent,
-    BusquedaPacienteComponent
+    BusquedaPacienteComponent,
+    PacienteComponent
   ],
 
   imports: [
