@@ -11,6 +11,7 @@ export class Paciente {
   afiliacionSalud!: string;
   estadoCivil!: string;
   familiaNuclear!: string;
+  atenciones!: HorarioAtencion[];
 
   constructor() {
 

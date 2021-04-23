@@ -26,15 +26,21 @@ export class PacienteService {
         // Verificar correcto funcionamiento
         (response.content as Paciente[]).forEach(paciente => console.log(paciente.nombre));
       }
-    )); 
+    ));
   }
 
   // Obtener pacientes por nombre, paginados
   obtenerPacientesPorNombre(nombre: string, page: number): Observable<any> {
     let params = new HttpParams().set('nombre', nombre);
-    return this.http.get<any>(`${this.url}pacientes/get/by-name/page/${page}`, {params});
+    return this.http.get<any>(`${this.url}pacientes/get/by-name/page/${page}`, { params });
   }
-  
+
+  // Obtener pacientes por nombre, sin paginar
+  obtenerPacientesPorNombreSinPaginar(nombre: string): Observable<Paciente[]> {
+    let params = new HttpParams().set('nombre', nombre);
+    return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-name`, { params });
+  }
+
   // Actualizar un paciente
   actualizarPaciente(paciente: Paciente): Observable<Paciente> {
     return this.http.put<Paciente>(`${this.url}pacientes/update/${paciente.idPaciente}`, paciente);

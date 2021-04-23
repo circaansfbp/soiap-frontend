@@ -1,5 +1,5 @@
 <!-- Agenda (Horas del día + agendar horas disponibles)-->
-<div class="container card" id="main">
+<div class="container" id="main">
     <div class="row" id="title">
         <div class="col-lg-6 date">
             <h1>Agenda</h1>
@@ -33,19 +33,13 @@
         <div class="col-lg-6 date" id="sobrecupos">
             <h3>Horarios del día</h3>
         </div>
-        <div class="col-lg-3 date">
-            <h3>Sobrecupos</h3>
-        </div>
         <div class="col-lg-3" id="button-div">
             <button class="btn btn-primary" [routerLink]="['/nuevo-horario']">Agendar horario</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <app-horario [fechaActual]="actualDate"></app-horario>
-        </div>
-        <div class="col-lg-6">
-
         </div>
     </div>
 </div>

@@ -1,31 +1,30 @@
-<div class="container">
-    <div class="row" *ngFor="let horario of horasAtencion">
-        <div class="col-lg-12 horario">
-            <div class="row">
-                <div class="col-lg-4 text-center hora">
-                    <!-- LA HORA DE ATENCIÓN NO DEBIESE DESPLEGAR LOS SEGUNDOS -->
-                    <h3><i class="bi bi-clock"></i><br>{{horario.horaAtencion.slice(0, 5)}} <br>hrs.</h3>
-                </div>
-
-                <!-- Si es un horario ocupado -->
-                <div class="col-lg-8 datos" *ngIf="!horario.disponible;else disponible">
-                    <h4>{{horario.paciente.nombre}} {{horario.paciente.apellido}} </h4>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#detalleHora"
-                        (click)="verDetalle(this.horario)">Ver detalle</button>
-                    <button class="btn btn-warning" [routerLink]="['/nuevo-horario', horario.idAtencion]">Modificar
-                        datos</button>
-                    <button class="btn btn-danger" (click)="eliminarHorario(horario.idAtencion, horario)">Eliminar
-                        horario</button>
-                </div>
-
-                <!-- Si el horario está disponible -->
-                <ng-template #disponible> 
-                    <div class="col-lg-8 datos text-center">
-                        <h3>Horario disponible</h3>
-                        <button class="btn btn-primary"
-                        [routerLink]="['/nuevo-horario']"><i class="bi bi-calendar-check"></i>Agendar este horario</button>
-                    </div>
-                  </ng-template>
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive-lg">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Hora</th>
+                            <th>Nombre paciente</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let hora of horasFechaDelDia">
+                            <td>{{hora.horaAtencion.slice(0, 5)}} hrs.</td>
+                            <td>{{hora.paciente.nombre + " " + hora.paciente.apellido}}</td>
+                            <td>
+                                <div class="row">
+                                    <button [routerLink]="['/nuevo-horario', hora.idAtencion]" class="btn btn-primary"
+                                        type="button">Modificar</button>
+                                    <button (click)="eliminarHorario(hora.idAtencion, hora)" class="btn btn-primary"
+                                        type="button">Eliminar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

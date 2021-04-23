@@ -16,15 +16,11 @@ moment.locale("es");
 export class HorarioComponent implements OnInit, OnChanges {
 
   // Fecha del día (obtenida desde componente agenda)
-  @Input() fechaActual!: string; 
+  @Input() fechaActual!: string;
 
-  // Horas predeterminadas
-  horas: string[] = ["08:00:00", "08:50:00", "09:40:00", "10:30:00", "11:20:00", "12:10:00", "13:00:00",
-    "15:00:00", "15:50:00", "16:40:00", "17:30:00", "18:20:00", "19:10:00", "20:00:00"];
+  // Para guardar los horarios del día
+  horasFechaDelDia: Array<HorarioAtencion> = new Array();
 
-  // Horarios del día (disponibles y ocupados)
-  horasAtencion: Array<HorarioAtencion> = new Array();
-  horasFechaDelDia: Array<HorarioAtencion> = new Array(); // Array que contiene los horarios del día
   horario: HorarioAtencion = new HorarioAtencion();
 
   constructor(private horarioAtencionService: HorarioAtencionService) { }
@@ -35,60 +31,13 @@ export class HorarioComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.horasFechaDelDia = [];
-    this.horasAtencion = [];
     this.getAtencionesFechaActual(this.fechaActual);
-  }
-
-  // Crear los horarios del día (disponibles y ocupados)
-  availableHours() {
-
-    // Si existen horarios para la fecha especificada
-    if (this.horasFechaDelDia.length != 0) {
-
-      this.horas.forEach((hora) => {
-        this.horasFechaDelDia.forEach((horaTomada) => {
-          if (hora != horaTomada.horaAtencion) {
-            this.horasAtencion.push(this.horario = {
-              'idAtencion': 0,
-              'asistencia': false,
-              'confirmaAsistencia': false,
-              'horaAtencion': hora,
-              'fechaAtencion': this.fechaActual,
-              'nroConsulta': 0,
-              'disponible': true,
-              'paciente': new Paciente()
-            });
-          } else this.horasAtencion.push(horaTomada);
-        });
-      });
-
-    } else { // Si no existen horarios, se crean objetos HorarioAtencion vacíos, disponibles para agendar
-
-      this.horas.forEach((hora) => {
-        this.horasAtencion.push(this.horario = {
-          'idAtencion': 0,
-          'asistencia': false,
-          'confirmaAsistencia': false,
-          'horaAtencion': hora,
-          'fechaAtencion': this.fechaActual,
-          'nroConsulta': 0,
-          'disponible': true,
-          'paciente': new Paciente()
-        });
-      });
-
-    }
-
-    console.log(this.horasAtencion);
   }
 
   // Obtiene las atenciones del día 
   getAtencionesFechaActual(fechaActual: string) {
     return this.horarioAtencionService.obtenerHorariosDelDía(fechaActual).subscribe((res: any) => {
       res.forEach((horario: HorarioAtencion) => this.horasFechaDelDia.push(horario));
-
-      // Luego de obtener las horas del día, se llama para todos los horarios del día (disponibles y ocupados)
-      this.availableHours();
     });
   }
 
@@ -110,14 +59,16 @@ export class HorarioComponent implements OnInit, OnChanges {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        horarioAtencion.disponible = true;
-        this.horarioAtencionService.eliminarHorario(idAtencion).subscribe(res => console.log(res));
+        this.horarioAtencionService.eliminarHorario(idAtencion).subscribe(res => {
 
-        swal.fire(
-          'Horario eliminado!',
-          'La hora de atención ha sido eliminada.',
-          'success'
-        );
+          // AL ELIMINAR UN HORARIO ESTE DEBE SER REMOVIDO DE LA VISTA
+
+          swal.fire(
+            'Horario eliminado!',
+            'La hora de atención ha sido eliminada.',
+            'success'
+          );
+        });
       }
     });
   }

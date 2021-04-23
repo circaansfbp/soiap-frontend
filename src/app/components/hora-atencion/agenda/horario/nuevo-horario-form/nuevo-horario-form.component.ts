@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 import { Paciente } from 'src/app/classes/paciente/paciente';
@@ -14,103 +13,57 @@ import swal from 'sweetalert2';
 })
 export class NuevoHorarioFormComponent implements OnInit {
 
-  nuevoHorarioForm: FormGroup;
+  // Para guardar/actualizar una atención
   horarioAtencion: HorarioAtencion = new HorarioAtencion();
-  paciente!: Paciente;
+
+  // Para guardar/actualizar un paciente
+  paciente: Paciente = new Paciente();
+
+  // Contiene los resultados de la búsqueda de pacientes
+  pacientes!: Paciente[];
+
   idAtencion!: number;
   idPaciente!: number;
 
-  constructor(private formBuilder: FormBuilder,
-    private horarioAtencionService: HorarioAtencionService,
+  constructor(private horarioAtencionService: HorarioAtencionService,
     private pacienteService: PacienteService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
-
-    // ReactiveForm que valida los campos 
-    this.nuevoHorarioForm = this.formBuilder.group({
-      nombrePaciente: ["", Validators.required], // VALIDAR QUE NO HAYAN NÚMEROS EN EL NOMBRE, APELLIDO, AFILIACIÓN
-      apellidoPaciente: ["", Validators.required],
-      telefonoPaciente: ["", [
-        Validators.required, Validators.pattern(/^[0-9]+$/),
-        Validators.minLength(8), Validators.maxLength(8)
-      ]],
-      afiliacionSaludPaciente: ["", Validators.required],
-      nroConsulta: ["", Validators.pattern(/^[0-9]+$/)], // VALIDAR QUE EL NÚMERO NO SOBREPASE EL 10
-      fechaAtencion: ["", Validators.required],
-      horaAtencion: ["", Validators.required]
-    });
   }
 
   ngOnInit(): void {
     this.loadHorarioAtencionData();
   }
 
-  // Obtener los valores del formulario para manejo de errores desde la vista
-  get nombrePaciente() {
-    return this.nuevoHorarioForm.get('nombrePaciente');
-  }
-
-  get apellidoPaciente() {
-    return this.nuevoHorarioForm.get('apellidoPaciente');
-  }
-
-  get telefonoPaciente() {
-    return this.nuevoHorarioForm.get('telefonoPaciente');
-  }
-
-  get afiliacionSaludPaciente() {
-    return this.nuevoHorarioForm.get('afiliacionSaludPaciente');
-  }
-
-  get nroConsulta() {
-    return this.nuevoHorarioForm.get('nroConsulta');
-  }
-
-  get fechaAtencion() {
-    return this.nuevoHorarioForm.get('fechaAtencion');
-  }
-
-  get horaAtencion() {
-    return this.nuevoHorarioForm.get('horaAtencion');
-  }
-
-  // Al crear o modificar un horario de atención, este método crea/modifica los objetos de hora de 
-  // atención y su paciente asociado
-  objetosHorarioAtencionPaciente() {
-    // Crea el nuevo paciente asociado a la hora de atención
-    this.paciente = {
-      "idPaciente": this.idPaciente,
-      "nombre": this.nuevoHorarioForm.get('nombrePaciente')?.value,
-      "apellido": this.nuevoHorarioForm.get('apellidoPaciente')?.value,
-      "telefono": `+569${this.nuevoHorarioForm.get('telefonoPaciente')?.value}`,
-      "fechaNacimiento": new Date(),
-      "ocupacion": "",
-      "institucion": "",
-      "afiliacionSalud": this.nuevoHorarioForm.get('afiliacionSaludPaciente')?.value,
-      "estadoCivil": "",
-      "familiaNuclear": ""
-    }
-
-    // Crea la nueva hora de atención
-    this.horarioAtencion = {
-      "idAtencion": this.idAtencion,
-      "asistencia": false,
-      "confirmaAsistencia": false,
-      "horaAtencion": this.nuevoHorarioForm.get('horaAtencion')?.value,
-      "fechaAtencion": this.nuevoHorarioForm.get('fechaAtencion')?.value,
-      "nroConsulta": this.nuevoHorarioForm.get('nroConsulta')?.value,
-      "disponible": false,
-      "paciente": this.paciente
-    };
-  }
-
   // Guardar los datos
   guardarNuevoHorario() {
-    this.objetosHorarioAtencionPaciente();
+    this.paciente.fechaNacimiento = new Date();
+    this.paciente.estadoCivil = "";
+    this.paciente.familiaNuclear = "";
+    this.paciente.institucion = "";
+    this.paciente.ocupacion = "";
+
+    this.horarioAtencion.paciente = this.paciente;
+
     this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe((res: any) => {
       console.log(res);
       this.router.navigate(['']);
       swal.fire('Horario creado!', 'La hora de atención ha sido guardada exitosamente.', 'success');
+    });
+  }
+
+  // Buscar paciente para cargar sus datos en el formulario 
+  searchPatients(nombrePaciente: string) {
+    this.pacienteService.obtenerPacientesPorNombreSinPaginar(nombrePaciente).subscribe(res => {
+      this.pacientes = res as Paciente[];
+    }, error => {
+      if (error.status == 404) {
+        swal.fire(
+          "No encontrado!",
+          "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
+          "error"
+        );
+      }
     });
   }
 
@@ -120,28 +73,25 @@ export class NuevoHorarioFormComponent implements OnInit {
       let idAtencion: number = params['idAtencion'];
       if (idAtencion) {
         this.horarioAtencionService.obtenerHorario(idAtencion).subscribe(
-          (res) => {
-            this.nuevoHorarioForm.setValue({
-              "nombrePaciente": res.paciente.nombre,
-              "apellidoPaciente": res.paciente.apellido,
-              "telefonoPaciente": res.paciente.telefono,
-              "afiliacionSaludPaciente": res.paciente.afiliacionSalud,
-              "nroConsulta": res.nroConsulta,
-              "fechaAtencion": res.fechaAtencion,
-              "horaAtencion": res.horaAtencion
-            });
+          (horario) => {
+            this.horarioAtencion = horario;
 
-            //ARREGLAR NRO DE TELÉFONO (SACAR +569)
+            horario.paciente.telefono = horario.paciente.telefono.slice(4, 12);
+            this.paciente = horario.paciente;
 
-            // Guardar los ID para realizar la actualización 
-            this.idAtencion = res.idAtencion;
-            this.idPaciente = res.paciente.idPaciente;
-
-            // Necesario para que la vista sepa cuál botón mostrar
-            this.horarioAtencion.idAtencion = res.idAtencion;
+            console.log(horario);
           }
         );
       }
+    });
+  }
+
+  loadPatientData(idPaciente: number) {
+    this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
+      paciente.telefono = paciente.telefono.slice(4, 12);
+      this.paciente = paciente;
+
+      swal.fire("Paciente encontrado!", "Los datos del paciente han sido cargados exitosamente.", "success");
     });
   }
 
@@ -158,8 +108,6 @@ export class NuevoHorarioFormComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.objetosHorarioAtencionPaciente();
-        
         this.horarioAtencionService.modificarHorario(this.horarioAtencion).subscribe(horario => {
           this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
             console.log(horario);

@@ -1,29 +1,55 @@
-#title {
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-    border-bottom: 5px solid #284b63;
-}
-
-.container {
+#main {
     margin-top: 40px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     background-color: #fff;
-    border-radius: 20px;
-    padding: 50px 100px;
+    border-radius: 15px;
+    padding-top: 20px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 80px;
 }
 
-.form-control, .input-group {
-    padding-bottom: 10px;
-    margin-bottom: 5px;
-    position: relative;
+#no-patients {
+    font-size: 150px;
+    background-color: #fff;
+    color: #284b63;
 }
 
-.input {
-    padding-left: 130px;
+#search-button {
+    margin-top: 77px;
+    margin-left: 20px;
 }
 
-button, button:disabled {
-    margin-left: 400px;
+#title {
+    padding-bottom: 25px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid #284b63;
+}
+
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+.form-control.ng-valid {
+    border: 2px solid green;
+}
+
+.modal-content {
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 60px;
+}
+
+.modal-header {
+    border-bottom: 5px solid #284b63;
+}
+
+.table-dark {
+    background-color: #284b63;
+}
+
+button, button:disabled, button:focus {
     background-color: #284b63;
     border-color: #284b63;
 }
@@ -37,6 +63,10 @@ button:hover {
 i {
     background-color: #284b63;
     color: #fff;
+}
+
+h2 {
+    padding-top: 40px;
 }
 
 span {

@@ -1,38 +1,19 @@
-.bi-clock {
-    font-size: 50px;
-}
-
-.bi-calendar-check {
-    font-size: 20px;
-    margin-right: 15px;
-}
-
-.datos {
-    padding-top: 30px;
-}
-
-.hora {
+.table-dark {
     background-color: #284b63;
-    border-radius: 15px;
-    color: white;
-    padding: 10px;
-}
-
-.horario {
-    margin-top: 30px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    border-radius: 15px;
 }
 
 button {
     background-color: #284b63;
     border-color: #284b63;
-    font-size: 18px;
-    margin-top: 10px;
+    margin: 0px 5px;
 }
 
-button:hover {
+button:hover, button:focus {
     background-color: #d9d9d9;
     border-color: #d9d9d9;
     color: #353535;
+}
+
+table {
+    margin-top: 10px;
 }

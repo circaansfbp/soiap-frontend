@@ -4,23 +4,11 @@
             <h1>Pacientes</h1>
         </div>
         <div class="col-lg-6" id="search-by-name-input">
-            <form>
-                <div class="form-group">
-                    <label for="nombre-paciente">Buscar paciente por su nombre:</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
-                        <input required maxlength="30" minlength="3" type="text" class="form-control"
-                            id="nombre-paciente" ngModel name="nombre-paciente" #nombrePaciente="ngModel"
-                            placeholder="Ingrese el primer nombre, o ambos">
-                    </div>
-                </div>
-                <button [disabled]="nombrePaciente.invalid" type="submit" class="btn btn-primary"
-                    (click)="getPatientsByName(nombrePaciente.value)">Buscar</button>
-            </form>
+            <app-busqueda-paciente (searchPatientEvent)="getPatientsByName($event)"></app-busqueda-paciente>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12 text-center">
             <div class="table-responsive-lg">
                 <table class="table table-bordered">
                     <thead class="table-dark">
@@ -37,12 +25,15 @@
                             <td>{{paciente.nombre + " " + paciente.apellido}}</td>
                             <td>{{paciente.telefono}}</td>
                             <td>{{paciente.afiliacionSalud}}</td>
-                            <td>ATENCIONES</td>
+                            <td>
+                                <button (click)="getAtencionesDeUnPaciente(paciente)" class="btn btn-primary" type="button">Ver atenciones</button>
+                            </td>
                             <td>
                                 <div class="row">
                                     <button [routerLink]="['form', paciente.idPaciente]" class="btn btn-primary"
                                         type="button">Modificar</button>
-                                    <button class="btn btn-primary" type="button" (click)="deletePatient(paciente)">Eliminar</button>
+                                    <button class="btn btn-primary" type="button"
+                                        (click)="deletePatient(paciente)">Eliminar</button>
                                 </div>
                             </td>
                         </tr>

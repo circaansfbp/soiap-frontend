@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,6 +40,11 @@ export class PacienteComponent implements OnInit {
     });
   }
 
+  // Obtener las atenciones de un paciente
+  getAtencionesDeUnPaciente(paciente: Paciente) {
+    console.log(paciente.atenciones);
+  }
+
   // Permite la búsqueda de pacientes mediante su nombre; los retorna paginados.
   getPatientsByName(name: string) {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -50,6 +55,9 @@ export class PacienteComponent implements OnInit {
       this.pacienteService.obtenerPacientesPorNombre(name, page).subscribe(res => {
         this.pacientes = res.content as Paciente[];
         this.paginador = res;
+
+        console.log(this.paginador);
+        console.log(this.pacientes);
       },
         error => {
           if (error.status == 404) {

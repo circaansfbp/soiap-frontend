@@ -11,6 +11,7 @@ import { AgendaComponent } from './components/hora-atencion/agenda/agenda.compon
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { PaginadorComponent } from './components/paginador/paginador.component';
 import { PacienteFormComponent } from './components/paciente/paciente-form/paciente-form/paciente-form.component';
+import { BusquedaPacienteComponent } from './components/busqueda/busqueda-pacientes/busqueda-paciente/busqueda-paciente.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
@@ -28,7 +29,8 @@ const routes = [
     AgendaComponent,
     PacienteComponent,
     PaginadorComponent,
-    PacienteFormComponent
+    PacienteFormComponent,
+    BusquedaPacienteComponent
   ],
 
   imports: [
