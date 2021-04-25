@@ -30,6 +30,10 @@
     margin-right: 30px;
 }
 
+.btn-save-modify {
+    margin-top: 15px;
+}
+
 .form-control.ng-touched.ng-invalid {
     border: 2px solid red;
 }

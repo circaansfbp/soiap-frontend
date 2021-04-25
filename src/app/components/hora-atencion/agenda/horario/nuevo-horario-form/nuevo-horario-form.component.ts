@@ -4,7 +4,9 @@ import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atenci
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
+
 import swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-nuevo-horario-form',
@@ -47,6 +49,7 @@ export class NuevoHorarioFormComponent implements OnInit {
   // Crear un nuevo horario de atención
   guardarNuevoHorario() {
     this.horarioAtencion.paciente = this.paciente;
+    console.log(this.horarioAtencion.fechaAtencion);
 
     this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe((res: any) => {
       console.log(res);
@@ -155,5 +158,14 @@ export class NuevoHorarioFormComponent implements OnInit {
   permanentOrNewPatient(type: boolean) {
     if (type) this.pacientePermanente = true;
     else this.pacientePermanente = false;
+  }
+
+  // Al seleccionar el tipo de paciente, permite volver a atrás
+  goBack() {
+    // Para refrescar componente
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

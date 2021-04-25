@@ -16,6 +16,8 @@
                             <td>{{hora.paciente.nombre + " " + hora.paciente.apellido}}</td>
                             <td>
                                 <div class="row">
+                                    <button (click)="verDetalle(hora)" data-toggle="modal" data-target="#detalleHora"
+                                        class="btn btn-primary" type="button">Ver detalle</button>
                                     <button [routerLink]="['/nuevo-horario', hora.idAtencion]" class="btn btn-primary"
                                         type="button">Modificar</button>
                                     <button (click)="eliminarHorario(hora.idAtencion, hora)" class="btn btn-primary"
@@ -30,37 +32,95 @@
     </div>
 </div>
 
-<!-- Modal que muestra el detalle (datos) de una hora de atención específica -->
-<!-- FALTA AGREGAR SI LA HORA FUE CANCELADA O NO Y MODALIDAD DE PAGO -->
-<!-- AGREGAR BOTÓN PARA MODIFICAR LOS DATOS EN MODAL ?-->
-<div class="modal fade" id="detalleHora" tabindex="-1" role="dialog" aria-labelledby="detalleHoraLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- Modal que muestra el detalle de un horario de atención -->
+<div class="modal fade bd-example-modal-lg" id="detalleHora" tabindex="-1" role="dialog"
+    aria-labelledby="detalleHoraLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detalleHoraLabel">Paciente:
-                    {{horario.paciente.nombre}}
-                    {{horario.paciente.apellido}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="col-lg-12">
+                    <h3>Detalle Horario</h3>
+                </div>
             </div>
             <div class="modal-body">
+                <!-- Nombre del paciente asociado al horario de atención -->
                 <div class="row">
-                    <div class="col-6">
-                        <h5>N° de sesión: {{horario.nroConsulta}}</h5>
-                    </div>
-                    <div class="col-6">
-                        <h5>
-                            Afiliación de salud: {{horario.paciente.afiliacionSalud}}
-                        </h5>
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-person-fill"></i>
+                        <h4>{{horario.paciente.nombre + " " + horario.paciente.apellido}}</h4>
                     </div>
                 </div>
+                <!-- Teléfono del paciente -->
                 <div class="row">
-                    <div class="col-12 text-center">
-                        <h5 *ngIf="horario.confirmaAsistencia">Asistencia confirmada por el paciente
-                        </h5>
-                        <h5 *ngIf="!horario.confirmaAsistencia">El paciente no confirmó su asistencia</h5>
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-telephone-forward-fill resized-icons"></i>
+                        <h4>{{horario.paciente.telefono}}</h4>
+                    </div>
+                </div>
+                <!-- Afiliación de salud del paciente -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-file-medical-fill resized-icons"></i>
+                        <h4>{{horario.paciente.afiliacionSalud}}</h4>
+                    </div>
+                </div>
+                <!-- Fecha de la atención -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-calendar2-check-fill resized-icons"></i>
+                        <h4>{{fecha}}</h4>
+                    </div>
+                </div>
+
+                <!-- Hora de la atención -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-clock-fill resized-icons"></i>
+                        <h4>{{hora}}</h4>
+                    </div>
+                </div>
+
+                <!-- Opciones -->
+                <div class="row" id="options">
+                    <div class="col-lg-12 text-left">
+                        <h3>Opciones</h3>
+                    </div>
+                </div>
+
+                <!-- Confirmación de asistencia -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h5 *ngIf="horario.confirmaAsistencia == false">
+                                El paciente no ha confirmado su asistencia aún
+                            </h5>
+                            <h5 *ngIf="horario.confirmaAsistencia == true">
+                                ¡El paciente confirmó su asistencia!
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h6 *ngIf="horario.confirmaAsistencia == false">
+                                ¿Desea confirmarla?
+                            </h6>
+                            <button (click)="confirmaAsistencia()" *ngIf="horario.confirmaAsistencia == false"
+                                class="btn btn-success confirmacion" type="button">Sí</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registro de asistencia del paciente -->
+                <!-- FALTA DIFERENCIAR ENTRE ASISTENCIA PENDIENTE (CAMBIAR ATRIBUTO A VALORES STRING?)-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h5>¿Desea registrar la asistencia del paciente?</h5>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <button (click)="asistencia(true)" class="btn btn-success confirmacion" type="button">El paciente asiste a su sesión</button>
+                            <button (click)="asistencia(false)" class="btn btn-success no-confirma" type="button">El paciente no asiste a su sesión</button>
+                        </div>
                     </div>
                 </div>
             </div>

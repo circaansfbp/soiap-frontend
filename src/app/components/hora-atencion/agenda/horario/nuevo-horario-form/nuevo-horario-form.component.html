@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <!-- Vista para el paciente permanente -->
+    <!-- Vista paciente permanente -->
     <div class="col-lg-6" *ngIf="!paciente && pacientePermanente">
       <div class="row">
         <div class="col-lg-12">
@@ -46,6 +46,7 @@
         <div class="col-lg-12 text-center" *ngIf="!pacientes">
           <i class="bi bi-people-fill" id="no-patients"></i>
           <h3>Los pacientes encontrados serán desplegados aquí</h3>
+          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Volver</button>
         </div>
         <div class="col-lg-12 text-center" *ngIf="pacientes">
           <table class="table table-bordered">
@@ -71,12 +72,15 @@
               </tr>
             </tbody>
           </table>
+
+          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Volver</button>
         </div>
       </div>
     </div>
 
     <!-- Vista paciente nuevo -->
     <div class="col-lg-6" *ngIf="!paciente && pacientePermanente == false">
+      <h5 class="mx-3">Registrar paciente</h5>
 
       <!-- Formulario para crear al nuevo paciente -->
       <form>
@@ -192,11 +196,18 @@
             </div>
           </div>
         </div>
-          <div class="col-lg">
-            <button
-              [disabled]="nombrePaciente.invalid || apellidoPaciente.invalid || telefonoPaciente.invalid || afiliacionSaludPaciente.invalid"
-              (click)="guardarNuevoPaciente()" class="btn btn-primary" type="button">Guardar datos</button>
+        <div class="col-lg">
+          <div class="row">
+            <div class="col-lg text-left">
+              <button
+                [disabled]="nombrePaciente.invalid || apellidoPaciente.invalid || telefonoPaciente.invalid || afiliacionSaludPaciente.invalid"
+                (click)="guardarNuevoPaciente()" class="btn btn-primary" type="button">Guardar datos</button>
+            </div>
+            <div class="col-lg text-right">
+              <button (click)="goBack()" class="btn btn-primary" type="button">Volver</button>
+            </div>
           </div>
+        </div>
       </form>
     </div>
 
@@ -208,7 +219,8 @@
     </div>
 
     <!-- Formulario para crear el nuevo horario de atención -->
-    <div class="col-lg-6">
+    <div class="col-lg-6 text-left">
+      <h5>Registrar nuevo horario de atención</h5>
       <form>
         <div class="row">
           <!-- Fecha de la atención -->
@@ -268,14 +280,14 @@
 
         <!-- Si se desea crear una atención, se muestra este botón -->
         <button [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid || !paciente"
-          type="submit" class="btn btn-primary" (click)="guardarNuevoHorario()"
+          type="submit" class="btn btn-primary btn-save-modify" (click)="guardarNuevoHorario()"
           *ngIf="!horarioAtencion.idAtencion;else updateButton">Guardar
           horario</button>
 
         <!-- Si se desea actualizar una atención, se muestra este botón -->
         <ng-template #updateButton>
           <button [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid || !paciente"
-            type="submit" class="btn btn-primary" (click)="updateHorarioAtencion()">Guardar cambios</button>
+            type="submit" class="btn btn-primary btn-save-modify" (click)="updateHorarioAtencion()">Guardar cambios</button>
         </ng-template>
 
       </form>

@@ -1,17 +1,49 @@
+#options {
+    border-top: 5px solid #284b63;
+    border-bottom: 5px solid #284b63;
+    padding: 10px 20px;
+}
+
+.confirmacion, .confirmacion:hover, .confirmacion:focus {
+    background-color: #007f5f;
+    border-color: #007f5f;
+}
+
+.container {
+    padding: 20px 0px;
+    border-bottom: 5px solid #284b63;
+}
+
+.modal-content {
+    padding: 20px 40px;
+}
+
+.modal-header {
+    border-bottom: 5px solid #284b63;
+}
+
+.no-confirma, .no-confirma:hover, .no-confirma:focus {
+    background-color: #d33;
+    border-color: #d33;
+}
+
+.resized-icons {
+    font-size: 30px;
+}
+
 .table-dark {
     background-color: #284b63;
 }
 
-button {
+button, button:focus, button:hover {
     background-color: #284b63;
     border-color: #284b63;
     margin: 0px 5px;
 }
 
-button:hover, button:focus {
-    background-color: #d9d9d9;
-    border-color: #d9d9d9;
-    color: #353535;
+i {
+    font-size: 40px;
+    color: #284b63;
 }
 
 table {
