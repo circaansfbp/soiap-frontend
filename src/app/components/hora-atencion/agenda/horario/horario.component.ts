@@ -28,9 +28,6 @@ export class HorarioComponent implements OnInit, OnChanges {
   fecha!: string;
   hora!: string;
 
-  displayAsistenciaPendiente: boolean = true;
-  asistenciaSeleccionada: boolean = false;
-
   constructor(private horarioAtencionService: HorarioAtencionService) { }
 
   ngOnInit(): void {
@@ -54,65 +51,113 @@ export class HorarioComponent implements OnInit, OnChanges {
     this.horario = horarioAtencion;
     this.fecha = moment(this.horario.fechaAtencion).format("dddd Do MMMM YYYY");
     this.hora = `${this.horario.horaAtencion.slice(0, 5)} hrs.`;
-
-    let today = moment();
-    let fechaAtencion = moment(this.horario.fechaAtencion);
-
-    if (fechaAtencion.isAfter(today)) this.displayAsistenciaPendiente = true;
-    else this.displayAsistenciaPendiente = false;
   }
 
   // Registra la confirmación de asistencia por parte del paciente
-  confirmaAsistencia() {
-    swal.fire({
-      title: 'Confirmación de asistencia.',
-      text: '¿Desea registrar la confirmación de asistencia a su sesión por parte del paciente?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'Cancelar'
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.horario.confirmaAsistencia = true;
-        swal.fire("Confirmación registrada!", "La confirmación se ha registrado exitosamente.", "success");
-      }
-    });
+  confirmaAsistencia(value: number) {
+    if (value == 1) {
+      swal.fire({
+        title: 'Registrar confirmación de asistencia',
+        text: '¿El paciente confirmó su asistencia con antelación?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#007f5f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, el paciente confirmó su asistencia',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.horario.confirmaAsistencia = 1;
+
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
+            console.log(updatedHorario);
+
+            swal.fire(
+              'Confirmación de asistencia registrada!',
+              'La confirmación de asistencia por parte del paciente se ha registrado exitosamente.',
+              'success'
+            );
+          });
+        }
+      });
+    } else if (value == -1) {
+      swal.fire({
+        title: 'Registrar confirmación de asistencia',
+        text: '¿El paciente no confirmó su asistencia con antelación?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#007f5f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'No, el paciente no confirmó su asistencia',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.horario.confirmaAsistencia = -1;
+          
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
+            console.log(updatedHorario);
+
+            swal.fire(
+              'Falta de confirmación registrada',
+              'La falta de confirmación de asistencia por parte del paciente ha sido registrada.',
+              'success'
+            );
+          });
+        }
+      });
+    }
   }
 
   // Registra la asistencia del paciente
-  asistencia(value: boolean) {
-    if (value) {
+  asistencia(value: number) {
+    if (value == 1) {
       swal.fire({
         title: 'Registrar asistencia',
-        text: '¿El paciente asistió a su sesión de terapia?',
+        text: '¿El paciente asiste a su hora de atención?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#007f5f',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, el paciente asistió',
+        confirmButtonText: 'Sí, el paciente asiste a su hora de atención',
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.horario.asistencia = true;
-          swal.fire("Asistencia registrada!", "La asistencia del paciente ha sido registrada exitosamente", "success");
+          this.horario.asistencia = 1;
+
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
+            console.log(updatedHorario);
+
+            swal.fire(
+              "Asistencia registrada!",
+              "La asistencia del paciente a su hora de atención ha sido registrada exitosamente",
+              "success"
+            );
+          });
         }
       });
-    } else {
+    } else if (value == -1){
       swal.fire({
         title: 'Registrar asistencia',
-        text: '¿El paciente faltó a su sesión de terapia?',
+        text: '¿El paciente falta a su hora de atención?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#007f5f',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, el paciente faltó',
+        confirmButtonText: 'Sí, el paciente falta a su hora de atención',
         cancelButtonText: 'Cancelar'
       }).then(result => {
         if (result.isConfirmed) {
-          this.horario.asistencia = false;
-          swal.fire("La falta de asistencia ha sido registrada", "La falta de asistencia por parte del paciente ha sido registrada exitosamente", "success");
+          this.horario.asistencia = -1;
+          
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
+            console.log(updatedHorario);
+
+            swal.fire(
+              "Falta de asistencia registrada",
+              "La falta de asistencia a su hora de atención por parte del paciente ha sido registrada",
+              "success"
+            );
+          });
         }
       });
     }

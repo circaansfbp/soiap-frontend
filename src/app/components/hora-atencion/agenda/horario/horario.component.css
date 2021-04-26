@@ -14,6 +14,19 @@
     border-bottom: 5px solid #284b63;
 }
 
+.icon-confirm {
+    color: #007f5f;
+}
+
+.icon-fail {
+    color: #d33;
+}
+
+.icon-confirm, .icon-fail {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
 .modal-content {
     padding: 20px 40px;
 }

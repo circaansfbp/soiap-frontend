@@ -1,3 +1,8 @@
+#back {
+    margin-top: 15px;
+    margin-left: 250px;
+}
+
 #main {
     margin-top: 40px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -51,6 +56,17 @@
     background-color: #fff;
     color: #284b63;
     margin-left: 35px;
+}
+
+.on-display-icon {
+    color: #284b63;
+    background-color: #fff;
+    font-size: 50px;
+}
+
+.on-display-text {
+    margin-bottom: 30px;
+    overflow-wrap: break-word;
 }
 
 .table-dark {

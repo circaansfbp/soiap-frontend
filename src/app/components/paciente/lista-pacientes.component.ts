@@ -45,30 +45,66 @@ export class ListaPacientesComponent implements OnInit {
     console.log(paciente.atenciones);
   }
 
-  // Permite la búsqueda de pacientes mediante su nombre; los retorna paginados.
-  getPatientsByName(name: string) {
+  // Permite la búsqueda de pacientes mediante su nombre, apellido o ambos; los retorna paginados.
+  getPatients(values: any) {
     this.activatedRoute.paramMap.subscribe(params => {
       let page: number = +params.get('params')!;
 
       if (!page) page = 0;
 
-      this.pacienteService.obtenerPacientesPorNombre(name, page).subscribe(res => {
-        this.pacientes = res.content as Paciente[];
-        this.paginador = res;
+      // Búsqueda por nombre
+      if (values.nombre && values.apellido == "") {
+        this.pacienteService.obtenerPacientesPorNombre(values.nombre, page).subscribe(res => {
+          this.pacientes = res.content as Paciente[];
+          this.paginador = res;
+        },
+          error => {
+            if (error.status == 404) {
+              this.router.navigate(['pacientes/page/0']);
+              swal.fire(
+                "No encontrado!",
+                "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
+                "error"
+              );
+            }
+          });
+      }
 
-        console.log(this.paginador);
-        console.log(this.pacientes);
-      },
-        error => {
-          if (error.status == 404) {
-            this.router.navigate(['pacientes/page/0']);
-            swal.fire(
-              "No encontrado!",
-              "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
-              "error"
-            );
-          }
-        });
+      // Búsqueda por apellido
+      else if (values.nombre == "" && values.apellido) {
+        this.pacienteService.obtenerPacientesPorApellido(values.apellido, page).subscribe(res => {
+          this.pacientes = res.content as Paciente[];
+          this.paginador = res;
+        },
+          error => {
+            if (error.status == 404) {
+              this.router.navigate(['pacientes/page/0']);
+              swal.fire(
+                "No encontrado!",
+                "No se han encontrado pacientes con el apellido ingresado. Intente nuevamente.",
+                "error"
+              );
+            }
+          });
+      }
+
+      // Búsqueda por nombre y apellido
+      else if (values.nombre && values.apellido) {
+        this.pacienteService.obtenerPacientesPorNombreApellido(values.nombre, values.apellido, page).subscribe(res => {
+          this.pacientes = res.content as Paciente[];
+          this.paginador = res;
+        },
+          error => {
+            if (error.status == 404) {
+              this.router.navigate(['pacientes/page/0']);
+              swal.fire(
+                "No encontrado!",
+                "No se han encontrado pacientes con el nombre completo ingresado. Intente nuevamente.",
+                "error"
+              );
+            }
+          });
+      }
     });
   }
 

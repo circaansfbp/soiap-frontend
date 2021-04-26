@@ -49,7 +49,6 @@ export class NuevoHorarioFormComponent implements OnInit {
   // Crear un nuevo horario de atención
   guardarNuevoHorario() {
     this.horarioAtencion.paciente = this.paciente;
-    console.log(this.horarioAtencion.fechaAtencion);
 
     this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe((res: any) => {
       console.log(res);

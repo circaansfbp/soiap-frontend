@@ -46,6 +46,30 @@ export class PacienteService {
     return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-name`, { params });
   }
 
+  // Obtener pacientes por apellido, paginados
+  obtenerPacientesPorApellido(apellido: string, page: number): Observable<any> {
+    let params = new HttpParams().set('apellido', apellido);
+    return this.http.get<any>(`${this.url}pacientes/get/by-lastname/page/${page}`, { params });
+  }
+
+  // Obtener pacientes por apellido, sin paginar
+  obtenerPacientesPorApellidoSinPaginar(apellido: string): Observable<Paciente[]> {
+    let params = new HttpParams().set('apellido', apellido);
+    return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-lastname/`, { params });
+  }
+
+  // Obtener pacientes por nombre y apellido, paginados 
+  obtenerPacientesPorNombreApellido(nombre: string, apellido: string, page: number): Observable<any> {
+    let params = new HttpParams().set('nombre', nombre).set('apellido', apellido);
+    return this.http.get<any>(`${this.url}pacientes/get/by-name-lastname/page/${page}`, { params });
+  }
+
+  // Obtener pacientes por nombre y apellido, sin paginar
+  obtenerPacientesPorNombreApellidoSinPaginar(nombre: string, apellido: string): Observable<Paciente[]> {
+    let params = new HttpParams().set('nombre', nombre).set('apellido', apellido);
+    return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-name-lastname`, { params });
+  }
+
   // Actualizar un paciente
   actualizarPaciente(paciente: Paciente): Observable<Paciente> {
     return this.http.put<Paciente>(`${this.url}pacientes/update/${paciente.idPaciente}`, paciente);

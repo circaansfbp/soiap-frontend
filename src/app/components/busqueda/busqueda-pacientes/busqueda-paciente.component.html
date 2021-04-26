@@ -3,11 +3,12 @@
         <label for="nombre-paciente">Buscar paciente:</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
-            <input required maxlength="30" minlength="3" type="text" class="form-control"
-                id="nombre-paciente" ngModel name="nombre-paciente" #nombrePaciente="ngModel"
-                placeholder="Ingrese el primer nombre, o ambos">
+            <input required maxlength="30" minlength="3" type="text" class="form-control" id="nombre-paciente" ngModel
+                name="nombre-paciente" #nombrePaciente="ngModel" placeholder="Nombre(s)">
+            <input required type="text" class="form-control" name="apellido-paciente" id="apellido-paciente" maxlength="30"
+                minlength="3" ngModel #apellidoPaciente="ngModel" placeholder="Apellido(s)">
         </div>
     </div>
-    <button [disabled]="nombrePaciente.invalid" type="submit" class="btn btn-primary"
-        (click)="eventEmitter(nombrePaciente.value)">Buscar</button>
+    <button [disabled]="nombrePaciente.invalid && apellidoPaciente.invalid" type="submit" class="btn btn-primary"
+        (click)="eventEmitter(nombrePaciente.value, apellidoPaciente.value)">Buscar</button>
 </form>

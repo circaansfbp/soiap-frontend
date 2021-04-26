@@ -7,15 +7,15 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class BusquedaPacienteComponent implements OnInit {
 
-  @Output() searchPatientEvent = new EventEmitter<string>();
+  @Output() searchPatientEvent = new EventEmitter<{nombre: string, apellido: string}>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  eventEmitter(nombrePaciente: string) {
-    this.searchPatientEvent.emit(nombrePaciente);
+  eventEmitter(nombrePaciente: string, apellidoPaciente: string) {
+    this.searchPatientEvent.emit({nombre: nombrePaciente, apellido: apellidoPaciente});
   }  
 
 }

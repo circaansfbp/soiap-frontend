@@ -212,10 +212,25 @@
     </div>
 
     <!-- Una vez se encuentra o se crea el paciente, se despliegan sus datos -->
-    <div class="col-lg-6" *ngIf="paciente">
-      <h5>Paciente: {{paciente.nombre + " " + paciente.apellido}}</h5><br>
-      <h5>Número de contacto: {{paciente.telefono}}</h5>
-      <h5>Afiliación de salud: {{paciente.afiliacionSalud}}</h5>
+    <div class="col-lg-6 text-center" *ngIf="paciente">
+
+      <!-- Nombre del paciente -->
+      <div class="col-lg-12 on-display-text">
+        <i class="bi bi-person-fill on-display-icon"></i>
+        <h4>{{paciente.nombre + " " + paciente.apellido}}</h4>
+      </div>
+
+      <!-- Teléfono del paciente -->
+      <div class="col-lg-12 on-display-text">
+        <i class="bi bi-telephone-forward-fill on-display-icon"></i>
+        <h4>{{paciente.telefono}}</h4>
+      </div>
+
+      <!-- Afiliación de salud del paciente -->
+      <div class="col-lg-12 on-display-text">
+        <i class="bi bi-file-medical-fill on-display-icon"></i>
+        <h4>{{paciente.afiliacionSalud}}</h4>
+      </div>
     </div>
 
     <!-- Formulario para crear el nuevo horario de atención -->
@@ -290,6 +305,7 @@
             type="submit" class="btn btn-primary btn-save-modify" (click)="updateHorarioAtencion()">Guardar cambios</button>
         </ng-template>
 
+        <button [routerLink]="['']" class="btn btn-primary" type="button" id="back">Volver</button>
       </form>
     </div>
   </div>
