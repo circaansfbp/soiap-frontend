@@ -5,13 +5,67 @@
             <div class="col-lg-4">
                 <i class="bi bi-person-lines-fill"></i>
             </div>
-            <div class="col-lg-8" id="patient-name">
+            <div class="col-lg-8 text-center" id="patient-name">
                 <h1>{{paciente.nombre + " " + paciente.apellido}}</h1>
+                <button class="btn btn-primary" type="button">Ver atenciones</button>
             </div>
         </div>
+
         <div class="row" id="body">
-            <div class="col-lg-4">
-                <h4>Edad:</h4>
+            <!-- Fecha de nacimiento -->
+            <div class="col-lg-3 text-center datos">
+                <i class="bi bi-calendar-event icons"></i>
+                <h5 class="color">Fecha de nacimiento</h5>
+                <h5 class="overflow">{{birthday}}</h5>
+            </div>
+
+            <!-- Edad -->
+            <div class="col-lg-3 text-center datos">
+                <i class="bi bi-person-circle icons"></i>
+                <h5 class="color">Edad</h5>
+                <h5 class="overflow">{{age()}}</h5>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="col-lg-3 text-center datos">
+                <i class="bi bi-telephone-forward-fill icons"></i>
+                <h5 class="color">N° de contacto</h5>
+                <h5 class="overflow">{{paciente.telefono}}</h5>
+            </div>
+            
+             <!-- Estado civil -->
+             <div class="col-lg-3 text-center datos">
+                <i class="bi bi-people-fill icons"></i>
+                <h5 class="color">Estado Civil</h5>
+                <h5 class="overflow">{{paciente.estadoCivil}}</h5>
+            </div>
+
+            <!-- Afiliacion de salud -->
+            <div class="col-lg-4 text-center datos">
+                <i class="bi bi-journal-medical icons"></i>
+                <h5 class="color">Afiliación de salud</h5>
+                <h5 class="overflow">{{paciente.afiliacionSalud}}</h5>
+            </div>
+
+            <!-- Ocupación/Profesión -->
+            <div class="col-lg-4 text-center datos">
+                <i class="bi bi-briefcase-fill icons"></i>
+                <h5 class="color">Profesión/Ocupación</h5>
+                <h5 class="overflow">{{paciente.ocupacion}}</h5>
+            </div>
+
+            <!-- Institución -->
+            <div class="col-lg-4 text-center datos">
+                <i class="bi bi-person-badge-fill icons"></i>
+                <h5 class="color">Institución</h5>
+                <h5 class="overflow">{{paciente.institucion}}</h5>
+            </div>
+
+            <!-- Familia nuclear -->
+            <div class="col-lg-12 text-center datos">
+                <i class="bi bi-people-fill icons"></i>
+                <h5 class="color">Grupo familiar</h5>
+                <h5 class="overflow">{{paciente.familiaNuclear}}</h5>
             </div>
         </div>
     </div>

@@ -13,13 +13,13 @@ moment.locale('es');
 })
 export class PacienteComponent implements OnInit {
   // Obtiene la fecha actual, para calcular la edad
-  today: string = moment().format("YYYY[-]M[-]D");
+  today = moment();
 
   // Representa al paciente 
   paciente: Paciente = new Paciente();
 
-  // Para almacenar su edad
-  edadPaciente!: number;
+  //Para desplegar la fecha de nacimiento
+  birthday!: string;
 
   constructor(private activatedRoute: ActivatedRoute,
     private pacienteService: PacienteService) { }
@@ -33,13 +33,16 @@ export class PacienteComponent implements OnInit {
       let idPaciente = params['idPaciente'];
 
       if (idPaciente) {
-        this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente =>
-          this.paciente = paciente);
+        this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
+          this.paciente = paciente;
+          this.birthday = moment(this.paciente.fechaNacimiento).format("dddd Do MMMM YYYY");
+        });
       }
     });
   }
 
-  age() {
-    
+  // Para calcular la edad del paciente
+  age(): number {
+    return Math.abs(moment(this.paciente.fechaNacimiento).diff(this.today, 'years'));
   }
 }

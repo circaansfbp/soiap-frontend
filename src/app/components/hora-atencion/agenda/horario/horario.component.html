@@ -20,7 +20,7 @@
                                         class="btn btn-primary" type="button">Ver detalle</button>
                                     <button [routerLink]="['/nuevo-horario', hora.idAtencion]" class="btn btn-primary"
                                         type="button">Modificar</button>
-                                    <button (click)="eliminarHorario(hora.idAtencion, hora)" class="btn btn-primary"
+                                    <button (click)="eliminarHorario(hora.idAtencion)" class="btn btn-primary"
                                         type="button">Eliminar</button>
                                 </div>
                             </td>
@@ -111,15 +111,20 @@
                 </div>
 
                 <!-- Registro de asistencia del paciente -->
-                <!-- FALTA DIFERENCIAR ENTRE ASISTENCIA PENDIENTE (CAMBIAR ATRIBUTO A VALORES STRING?)-->
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12 text-center">
+                        <div class="col-lg-12 text-center" *ngIf="displayAsistenciaPendiente">
+                            <h5>Asistencia pendiente</h5>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="!displayAsistenciaPendiente && !horario.asistencia">
                             <h5>¿Desea registrar la asistencia del paciente?</h5>
                         </div>
-                        <div class="col-lg-12 text-center">
+                        <div class="col-lg-12 text-center" *ngIf="!displayAsistenciaPendiente && !horario.asistencia">
                             <button (click)="asistencia(true)" class="btn btn-success confirmacion" type="button">El paciente asiste a su sesión</button>
                             <button (click)="asistencia(false)" class="btn btn-success no-confirma" type="button">El paciente no asiste a su sesión</button>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="!displayAsistenciaPendiente && horario.asistencia">
+                            <h5><i class="bi bi-check-circle-fill"></i>El paciente sí asistió a su sesión de terapia</h5>
                         </div>
                     </div>
                 </div>

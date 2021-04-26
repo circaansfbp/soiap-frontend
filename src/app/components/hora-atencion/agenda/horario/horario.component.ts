@@ -5,6 +5,7 @@ import { HorarioAtencionService } from 'src/app/services/horario-atencion/horari
 
 import * as moment from 'moment';
 import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 moment.locale("es");
 
@@ -26,6 +27,9 @@ export class HorarioComponent implements OnInit, OnChanges {
   // Para manejar la fecha y hora de la atención al ver el detalle de esta
   fecha!: string;
   hora!: string;
+
+  displayAsistenciaPendiente: boolean = true;
+  asistenciaSeleccionada: boolean = false;
 
   constructor(private horarioAtencionService: HorarioAtencionService) { }
 
@@ -50,6 +54,12 @@ export class HorarioComponent implements OnInit, OnChanges {
     this.horario = horarioAtencion;
     this.fecha = moment(this.horario.fechaAtencion).format("dddd Do MMMM YYYY");
     this.hora = `${this.horario.horaAtencion.slice(0, 5)} hrs.`;
+
+    let today = moment();
+    let fechaAtencion = moment(this.horario.fechaAtencion);
+
+    if (fechaAtencion.isAfter(today)) this.displayAsistenciaPendiente = true;
+    else this.displayAsistenciaPendiente = false;
   }
 
   // Registra la confirmación de asistencia por parte del paciente
@@ -109,7 +119,7 @@ export class HorarioComponent implements OnInit, OnChanges {
   }
 
   // Permite eliminar un horario de atención
-  eliminarHorario(idAtencion: number, horarioAtencion: HorarioAtencion) {
+  eliminarHorario(idAtencion: number) {
     swal.fire({
       title: '¿Eliminar este horario?',
       text: 'Esta acción es irreversible!',
@@ -122,8 +132,11 @@ export class HorarioComponent implements OnInit, OnChanges {
     }).then((result) => {
       if (result.isConfirmed) {
         this.horarioAtencionService.eliminarHorario(idAtencion).subscribe(res => {
-
-          // AL ELIMINAR UN HORARIO ESTE DEBE SER REMOVIDO DE LA VISTA
+          console.log(res);
+          
+          // Para que el horario eliminado sea removido de la vista.
+          this.horasFechaDelDia = [];
+          this.getAtencionesFechaActual(this.fechaActual);
 
           swal.fire(
             'Horario eliminado!',

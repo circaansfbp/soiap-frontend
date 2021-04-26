@@ -10,37 +10,42 @@ moment.locale('es');
 })
 export class AgendaComponent implements OnInit {
   titleDate = moment().format('[Hoy es ] dddd[, ] Do [de] MMMM[ de ] YYYY'); // Fecha actual para desplegar como título
-  actualDate = moment().format("YYYY[-]M[-]D"); // Fecha a pasar al componente horario para búsquedas en BD
+  actualDate = moment().format("YYYY[-]MM[-]DD"); // Fecha a pasar al componente horario para búsquedas en BD
 
-  changeDay: number = 0; // Variable que maneja la adición y sustracción de días 
-
-  // pacientePermanente: boolean = true;
+  // Para manejar el display y búsquedas correctas de las fechas
+  today = moment();
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.changeDay = 0;
-  }
+  ngOnInit(): void { }
 
   // Día siguiente
   nextDay() {
-    this.changeDay++;
-    let next = moment().add(this.changeDay, 'd');
-    this.actualDate = next.format("YYYY[-]M[-]D");
-    this.titleDate = next.format('dddd Do MMMM YYYY');
+    let nextDay = moment(this.today).add(1, 'd');
+    this.today = nextDay;
+
+    this.actualDate = moment(this.today).format("YYYY[-]MM[-]DD");
+    this.titleDate = moment(this.today).format("dddd Do MMMM YYYY");
+
+    console.log(this.today.format("YYYY MM DD"));
   }
 
   // Día anterior
-  previosDay() {
-    this.changeDay--;
-    let previous = moment().add(this.changeDay, 'd');
-    this.actualDate = previous.format("YYYY[-]M[-]D");
-    this.titleDate = previous.format('dddd Do MMMM YYYY');
+  previousDay() {
+    let previousDay = moment(this.today).subtract(1, 'd');
+    this.today = previousDay;
+
+    this.actualDate = moment(this.today).format("YYYY[-]MM[-]DD");
+    this.titleDate = moment(this.today).format("dddd Do MMMM YYYY");
+
+    console.log(this.today.format("YYYY MM DD"));
   }
 
-  // Buscar fecha específica mediante input type date
+  // Búsqueda mediante input fecha
   searchBySpecificDate(date: string) {
-    this.actualDate = moment(date).format("YYYY[-]M[-]D");
-    this.titleDate = moment(date).format('dddd Do MMMM YYYY');
+    this.today = moment(date);
+
+    this.actualDate = moment(this.today).format("YYYY[-]MM[-]DD");
+    this.titleDate = moment(this.today).format("dddd Do MMMM YYYY");
   }
 }

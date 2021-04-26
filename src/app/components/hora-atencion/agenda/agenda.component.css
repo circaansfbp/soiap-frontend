@@ -2,6 +2,10 @@
     padding-top: 30px;
 }
 
+#fecha {
+    margin-bottom: 25px;
+}
+
 #main {
     margin-top: 40px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -26,12 +30,18 @@
 #subtitles {
     padding-bottom: 20px;
     border-bottom: 5px solid #284b63;
+    border-top: 5px solid #284b63;
 }
 
 #title {
     padding-bottom: 25px;
     margin-bottom: 10px;
     border-bottom: 5px solid #284b63;
+}
+
+.bi-plus {
+    margin-right: 4px;
+    font-size: 16px;
 }
 
 .date {
@@ -61,12 +71,6 @@ button, button:disabled, button:focus, button:hover {
     background-color: #284b63;
     border-color: #284b63;
 }
-
-/* button:hover {
-    background-color: #d9d9d9;
-    border-color: #d9d9d9;
-    color: #353535;
-} */
 
 i, span {
     background-color: #284b63;

@@ -1,6 +1,7 @@
 #header {
     height: 270px;
     border-bottom: 5px solid #284b63;
+    margin-bottom: 20px;
 }
 
 #main {
@@ -8,15 +9,36 @@
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     background-color: #fff;
     border-radius: 15px;
-    padding-top: 20px;
     padding-left: 80px;
     padding-right: 80px;
     padding-bottom: 80px;
 }
 
 #patient-name {
-    padding-top: 110px;
+    padding-top: 85px;
     color: #284b63;
+}
+
+.color {
+    color: #284b63;
+}
+
+.datos {
+    margin-bottom: 40px;
+}
+
+.icons {
+    font-size: 40px;
+}
+
+.overflow {
+    overflow-wrap: break-word;
+}
+
+button, button:hover, button:disabled, button:focus {
+    margin-top: 10px;
+    background-color: #284b63;
+    border-color: #284b63;
 }
 
 i {

@@ -4,6 +4,8 @@
         <div class="col-lg-6 date">
             <h1>Agenda</h1>
         </div>
+
+        <!-- Input que permite buscar horarios por fecha -->
         <div class="col-lg-6" id="search-date-input">
             <form>
                 <div class="form-group">
@@ -19,22 +21,29 @@
             </form>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12 date">
+    <!-- Botones de día siguiente y anterior -->
+    <div class="row" id="fecha">
+        <div class="col-lg-2 date">
+            <button (click)="previousDay()" class="btn btn-primary" type="button"><i
+                    class="bi bi-arrow-left-short"></i>Día anterior</button>
+        </div>
+        <div class="col-lg-8 text-center date">
             <h2>
-                <!--<button class="btn btn-dark" (click)="previosDay()"><i
-                        class="bi bi-arrow-left-circle-fill"></i></button>-->{{titleDate}}
-                <!--<button class="btn btn-dark" 
-                    (click)="nextDay()"><i class="bi bi-arrow-right-circle-fill"></i></button>-->
+                {{titleDate}}
             </h2>
+        </div>
+        <div class="col-lg-2 date">
+            <button (click)="nextDay()" class="btn btn-primary" type="button">Día siguiente<i
+                    class="bi bi-arrow-right-short"></i></button>
         </div>
     </div>
     <div class="row" id="subtitles">
-        <div class="col-lg-6 date" id="sobrecupos">
+        <div class="col-lg-8 date">
             <h3>Horarios del día</h3>
         </div>
-        <div class="col-lg-3" id="button-div">
-            <button class="btn btn-primary" [routerLink]="['nuevo-horario']">Agendar horario</button>
+        <div class="col-lg-4 text-right" id="button-div">
+            <button class="btn btn-primary" [routerLink]="['nuevo-horario']"><i class="bi bi-plus"></i>Nuevo
+                horario</button>
         </div>
     </div>
     <div class="row">
