@@ -36,6 +36,9 @@ export class NuevoHorarioFormComponent implements OnInit {
   idAtencion!: number;
   idPaciente!: number;
 
+  // Para saber si se quiere modificar un paciente
+  modify: boolean = false;
+
   constructor(private horarioAtencionService: HorarioAtencionService,
     private pacienteService: PacienteService,
     private activatedRoute: ActivatedRoute,
@@ -43,7 +46,13 @@ export class NuevoHorarioFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadHorarioAtencionData();
+    this.loadHorarioAtencionData(); 
+  }
+
+  // Modificar paciente
+  modifyPatient() {
+    this.modify = true;
+    
   }
 
   // Crear un nuevo horario de atención
@@ -129,19 +138,55 @@ export class NuevoHorarioFormComponent implements OnInit {
   }
 
   // Buscar paciente para cargar sus datos en el formulario 
-  searchPatients(nombrePaciente: string) {
-    this.pacienteService.obtenerPacientesPorNombreSinPaginar(nombrePaciente).subscribe(res => {
-      this.pacientes = res as Paciente[];
-      console.log(this.pacientes);
-    }, error => {
-      if (error.status == 404) {
-        swal.fire(
-          "No encontrado!",
-          "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
-          "error"
-        );
-      }
-    });
+  searchPatients(values: any) {
+
+    // Busca pacientes por su nombre
+    if (values.nombre && values.apellido == "") {
+      this.pacienteService.obtenerPacientesPorNombreSinPaginar(values.nombre).subscribe(res => {
+        this.pacientes = res as Paciente[];
+        console.log(this.pacientes);
+      }, error => {
+        if (error.status == 404) {
+          swal.fire(
+            "No encontrado!",
+            "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
+            "error"
+          );
+        }
+      });
+    }
+    // Busca pacientes por su apellido
+    else if (values.nombre == "" && values.apellido) {
+      this.pacienteService.obtenerPacientesPorApellidoSinPaginar(values.apellido).subscribe(res => {
+        this.pacientes = res as Paciente[];
+        console.log(this.pacientes);
+      },
+        error => {
+          if (error.status == 404) {
+            swal.fire(
+              "No encontrado!",
+              "No se han encontrado pacientes con el apellido ingresado. Intente nuevamente.",
+              "error"
+            );
+          }
+        });
+    }
+    // Busca pacientes por nombre y apellido
+    else if (values.nombre && values.apellido) {
+      this.pacienteService.obtenerPacientesPorNombreApellidoSinPaginar(values.nombre, values.apellido).subscribe(res => {
+        this.pacientes = res as Paciente[];
+        console.log(this.pacientes);
+      },
+        error => {
+          if (error.status == 404) {
+            swal.fire(
+              "No encontrado!",
+              "No se han encontrado pacientes con el nombre completo ingresado. Intente nuevamente.",
+              "error"
+            );
+          }
+        });
+    }
   }
 
   // Carga los datos de un paciente

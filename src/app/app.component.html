@@ -9,7 +9,10 @@
         <div class="collapse navbar-collapse" id="contenido">
             <ul class="navbar-nav me-auto mb-2  mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="">Agenda</a>
+                    <a [routerLink]="['']" class="nav-link active" aria-current="page">Agenda</a>
+                </li>
+                <li class="nav-item">
+                    <a [routerLink]="['pacientes/page/0']" class="nav-link active" aria-current="page">Pacientes</a>
                 </li>
             </ul>   
         </div>

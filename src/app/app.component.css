@@ -2,10 +2,16 @@
     font-size: 28px;
 }
 
+#contenido {
+    border-left: 2px solid #fff;
+    padding-left: 20px;
+}
+
 .navbar {
     height: 100px;
 }
 
 a {
     color: #fff;
+    font-size: 25px;
 }
