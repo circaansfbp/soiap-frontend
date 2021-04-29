@@ -2,7 +2,7 @@
   <!-- Título -->
   <div class="row" id="title">
     <div class="col-lg-12">
-      <h2>Nuevo horario de atención</h2>
+      <h2>Horario de atención</h2>
       <h5>Ingrese los datos solicitados para agendar el horario de atención.</h5>
     </div>
   </div>
@@ -50,7 +50,7 @@
         <div class="col-lg-12 text-center" *ngIf="!pacientes">
           <i class="bi bi-people-fill" id="no-patients"></i>
           <h3>Los pacientes encontrados serán desplegados aquí</h3>
-          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Volver</button>
+          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Cancelar</button>
         </div>
         <div class="col-lg-12 text-center" *ngIf="pacientes">
           <table class="table table-bordered">
@@ -77,7 +77,7 @@
             </tbody>
           </table>
 
-          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Volver</button>
+          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Cancelar</button>
         </div>
       </div>
     </div>
@@ -208,7 +208,7 @@
                 (click)="guardarNuevoPaciente()" class="btn btn-primary" type="button">Guardar datos</button>
             </div>
             <div class="col-lg text-right">
-              <button (click)="goBack()" class="btn btn-primary" type="button">Volver</button>
+              <button (click)="goBack()" class="btn btn-primary" type="button">Cancelar</button>
             </div>
           </div>
         </div>
@@ -432,9 +432,10 @@
             type="submit" class="btn btn-primary btn-save-modify" (click)="updateHorarioAtencion()">Guardar
             cambios</button>
         </ng-template>
-
-        <button [routerLink]="['']" class="btn btn-primary" type="button" id="back">Volver</button>
       </form>
     </div>
+  </div>
+  <div class="col-lg-12 text-right">
+    <button [routerLink]="['']" class="btn btn-primary" type="button" id="btn-back">Volver a la agenda</button>
   </div>
 </div>

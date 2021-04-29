@@ -46,24 +46,41 @@ export class NuevoHorarioFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadHorarioAtencionData(); 
+    this.loadHorarioAtencionData();
   }
 
   // Modificar paciente
   modifyPatient() {
     this.modify = true;
-    
+
   }
 
   // Crear un nuevo horario de atención
   guardarNuevoHorario() {
     this.horarioAtencion.paciente = this.paciente;
+    console.log(this.horarioAtencion.fechaAtencion);
 
-    this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe((res: any) => {
-      console.log(res);
+    this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe(horario => {
+      console.log(horario);
       this.router.navigate(['']);
       swal.fire('Horario creado!', 'La hora de atención ha sido guardada exitosamente.', 'success');
-    });
+    },
+      error => {
+        if (error.status == 409) {
+          swal.fire(
+            'Conflicto de horarios!',
+            'La fecha y hora de atención seleccionados ya se encuentran asignados a otro paciente. Por favor, intente nuevamente con una fecha u hora distinta.',
+            'error'
+          );
+        }
+        else if (error.status == 204) {
+          swal.fire(
+            'Fallo en el ingreso de datos',
+            'Para guardar un nuevo horario de atención, primero debe ingresar todos los datos solicitados',
+            'error'
+          );
+        }
+      });
   }
 
   // Crear nuevo paciente
@@ -74,7 +91,7 @@ export class NuevoHorarioFormComponent implements OnInit {
       "apellido": this.apellido,
       "telefono": this.nroTelefono,
       "afiliacionSalud": this.afiliacion,
-      "fechaNacimiento": new Date(),
+      "fechaNacimiento": "",
       "ocupacion": "",
       "institucion": "",
       "estadoCivil": "",

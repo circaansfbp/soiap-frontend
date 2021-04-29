@@ -32,12 +32,12 @@
                 <h5 class="color">N° de contacto</h5>
                 <h5 class="overflow">{{paciente.telefono}}</h5>
             </div>
-            
-             <!-- Estado civil -->
-             <div class="col-lg-3 text-center datos">
+
+            <!-- Estado civil -->
+            <div class="col-lg-3 text-center datos">
                 <i class="bi bi-people-fill icons"></i>
                 <h5 class="color">Estado Civil</h5>
-                <h5 class="overflow">{{paciente.estadoCivil}}</h5>
+                <h5 class="overflow" *ngIf="paciente.estadoCivil;else empty">{{paciente.estadoCivil}}</h5>
             </div>
 
             <!-- Afiliacion de salud -->
@@ -51,22 +51,26 @@
             <div class="col-lg-4 text-center datos">
                 <i class="bi bi-briefcase-fill icons"></i>
                 <h5 class="color">Profesión/Ocupación</h5>
-                <h5 class="overflow">{{paciente.ocupacion}}</h5>
+                <h5 class="overflow"*ngIf="paciente.ocupacion;else empty">{{paciente.ocupacion}}</h5>
             </div>
 
             <!-- Institución -->
             <div class="col-lg-4 text-center datos">
                 <i class="bi bi-person-badge-fill icons"></i>
                 <h5 class="color">Institución</h5>
-                <h5 class="overflow">{{paciente.institucion}}</h5>
+                <h5 class="overflow" *ngIf="paciente.institucion;else empty">{{paciente.institucion}}</h5>
             </div>
 
             <!-- Familia nuclear -->
             <div class="col-lg-12 text-center datos">
                 <i class="bi bi-people-fill icons"></i>
                 <h5 class="color">Grupo familiar</h5>
-                <h5 class="overflow">{{paciente.familiaNuclear}}</h5>
+                <h5 class="overflow" *ngIf="paciente.familiaNuclear;else empty">{{paciente.familiaNuclear}}</h5>
             </div>
+
+            <ng-template #empty>
+                <h5>-</h5>
+            </ng-template>
         </div>
     </div>
 </div>

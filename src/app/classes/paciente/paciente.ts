@@ -5,7 +5,7 @@ export class Paciente {
   nombre!: string;
   apellido!: string;
   telefono!: string;
-  fechaNacimiento!: Date;
+  fechaNacimiento!: string;
   ocupacion!: string;
   institucion!: string;
   afiliacionSalud!: string;

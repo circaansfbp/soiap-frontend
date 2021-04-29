@@ -35,14 +35,21 @@ export class PacienteComponent implements OnInit {
       if (idPaciente) {
         this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
           this.paciente = paciente;
-          this.birthday = moment(this.paciente.fechaNacimiento).format("dddd Do MMMM YYYY");
+
+          if (this.paciente.fechaNacimiento != null) 
+            this.birthday = moment(this.paciente.fechaNacimiento).format("dddd Do MMMM YYYY");
+          
+          else this.birthday = "-";
         });
       }
     });
   }
 
   // Para calcular la edad del paciente
-  age(): number {
-    return Math.abs(moment(this.paciente.fechaNacimiento).diff(this.today, 'years'));
+  age(): any {
+    if (this.paciente.fechaNacimiento != null) 
+      return Math.abs(moment(this.paciente.fechaNacimiento).diff(this.today, 'years'));
+    
+    else return "-";
   }
 }
