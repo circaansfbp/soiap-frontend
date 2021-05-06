@@ -264,12 +264,18 @@
                     </div>
 
                 </div>
-
-                <div class="col-lg text-center">
-                    <button [disabled]="nombrePaciente.invalid && apellidoPaciente.invalid && telefonoPaciente.invalid 
-                    && fechaNacimientoPaciente.invalid && ocupacionPaciente.invalid && institucionPaciente.invalid
-                    && afiliacionSaludPaciente.invalid && estadoCivilPaciente.invalid && familiaNuclear.invalid" type="submit"
-                        class="btn btn-primary">Guardar cambios</button>
+                <div class="row">
+                    <div class="col-lg-7 text-right">
+                        <!-- Guardar cambios -->
+                        <button [disabled]="nombrePaciente.invalid && apellidoPaciente.invalid && telefonoPaciente.invalid 
+&& fechaNacimientoPaciente.invalid && ocupacionPaciente.invalid && institucionPaciente.invalid
+&& afiliacionSaludPaciente.invalid && estadoCivilPaciente.invalid && familiaNuclear.invalid" type="submit"
+                            class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                    <div class="col-lg-5 text-right">
+                        <!-- Cancelar operación/volver -->
+                        <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+                    </div>
                 </div>
             </form>
         </div>

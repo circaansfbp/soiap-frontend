@@ -26,17 +26,57 @@
                             <td>{{paciente.afiliacionSalud}}</td>
                             <td>
                                 <div class="row">
-                                    <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary" type="button">Ver</button>
-                                    <button [routerLink]="['../../form', paciente.idPaciente]" class="btn btn-primary"
-                                        type="button">Modificar</button>
-                                    <button class="btn btn-primary" type="button"
-                                        (click)="deletePatient(paciente)">Eliminar</button>
+                                    <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary" type="button">Ver detalle</button>
+                                    <button (click)="getAtencionesDeUnPaciente(paciente)" class="btn btn-primary"
+                                        type="button" data-toggle="modal" data-target="#atencionesPaciente">Ver atenciones</button>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <app-paginador *ngIf="paginador" [paginador]='paginador'></app-paginador>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal que muestra las atenciones que ha agendado un paciente -->
+<div class="modal fade bd-example-modal-lg" id="atencionesPaciente" tabindex="-1" role="dialog"
+    aria-labelledby="atencionesPacienteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>{{paciente.nombre + " " + paciente.apellido}}</h3>
+                    <h5>Atenciones agendadas en los últimos seis meses:</h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="table table-responsive-lg">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <!-- Debiese incluir la hora de la atención? Consultar. -->
+                                        <th>Asistencia</th>
+                                        <th>Pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let atencion of atencionesUltimosSeisMeses">
+                                        <td>{{formatDisplayFechaAtencion(atencion)}}</td>
+                                        <td *ngIf="atencion.asistencia == 1">{{atencion.asistencia}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

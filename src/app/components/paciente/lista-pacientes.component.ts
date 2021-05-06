@@ -4,6 +4,8 @@ import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import swal from 'sweetalert2';
+import * as moment from 'moment';
+import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 
 @Component({
   selector: 'app-paciente',
@@ -14,6 +16,14 @@ export class ListaPacientesComponent implements OnInit {
 
   pacientes!: Paciente[];
   paginador!: any;
+  paciente: Paciente = new Paciente();
+
+  // Para manejar las atenciones a las que ha asistido un paciente 
+  atencionesUltimosSeisMeses: HorarioAtencion[] = new Array();
+
+  // Fecha actual (para calcular rango de atenciones desde-hasta seis meses atrás)
+  // Agrega un día para permitir inclusión de atenciones agendadas para el día actual
+  fechaActual: any = moment().add(1, 'days').format("YYYY[-]MM[-]DD");
 
   constructor(private pacienteService: PacienteService,
     private activatedRoute: ActivatedRoute,
@@ -42,7 +52,24 @@ export class ListaPacientesComponent implements OnInit {
 
   // Obtener las atenciones de un paciente
   getAtencionesDeUnPaciente(paciente: Paciente) {
-    console.log(paciente.atenciones);
+    this.atencionesUltimosSeisMeses = [];
+
+    this.paciente = paciente;
+    let sixMonthsBefore = moment(this.fechaActual).subtract(6, 'months').format("YYYY[-]MM[-]DD");
+
+    // Agrega las atenciones agendadas en los últimos seis meses
+    this.paciente.atenciones.forEach(atencion => {
+      if (moment(atencion.fechaAtencion).isBetween(sixMonthsBefore, this.fechaActual)) {
+        this.atencionesUltimosSeisMeses.push(atencion);
+      }
+    });
+
+    console.log(this.atencionesUltimosSeisMeses);
+  }
+
+  // Para desplegar la fecha de la atención formateada
+  formatDisplayFechaAtencion(horarioAtencion: HorarioAtencion): string {
+    return moment(horarioAtencion.fechaAtencion).format("dddd Do MMMM YYYY");
   }
 
   // Permite la búsqueda de pacientes mediante su nombre, apellido o ambos; los retorna paginados.
@@ -109,35 +136,35 @@ export class ListaPacientesComponent implements OnInit {
   }
 
   // Permite la eliminación lógica de un paciente
-  deletePatient(paciente: Paciente) {
-    swal.fire({
-      title: '¿Eliminar paciente?',
-      text: 'Esta acción es irreversible!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.pacienteService.eliminarPaciente(paciente, paciente.idPaciente).subscribe(res => {
-          console.log(res);
+  // deletePatient(paciente: Paciente) {
+  //   swal.fire({
+  //     title: '¿Eliminar paciente?',
+  //     text: 'Esta acción es irreversible!',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Sí',
+  //     cancelButtonText: 'Cancelar'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       this.pacienteService.eliminarPaciente(paciente, paciente.idPaciente).subscribe(res => {
+  //         console.log(res);
 
-          // Para refrescar componente
-          let currentUrl = this.router.url;
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate([currentUrl]);
-          });
+  //         // Para refrescar componente
+  //         let currentUrl = this.router.url;
+  //         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  //           this.router.navigate([currentUrl]);
+  //         });
 
-          swal.fire(
-            'Paciente eliminado!',
-            'El registro del paciente ha sido eliminado.',
-            'success'
-          );
-        });
-      }
-    })
-  }
+  //         swal.fire(
+  //           'Paciente eliminado!',
+  //           'El registro del paciente ha sido eliminado.',
+  //           'success'
+  //         );
+  //       });
+  //     }
+  //   })
+  // }
 }
 

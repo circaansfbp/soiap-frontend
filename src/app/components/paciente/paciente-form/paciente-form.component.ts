@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import swal from 'sweetalert2';
@@ -16,8 +17,9 @@ export class PacienteFormComponent implements OnInit {
   paciente: Paciente = new Paciente();
 
   constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private pacienteService: PacienteService) { }
+    private router: Router,
+    private pacienteService: PacienteService,
+    private location: Location) { }
 
   ngOnInit(): void {
     this.loadPatientData();
@@ -64,4 +66,8 @@ export class PacienteFormComponent implements OnInit {
     })
   }
 
+  // Para volver a la página anterior
+  back(): void {
+    this.location.back();
+  }
 }

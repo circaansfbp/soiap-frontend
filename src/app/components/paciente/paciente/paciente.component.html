@@ -7,7 +7,8 @@
             </div>
             <div class="col-lg-8 text-center" id="patient-name">
                 <h1>{{paciente.nombre + " " + paciente.apellido}}</h1>
-                <button class="btn btn-primary" type="button">Ver atenciones</button>
+                <button [routerLink]="['../form', paciente.idPaciente]" class="btn btn-primary" type="button">Modificar datos</button>
+                <button (click)="deletePatient()" class="btn btn-primary" type="button">Eliminar</button>
             </div>
         </div>
 
@@ -51,7 +52,7 @@
             <div class="col-lg-4 text-center datos">
                 <i class="bi bi-briefcase-fill icons"></i>
                 <h5 class="color">Profesión/Ocupación</h5>
-                <h5 class="overflow"*ngIf="paciente.ocupacion;else empty">{{paciente.ocupacion}}</h5>
+                <h5 class="overflow" *ngIf="paciente.ocupacion;else empty">{{paciente.ocupacion}}</h5>
             </div>
 
             <!-- Institución -->
@@ -71,6 +72,12 @@
             <ng-template #empty>
                 <h5>-</h5>
             </ng-template>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+            </div>
         </div>
     </div>
 </div>
