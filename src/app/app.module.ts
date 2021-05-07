@@ -13,6 +13,7 @@ import { PaginadorComponent } from './components/paginador/paginador.component';
 import { PacienteFormComponent } from './components/paciente/paciente-form/paciente-form.component';
 import { BusquedaPacienteComponent } from './components/busqueda/busqueda-pacientes/busqueda-paciente.component';
 import { PacienteComponent } from './components/paciente/paciente/paciente.component';
+import { FiltrarAsistenciaComponent } from './components/busqueda/filtrar-asistencia/filtrar-asistencia.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
@@ -33,7 +34,8 @@ const routes = [
     PaginadorComponent,
     PacienteFormComponent,
     BusquedaPacienteComponent,
-    PacienteComponent
+    PacienteComponent,
+    FiltrarAsistenciaComponent
   ],
 
   imports: [

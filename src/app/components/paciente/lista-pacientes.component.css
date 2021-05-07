@@ -31,6 +31,10 @@
     border-bottom: 5px solid #284b63;
 }
 
+.modal-footer {
+    display: block;
+}
+
 .table-dark {
     background-color: #284b63;
 }

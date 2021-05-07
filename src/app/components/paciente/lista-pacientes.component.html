@@ -26,9 +26,11 @@
                             <td>{{paciente.afiliacionSalud}}</td>
                             <td>
                                 <div class="row">
-                                    <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary" type="button">Ver detalle</button>
+                                    <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary"
+                                        type="button">Ver detalle</button>
                                     <button (click)="getAtencionesDeUnPaciente(paciente)" class="btn btn-primary"
-                                        type="button" data-toggle="modal" data-target="#atencionesPaciente">Ver atenciones</button>
+                                        type="button" data-toggle="modal" data-target="#atencionesPaciente">Ver
+                                        atenciones</button>
                                 </div>
                             </td>
                         </tr>
@@ -46,9 +48,15 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="col-lg-12">
-                    <h3>{{paciente.nombre + " " + paciente.apellido}}</h3>
-                    <h5>Atenciones agendadas en los últimos seis meses:</h5>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3>{{paciente.nombre + " " + paciente.apellido}}</h3>
+                        <h5>Historial de atenciones</h5>
+                    </div>
+                    <div class="col-lg-6">
+                        <app-filtrar-asistencia (filterEvent)="actualizarAtencionesFiltradas($event)">
+                        </app-filtrar-asistencia>
+                    </div>
                 </div>
             </div>
             <div class="modal-body">
@@ -67,7 +75,9 @@
                                 <tbody>
                                     <tr *ngFor="let atencion of atencionesUltimosSeisMeses">
                                         <td>{{formatDisplayFechaAtencion(atencion)}}</td>
-                                        <td *ngIf="atencion.asistencia == 1">{{atencion.asistencia}}</td>
+                                        <td *ngIf="atencion.asistencia == 1">Sí, asiste a sesión de terapia</td>
+                                        <td *ngIf="atencion.asistencia == -1">No, falta a sesión de terapia</td>
+                                        <td *ngIf="atencion.asistencia == 0">Asistencia pendiente</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -76,7 +86,17 @@
                 </div>
             </div>
             <div class=" modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <div class="row">
+                    <div class="col-lg-6 text-left">
+                        <button (click)="backSixMonths()" class="btn btn-primary" type="button"><i class="bi bi-arrow-left-short"></i>Retroceder 6
+                            meses</button>
+                            <button (click)="forwardSixMonths()" class="btn btn-primary" type="button"><i class="bi bi-arrow-right-short"></i>Avanzar 6
+                                meses</button>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
