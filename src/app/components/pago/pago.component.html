@@ -26,4 +26,25 @@
             <h5 class="overflow">${{horarioAtencion.pago.montoPago}}</h5>
         </div>
     </div>
+    
+</div>
+
+<!-- Modal que permite la modificación de un pago -->
+<div class="modal fade" id="modificarPago" tabindex="-1" role="dialog"
+    aria-labelledby="modificarPagoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>Modificar pago</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <app-pago-form [horarioAtencion]="horarioAtencion" ></app-pago-form>
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>

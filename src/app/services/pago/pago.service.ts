@@ -17,4 +17,9 @@ export class PagoService {
   registerPayment(pago: Pago): Observable<Pago> {
     return this.http.post<Pago>(`${this.url}pago`, pago);
   }
+
+  // Actualizar un pago
+  updatePayment(pago: Pago, idPago: number): Observable<Pago> {
+    return this.http.put<Pago>(`${this.url}pago/update/${idPago}`, pago);
+  }
 }

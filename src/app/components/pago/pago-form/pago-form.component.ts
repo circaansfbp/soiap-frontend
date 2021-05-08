@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 import { Pago } from 'src/app/classes/pago/pago';
 import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
+import { PagoService } from 'src/app/services/pago/pago.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -17,12 +18,14 @@ export class PagoFormComponent implements OnInit {
   // Para manejar el pago
   pago: Pago = new Pago();
 
-  constructor(private horarioAtencionService: HorarioAtencionService) { }
+  constructor(private horarioAtencionService: HorarioAtencionService,
+    private pagoService: PagoService) { }
 
   ngOnInit(): void {
-
+    this.loadPaymentData();
   }
 
+  // Registra el pago
   pay() {
     this.pago.cantidadHorasPagadas = 1;
     this.horarioAtencion.pago = this.pago;
@@ -45,5 +48,23 @@ export class PagoFormComponent implements OnInit {
           );
         }
       });
+  }
+
+  // Cargar los datos del pago que se desea actualizar
+  loadPaymentData() {
+    if (this.horarioAtencion.pago) {
+      this.pago = this.horarioAtencion.pago;
+    }
+  }
+
+  // Actualizar el pago
+  updatePayment() {
+    this.pagoService.updatePayment(this.pago, this.pago.idPago).subscribe(pago => {
+      swal.fire(
+        'Datos actualizados!',
+        'Los datos del registro del pago han sido actualizados.',
+        'success'
+      );
+    });
   }
 }

@@ -2,6 +2,14 @@
     color: #284b63;
 }
 
+.modal-content {
+    padding: 20px 40px;
+}
+
+.modal-header {
+    border-bottom: 5px solid #284b63;
+}
+
 .overflow {
     overflow-wrap: break-word;
 }

@@ -28,10 +28,14 @@ export class HorarioComponent implements OnInit, OnChanges {
   fecha!: string;
   hora!: string;
 
+  // Para manejar despliegue del componente pago-form al actualizar un pago
+  actualizarPago: boolean = false;
+
   constructor(private horarioAtencionService: HorarioAtencionService) { }
 
   ngOnInit(): void {
     this.horario.paciente = new Paciente();
+    this.actualizarPago = false;
   }
 
   ngOnChanges(): void {
@@ -191,5 +195,10 @@ export class HorarioComponent implements OnInit, OnChanges {
         });
       }
     });
+  }
+
+  // Para desplegar el componente que permitirá modificar un pago
+  updatePayment() {
+    this.actualizarPago = true;
   }
 }
