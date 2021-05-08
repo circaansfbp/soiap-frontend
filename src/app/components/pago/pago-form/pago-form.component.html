@@ -1,0 +1,75 @@
+<div class="container">
+    <form>
+        <!-- Afiliación del paciente -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="medio-pago">Afiliación del paciente</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
+                        <input readonly value="{{horarioAtencion.paciente.afiliacionSalud}}" type="text"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medio de pago -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="medio-pago">Medio de pago:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
+                        <select required name="medio-pago" id="medio-pago" class="form-select" ngModel
+                            #medioPago="ngModel" [(ngModel)]="pago.medioPago">
+                            <option value="Bono(s)">Bono(s)</option>
+                            <option value="Programa">Programa</option>
+                            <option value="Bonos/Programa">Bonos y programa</option>
+                            <option value="Efectivo">Efectivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monto del pago -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="monto-pago">Monto:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
+                        <input [readOnly]="medioPago.value != 'Efectivo'" [required]="medioPago.value == 'Efectivo'"
+                            pattern="^[0-9]+$" ngModel #montoPago="ngModel" type="number" class="form-control"
+                            [(ngModel)]="pago.montoPago" id="monto-pago" name="monto-pago">
+                        <div class="col-lg-12">
+                            <small class="form-text text-secondary">Si el paciente paga con efectivo, debe ingresar el
+                                monto.</small>
+                        </div>
+                        <div class="col-lg-12">
+                            <small class="form-text text-secondary">Ingrese solo dígitos.</small>
+                        </div>
+                    </div>
+
+                    <!-- Manejo de errores -->
+                    <div class="col-lg-12" *ngIf="montoPago.invalid && (montoPago.touched || montoPago.dirty)">
+                        <div *ngIf="montoPago.errors?.required">
+                            <small class="text-danger">Se debe ingresar el monto del pago.</small>
+                        </div>
+                        <div *ngIf="montoPago.errors?.pattern">
+                            <small class="text-danger">Se debe ingresar un monto válido.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button (click)="pay()" [disabled]="medioPago.invalid || montoPago.invalid" class="btn btn-primary"
+                    type="button" data-dismiss="modal">Registrar pago</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,16 @@
+.color {
+    color: #284b63;
+}
+
+.overflow {
+    overflow-wrap: break-word;
+}
+
+.row {
+    margin-top: 10px;
+}
+
+i {
+    font-size: 40px;
+    color: #284b63;
+}

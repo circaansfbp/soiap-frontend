@@ -145,6 +145,64 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Registro del pago del horario de atención -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center" *ngIf="!horario.pago">
+                            <h5>No se ha registrado el pago por este horario de atención</h5>
+                            <h5>¿Desea registrarlo?</h5>
+                            <button class="btn btn-primary confirmacion" type="button" data-dismiss="modal"
+                            data-toggle="modal" data-target="#pago">Registrar pago</button>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="horario.pago">
+                            <i class="bi bi-check-circle-fill icon-confirm"></i>
+                            <h5>¡El horario de atención fue pagado!</h5>
+                            <button class="btn btn-primary confirmacion" type="button" data-dismiss="modal"
+                            data-toggle="modal" data-target="#detallePago">Ver pago</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal que contiene el registro del pago (componente hijo) -->
+<div class="modal fade" id="pago" tabindex="-1" role="dialog"
+    aria-labelledby="pagoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>Registrar pago</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <app-pago-form [horarioAtencion]="horario" ></app-pago-form>
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal que permite ver el registro del pago -->
+<div class="modal fade" id="detallePago" tabindex="-1" role="dialog"
+    aria-labelledby="detallePagoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>Detalle pago</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <app-pago [horarioAtencion]="horario"></app-pago>
             </div>
             <div class=" modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

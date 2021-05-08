@@ -1,4 +1,5 @@
 import { Paciente } from '../paciente/paciente';
+import { Pago } from '../pago/pago';
 
 export class HorarioAtencion {
   idAtencion!: number;
@@ -8,7 +9,7 @@ export class HorarioAtencion {
   fechaAtencion!: string;
   nroConsulta!: number;
   paciente!: Paciente;
-  // Falta agregar el pago!
+  pago!: Pago;
 
   constructor() { }
 }
