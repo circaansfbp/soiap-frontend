@@ -160,9 +160,11 @@
                             <i class="bi bi-check-circle-fill icon-confirm"></i>
                             <h5>¡El horario de atención fue pagado!</h5>
                             <button class="btn btn-primary confirmacion" type="button" data-dismiss="modal"
-                                data-toggle="modal" data-target="#detallePago">Ver</button>
-                            <button [routerLink]="['horario/pago', horario.idAtencion, horario.pago.idPago]" class="btn btn-primary confirmacion" type="button"
+                                data-toggle="modal" data-target="#detallePago">Ver detalle</button>
+                            <button [routerLink]="['horario/pago', horario.idAtencion, horario.pago.idPago]"
+                                class="btn btn-primary confirmacion" type="button"
                                 data-dismiss="modal">Modificar</button>
+                            <button class="btn btn-primary no-confirma" type="button">Eliminar</button>
                         </div>
                     </div>
                 </div>
@@ -189,6 +191,7 @@
             </div>
             <div class=" modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
             </div>
         </div>
     </div>

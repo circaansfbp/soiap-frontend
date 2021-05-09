@@ -10,6 +10,11 @@
     border-bottom: 5px solid #284b63;
 }
 
+.no-confirma, .no-confirma:hover, .no-confirma:focus {
+    background-color: #d33;
+    border-color: #d33;
+}
+
 .overflow {
     overflow-wrap: break-word;
 }

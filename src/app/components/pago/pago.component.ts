@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
+import { Pago } from 'src/app/classes/pago/pago';
 
 @Component({
   selector: 'app-pago',
@@ -13,6 +14,7 @@ export class PagoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }
