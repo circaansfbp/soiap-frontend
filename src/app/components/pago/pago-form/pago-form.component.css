@@ -1,6 +1,24 @@
+#main {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px 80px;
+    margin-top: 40px;
+}
+
+#title {
+    padding-bottom: 25px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid #284b63;
+}
+
 button, button:disabled, button:focus, button:hover {
     background-color: #284b63;
     border-color: #284b63;
+}
+
+form {
+    padding: 0 200px;
 }
 
 i, span {
@@ -9,7 +27,7 @@ i, span {
 }
 
 select {
-    width: 310px;
+    width: 538px;
     border-radius: 5px;
     border: 1px solid #d9d9d9;
 }

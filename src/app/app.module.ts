@@ -23,7 +23,9 @@ const routes = [
   { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent },
   { path: 'pacientes/page/:page', component: ListaPacientesComponent },
   { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent },
-  { path: 'pacientes/:idPaciente', component: PacienteComponent}
+  { path: 'pacientes/:idPaciente', component: PacienteComponent },
+  { path: 'horario/pago/:idAtencion', component: PagoFormComponent },
+  { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent }
 ];
 
 @NgModule({
