@@ -16,6 +16,8 @@ import { PacienteComponent } from './components/paciente/paciente/paciente.compo
 import { FiltrarAsistenciaComponent } from './components/busqueda/filtrar-asistencia/filtrar-asistencia.component';
 import { PagoFormComponent } from './components/pago/pago-form/pago-form.component';
 import { PagoComponent } from './components/pago/pago.component';
+import { AnamnesisComponent } from './components/anamnesis/anamnesis.component';
+import { AnamnesisFormComponent } from './components/anamnesis/anamnesis-form/anamnesis-form.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
@@ -24,6 +26,7 @@ const routes = [
   { path: 'pacientes/page/:page', component: ListaPacientesComponent },
   { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent },
   { path: 'pacientes/:idPaciente', component: PacienteComponent },
+  { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent },
   { path: 'horario/pago/:idAtencion', component: PagoFormComponent },
   { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent }
 ];
@@ -41,7 +44,9 @@ const routes = [
     PacienteComponent,
     FiltrarAsistenciaComponent,
     PagoFormComponent,
-    PagoComponent
+    PagoComponent,
+    AnamnesisComponent,
+    AnamnesisFormComponent
   ],
 
   imports: [

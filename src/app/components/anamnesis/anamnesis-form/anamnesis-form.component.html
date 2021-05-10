@@ -1,0 +1,87 @@
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-lg-12" id="title">
+            <h2>{{paciente.nombre + " " + paciente.apellido}}</h2>
+            <h5>Complete los campos solicitados para registrar la anamnesis del paciente.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" id="body">
+            <form>
+
+                <!-- Motivo de consulta del paciente -->
+                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="motivo-consulta-paciente" class="form-label">Motivo de la consulta:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                            <textarea name="motivo-consulta-paciente" id="motivo-consulta-paciente" cols="12" rows="4"
+                                class="form-control" ngModel #motivoConsulta="ngModel"
+                                [(ngModel)]="anamnesis.motivoConsultaPaciente" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Antecedentes del paciente -->
+                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
+                <!-- CAMBIAR ÍCONO -->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="antecedentes-paciente" class="form-label">Antecedentes del paciente:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                            <textarea name="antecedentes-paciente" id="antecedentes-paciente" cols="12" rows="4"
+                                class="form-control" ngModel #antecedentesPaciente="ngModel"
+                                [(ngModel)]="anamnesis.antecedentesPaciente" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Antecedentes familiares del paciente -->
+                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
+                <!-- CAMBIAR ÍCONO -->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="antecedentes-familiares-paciente" class="form-label">Antecedentes familiares del
+                            paciente:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                            <textarea name="antecedentes-familiares-paciente" id="antecedentes-familiares-paciente"
+                                cols="12" rows="4" class="form-control" ngModel
+                                #antecedentesFamiliaresPaciente="ngModel" [(ngModel)]="anamnesis.antecedentesFamiliares"
+                                required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Observaciones generales -->
+                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
+                <!-- CAMBIAR ÍCONO -->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="observaciones" class="form-label">Observaciones generales:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
+                            <textarea name="observaciones" id="observaciones" cols="12" rows="4" class="form-control"
+                                ngModel #observaciones="ngModel" [(ngModel)]="anamnesis.observaciones"
+                                required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-7 text-right">
+                        <!-- Guardar la anamnesis -->
+                        <button class="btn btn-primary" type="submit">Registrar anamnesis</button>
+                    </div>
+                    <div class="col-lg-5 text-right">
+                        <button
+                            (click)="back(motivoConsulta.value, antecedentesPaciente.value, antecedentesFamiliaresPaciente.value, observaciones.value)"
+                            class="btn btn-primary" type="button">Volver</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

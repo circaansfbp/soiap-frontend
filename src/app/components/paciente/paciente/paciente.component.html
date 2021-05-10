@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="row" id="body">
+        <div class="row" id="datos-paciente">
             <!-- Fecha de nacimiento -->
             <div class="col-lg-3 text-center datos">
                 <i class="bi bi-calendar-event icons"></i>
@@ -72,6 +72,14 @@
             <ng-template #empty>
                 <h5>-</h5>
             </ng-template>
+        </div>
+
+        <div class="row" id="anamnesis-paciente">
+            <div *ngIf="!paciente.anamnesis" class="col-lg-12 text-center">
+                <h4>La anamnesis del paciente no ha sido registrada.</h4>
+                <h5>¿Desea registrarla?</h5>
+                <button [routerLink]="['../../pacientes/anamnesis/', paciente.idPaciente]" class="btn btn-primary" type="button">Registrar anamnesis</button>
+            </div>
         </div>
 
         <div class="row">

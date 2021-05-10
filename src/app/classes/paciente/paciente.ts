@@ -1,3 +1,4 @@
+import { Anamnesis } from '../anamnesis/anamnesis';
 import { HorarioAtencion } from '../horario-atencion/horario-atencion';
 
 export class Paciente {
@@ -12,6 +13,7 @@ export class Paciente {
   estadoCivil!: string;
   familiaNuclear!: string;
   atenciones!: HorarioAtencion[];
+  anamnesis!: Anamnesis;  
 
   constructor() {
 

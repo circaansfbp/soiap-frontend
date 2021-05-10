@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Anamnesis } from 'src/app/classes/anamnesis/anamnesis';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
@@ -96,7 +97,8 @@ export class NuevoHorarioFormComponent implements OnInit {
       "institucion": "",
       "estadoCivil": "",
       "familiaNuclear": "",
-      "atenciones": []
+      "atenciones": [],
+      "anamnesis": null!
     }
 
     this.pacienteService.crearPaciente(this.paciente).subscribe(paciente => {

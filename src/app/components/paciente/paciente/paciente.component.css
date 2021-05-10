@@ -1,3 +1,13 @@
+#anamnesis-paciente {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 5px solid #284b63;
+}
+
+#datos-paciente {
+    border-bottom: 5px solid #284b63;
+}
+
 #header {
     height: 270px;
     border-bottom: 5px solid #284b63;
