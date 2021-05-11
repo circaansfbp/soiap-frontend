@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Anamnesis } from 'src/app/classes/anamnesis/anamnesis';
 import { Paciente } from 'src/app/classes/paciente/paciente';
@@ -21,6 +21,7 @@ export class AnamnesisFormComponent implements OnInit {
   anamnesis: Anamnesis = new Anamnesis();
 
   constructor(private activatedRoute: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private pacienteService: PacienteService) { }
 
@@ -38,6 +39,25 @@ export class AnamnesisFormComponent implements OnInit {
           this.paciente = paciente;
         });
       }
+    })
+  }
+
+  // Guardar la anamnesis del paciente
+  createAnamnesis() {
+    if (this.anamnesis.observaciones == undefined) this.anamnesis.observaciones = "-";
+    this.paciente.anamnesis = this.anamnesis;
+    
+    this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
+      this.paciente = paciente;
+      console.log(this.paciente);
+
+      this.router.navigate(['pacientes/', paciente.idPaciente]);
+
+      swal.fire(
+        "Anamnesis registrada!",
+        "La anamnesis del paciente ha sido registrada exitosamente",
+        "success"
+      )
     })
   }
 

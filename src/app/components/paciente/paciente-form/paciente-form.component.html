@@ -257,8 +257,8 @@
                             </div>
                             <div *ngIf="familiaNuclear && familiaNuclear.value?.length > 205 && familiaNuclear.value?.length < 255"
                                 class="col-lg-12">
-                                <small class="text-secondary">Quedan {{familiaNuclear.errors?.maxLength.requiredLength -
-                                    familiaNuclear.value.length}} caracteres.</small>
+                                <small class="text-secondary">Quedan {{255 -
+                                    familiaNuclear.value?.length}} caracteres.</small>
                             </div>
                         </div>
                     </div>

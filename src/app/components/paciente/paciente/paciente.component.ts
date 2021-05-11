@@ -20,8 +20,11 @@ export class PacienteComponent implements OnInit {
   // Representa al paciente 
   paciente: Paciente = new Paciente();
 
-  //Para desplegar la fecha de nacimiento
+  // Para desplegar la fecha de nacimiento
   birthday!: string;
+
+  // Para desplegar la fecha de la anamnesis
+  fechaAnamnesis!: string;
 
   constructor(private activatedRoute: ActivatedRoute,
     private pacienteService: PacienteService,
@@ -44,6 +47,8 @@ export class PacienteComponent implements OnInit {
             this.birthday = moment(this.paciente.fechaNacimiento).format("dddd Do MMMM YYYY");
 
           else this.birthday = "-";
+
+          if (this.paciente.anamnesis != undefined) this.fechaAnamnesis = moment(this.paciente.anamnesis.fechaAnamnesis).format("dddd Do MMMM YYYY");
         });
       }
     });

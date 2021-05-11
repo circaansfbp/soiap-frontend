@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <div class="table-responsive-lg">
+            <div class="table-responsive-lg text-center">
                 <table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
@@ -26,11 +26,13 @@
                             <td>{{paciente.afiliacionSalud}}</td>
                             <td>
                                 <div class="row">
-                                    <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary"
-                                        type="button">Ver detalle</button>
-                                    <button (click)="getAtencionesDeUnPaciente(paciente)" class="btn btn-primary"
-                                        type="button" data-toggle="modal" data-target="#atencionesPaciente">Ver
-                                        atenciones</button>
+                                    <div class="col-lg-12 text-center">
+                                        <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary"
+                                            type="button">Ver detalle</button>
+                                        <button (click)="getAtencionesDeUnPaciente(paciente)" class="btn btn-primary"
+                                            type="button" data-toggle="modal" data-target="#atencionesPaciente">Ver
+                                            atenciones</button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -88,10 +90,12 @@
             <div class=" modal-footer">
                 <div class="row">
                     <div class="col-lg-6 text-left">
-                        <button (click)="backSixMonths()" class="btn btn-primary" type="button"><i class="bi bi-arrow-left-short"></i>Retroceder 6
+                        <button (click)="backSixMonths()" class="btn btn-primary" type="button"><i
+                                class="bi bi-arrow-left-short"></i>Retroceder 6
                             meses</button>
-                            <button (click)="forwardSixMonths()" class="btn btn-primary" type="button"><i class="bi bi-arrow-right-short"></i>Avanzar 6
-                                meses</button>
+                        <button (click)="forwardSixMonths()" class="btn btn-primary" type="button"><i
+                                class="bi bi-arrow-right-short"></i>Avanzar 6
+                            meses</button>
                     </div>
                     <div class="col-lg-6 text-right">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

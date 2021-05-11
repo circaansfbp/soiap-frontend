@@ -46,8 +46,8 @@
                             <label for="medio-pago">Medio de pago:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                                <select required name="medio-pago" id="medio-pago" class="form-select" ngModel
-                                    #medioPago="ngModel" [(ngModel)]="pago.medioPago">
+                                <select required maxlength="30" name="medio-pago" id="medio-pago" class="form-select"
+                                    ngModel #medioPago="ngModel" [(ngModel)]="pago.medioPago">
                                     <option value="Bono(s)">Bono(s)</option>
                                     <option value="Programa">Programa</option>
                                     <option value="Bonos/Programa">Bonos y programa</option>

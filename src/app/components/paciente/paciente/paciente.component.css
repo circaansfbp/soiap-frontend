@@ -37,16 +37,27 @@
     margin-bottom: 40px;
 }
 
+.datos-anamnesis {
+    margin-top: 20px;
+}
+
 .icons {
     font-size: 40px;
+}
+
+.options {
+    margin: 10px 5px;
 }
 
 .overflow {
     overflow-wrap: break-word;
 }
 
-button, button:hover, button:disabled, button:focus {
+button { 
     margin-top: 10px;
+}
+
+button, button:hover, button:disabled, button:focus {
     background-color: #284b63;
     border-color: #284b63;
 }
@@ -54,4 +65,8 @@ button, button:hover, button:disabled, button:focus {
 i {
     font-size: 200px;
     color: #284b63;
+}
+
+p {
+    font-size: 18px;
 }

@@ -10,37 +10,60 @@
             <form>
 
                 <!-- Motivo de consulta del paciente -->
-                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="motivo-consulta-paciente" class="form-label">Motivo de la consulta:</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
-                            <textarea name="motivo-consulta-paciente" id="motivo-consulta-paciente" cols="12" rows="4"
+                            <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
+                            <textarea name="motivo-consulta-paciente" id="motivo-consulta-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #motivoConsulta="ngModel"
-                                [(ngModel)]="anamnesis.motivoConsultaPaciente" required></textarea>
+                                [(ngModel)]="anamnesis.motivoConsultaPaciente" required maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="motivoConsulta.invalid && (motivoConsulta.touched || motivoConsulta.dirty)">
+                            <div *ngIf="motivoConsulta.errors?.required">
+                                <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
+                            </div>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="motivoConsulta && motivoConsulta.value?.length > 1500 && motivoConsulta.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - motivoConsulta.value?.length}}
+                                caracteres.</small>
                         </div>
                     </div>
                 </div>
 
                 <!-- Antecedentes del paciente -->
-                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
-                <!-- CAMBIAR ÍCONO -->
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="antecedentes-paciente" class="form-label">Antecedentes del paciente:</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
-                            <textarea name="antecedentes-paciente" id="antecedentes-paciente" cols="12" rows="4"
+                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                            <textarea name="antecedentes-paciente" id="antecedentes-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #antecedentesPaciente="ngModel"
-                                [(ngModel)]="anamnesis.antecedentesPaciente" required></textarea>
+                                [(ngModel)]="anamnesis.antecedentesPaciente" required maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="antecedentesPaciente.invalid && (antecedentesPaciente.touched || antecedentesPaciente.dirty)">
+                            <small class="text-danger">Se deben ingresar los antecedentes del paciente.</small>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="antecedentesPaciente && antecedentesPaciente.value?.length > 1500 && antecedentesPaciente.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - antecedentesPaciente.value?.length}}
+                                caracteres.</small>
                         </div>
                     </div>
                 </div>
 
                 <!-- Antecedentes familiares del paciente -->
-                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
-                <!-- CAMBIAR ÍCONO -->
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="antecedentes-familiares-paciente" class="form-label">Antecedentes familiares del
@@ -48,33 +71,55 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
                             <textarea name="antecedentes-familiares-paciente" id="antecedentes-familiares-paciente"
-                                cols="12" rows="4" class="form-control" ngModel
+                                cols="12" rows="6" class="form-control" ngModel
                                 #antecedentesFamiliaresPaciente="ngModel" [(ngModel)]="anamnesis.antecedentesFamiliares"
-                                required></textarea>
+                                required maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="antecedentesFamiliaresPaciente.invalid && (antecedentesFamiliaresPaciente.touched || antecedentesFamiliaresPaciente.dirty)">
+                            <small class="text-danger">Se deben ingresar los antecedentes familiares del
+                                paciente.</small>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="antecedentesFamiliaresPaciente && antecedentesFamiliaresPaciente.value?.length > 1500 && antecedentesFamiliaresPaciente.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - antecedentesFamiliaresPaciente.value?.length}}
+                                caracteres.</small>
                         </div>
                     </div>
                 </div>
 
                 <!-- Observaciones generales -->
-                <!-- FALTA AGREGAR PROPIEDAD MAXLENGTH-->
-                <!-- CAMBIAR ÍCONO -->
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="observaciones" class="form-label">Observaciones generales:</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
-                            <textarea name="observaciones" id="observaciones" cols="12" rows="4" class="form-control"
+                            <span class="input-group-text"><i class="bi bi-chat-left-dots-fill"></i></span>
+                            <textarea name="observaciones" id="observaciones" cols="12" rows="6" class="form-control"
                                 ngModel #observaciones="ngModel" [(ngModel)]="anamnesis.observaciones"
-                                required></textarea>
+                                maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div *ngIf="observaciones && observaciones.value?.length > 1500 && observaciones.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - observaciones.value?.length}} caracteres.</small>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
+
+                    <!-- Guardar la anamnesis -->
                     <div class="col-lg-7 text-right">
-                        <!-- Guardar la anamnesis -->
-                        <button class="btn btn-primary" type="submit">Registrar anamnesis</button>
+                        <button (click)="createAnamnesis()"
+                            [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid"
+                            class="btn btn-primary" type="submit">Registrar anamnesis</button>
                     </div>
+
+                    <!-- Para volver atrás -->
                     <div class="col-lg-5 text-right">
                         <button
                             (click)="back(motivoConsulta.value, antecedentesPaciente.value, antecedentesFamiliaresPaciente.value, observaciones.value)"
