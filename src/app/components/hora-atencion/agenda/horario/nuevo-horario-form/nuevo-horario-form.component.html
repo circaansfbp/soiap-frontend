@@ -279,8 +279,8 @@
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
               <input id="apellido-paciente" name="apellido-paciente" type="text" class="form-control"
-                [(ngModel)]="paciente.apellido" ngModel #apellidoPaciente="ngModel" required minlength="3" maxlength="30"
-                pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
+                [(ngModel)]="paciente.apellido" ngModel #apellidoPaciente="ngModel" required minlength="3"
+                maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
               <!-- Manejo de errores  -->
               <div *ngIf="apellidoPaciente?.invalid && (apellidoPaciente?.touched || apellidoPaciente?.dirty)"
@@ -343,7 +343,8 @@
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
               <input id="afiliacion-salud-paciente" name="afiliacion-salud-paciente" type="text" class="form-control"
-                [(ngModel)]="paciente.afiliacionSalud" ngModel #afiliacionSaludPaciente="ngModel" required maxlength="30">
+                [(ngModel)]="paciente.afiliacionSalud" ngModel #afiliacionSaludPaciente="ngModel" required
+                maxlength="30">
 
               <!-- Manejo de errores  -->
               <div
@@ -371,11 +372,14 @@
               <label for="fecha-atencion" class="form-label">Fecha de la atención:</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
-                <input [disabled]="!paciente" type="date" class="form-control" id="fecha-atencion" name="fecha-atencion"
+                <input [ngStyle]="fechaAtencion.value < fechaActual ? {'border': '2px solid red'} : {}" [disabled]="!paciente" type="date" class="form-control" id="fecha-atencion" name="fecha-atencion"
                   ngModel [(ngModel)]="horarioAtencion.fechaAtencion" #fechaAtencion="ngModel" required>
                 <div *ngIf="fechaAtencion?.invalid && (fechaAtencion?.touched || fechaAtencion?.dirty)"
                   class="col-lg-12">
-                  <small class="text-danger">Se debe ingresar la fecha de la atención!</small>
+                  <small class="text-danger">Se debe ingresar la fecha de la atención.</small>
+                </div>
+                <div *ngIf="(fechaAtencion.touched || fechaAtencion.dirty) && fechaAtencion.value < fechaActual" class="col-lg-12">
+                  <small class="text-danger">No se puede seleccionar una fecha pasada.</small>
                 </div>
               </div>
             </div>
@@ -405,30 +409,39 @@
             <label for="nro-consulta" class="form-label">N° consulta:</label>
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-hash"></i></span>
-              <input [disabled]="!paciente" type="number" class="form-control" id="nro-consulta" name="nro-consulta"
-                ngModel [(ngModel)]="horarioAtencion.nroConsulta" #nroConsulta="ngModel" pattern="^[0-9]+$" min="1"
-                max="10">
-              <div *ngIf="nroConsulta?.invalid && (nroConsulta?.touched || nroConsulta?.dirty)" class="col-lg-12">
-                <div *ngIf="nroConsulta.errors?.pattern">
-                  <small class="text-danger">Solo se permite el ingreso de 2 dígitos!</small>
-                </div>
-                <div *ngIf="nroConsulta.errors?.max || nroConsulta.errors?.min">
-                  <small class="text-danger">El número de consulta debe estar entre el 1 y 10!</small>
-                </div>
-              </div>
+              <input required [disabled]="!paciente" type="number" class="form-control" id="nro-consulta"
+                name="nro-consulta" ngModel [(ngModel)]="horarioAtencion.nroConsulta" #nroConsulta="ngModel"
+                pattern="^[0-9]{1}$" min="1" max="8">
             </div>
+          </div>
+
+          <!-- Manejo de errores -->
+          <div *ngIf="nroConsulta?.invalid && (nroConsulta?.touched || nroConsulta?.dirty)" class="col-lg-12">
+            <div *ngIf="nroConsulta.errors?.required">
+              <small class="text-danger">Se debe ingresar el número de consulta.</small>
+            </div>
+
+            <div *ngIf="nroConsulta.errors?.pattern">
+              <small class="text-danger">Solo se permite el ingreso de 1 dígito.</small>
+            </div>
+          </div>
+          <div *ngIf="(nroConsulta.touched || nroConsulta.dirty) && (nroConsulta.value < 1 || nroConsulta.value > 8)"
+            class="col-lg-12">
+            <small class="text-danger">El número de consulta debe estar entre el 1 y 8.</small>
           </div>
         </div>
 
         <!-- Si se desea crear una atención, se muestra este botón -->
-        <button [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid || !paciente"
+        <button
+          [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.value < 1 || nroConsulta.value > 8 || nroConsulta.invalid || !paciente || fechaAtencion.value < fechaActual"
           type="submit" class="btn btn-primary btn-save-modify" (click)="guardarNuevoHorario()"
           *ngIf="!horarioAtencion.idAtencion;else updateButton">Guardar
           horario</button>
 
         <!-- Si se desea actualizar una atención, se muestra este botón -->
         <ng-template #updateButton>
-          <button [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.invalid || !paciente"
+          <button
+            [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.value < 1 || nroConsulta.value > 8 || !paciente || fechaAtencion.value < fechaActual"
             type="submit" class="btn btn-primary btn-save-modify" (click)="updateHorarioAtencion()">Guardar
             cambios</button>
         </ng-template>

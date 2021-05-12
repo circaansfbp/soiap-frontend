@@ -21,6 +21,14 @@
     margin-left: 7px;
 }
 
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+.form-control.ng-valid {
+    border: 2px solid green;
+}
+
 button, button:disabled, button:focus, button:hover {
     background-color: #284b63;
     border-color: #284b63;

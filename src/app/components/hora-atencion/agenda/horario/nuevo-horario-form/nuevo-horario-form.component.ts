@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Anamnesis } from 'src/app/classes/anamnesis/anamnesis';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
+import * as moment from 'moment';
 import swal from 'sweetalert2';
 
 
@@ -15,6 +15,8 @@ import swal from 'sweetalert2';
   styleUrls: ['./nuevo-horario-form.component.css']
 })
 export class NuevoHorarioFormComponent implements OnInit {
+  // Para validar que la fecha seleccionada no sea anterior a la fecha actual
+  fechaActual: string = moment().format("YYYY[-]MM[-]DD");
 
   // Para guardar/actualizar una atención
   horarioAtencion: HorarioAtencion = new HorarioAtencion();
@@ -53,7 +55,6 @@ export class NuevoHorarioFormComponent implements OnInit {
   // Modificar paciente
   modifyPatient() {
     this.modify = true;
-
   }
 
   // Crear un nuevo horario de atención

@@ -16,8 +16,7 @@
                             <label for="medio-pago">Afiliación de salud asociada a este pago:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
-                                <input [required]="!modificarAfiliacion.checked"
-                                    [readOnly]="!modificarAfiliacion.checked"
+                                <input required [readOnly]="!modificarAfiliacion.checked"
                                     value="{{horarioAtencion.paciente.afiliacionSalud}}" type="text" ngModel
                                     #afiliacionPaciente="ngModel" class="form-control" id="afiliacion-pago"
                                     name="afiliacion-pago" [(ngModel)]="afiliacion" maxlength="30">
@@ -27,13 +26,14 @@
                                     id="modificar-afiliacion" ngModel #modificarAfiliacion>
                                 <label for="modificar-afiliacion" class="form-check-label">Modificar afiliación</label>
                             </div>
-                        </div>
 
-                        <!-- Manejo de errores -->
-                        <div class="col-lg-12"
-                            *ngIf="afiliacionPaciente.invalid && (afiliacionPaciente.touched || afiliacionPaciente.dirty)">
-                            <div *ngIf="afiliacionPaciente.errors?.required">
-                                <small class="text-danger">Se debe ingresar la afiliación asociada a este pago.</small>
+                            <!-- Manejo de errores -->
+                            <div class="col-lg-12"
+                                *ngIf="afiliacionPaciente.invalid && (afiliacionPaciente.touched || afiliacionPaciente.dirty)">
+                                <div *ngIf="afiliacionPaciente.errors?.required">
+                                    <small class="text-danger">Se debe ingresar la afiliación asociada a este
+                                        pago.</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,8 @@
                             <label for="monto-pago">Monto:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
-                                <input [readOnly]="medioPago.value != 'Efectivo'"
+                                <input [value]="medioPago.value != 'Efectivo' ? '' : montoPago.value"
+                                    [readOnly]="medioPago.value != 'Efectivo'"
                                     [required]="medioPago.value == 'Efectivo'" pattern="^[0-9]+$" ngModel
                                     #montoPago="ngModel" type="number" class="form-control" [(ngModel)]="pago.montoPago"
                                     id="monto-pago" name="monto-pago">
