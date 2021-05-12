@@ -104,8 +104,10 @@
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
-                        <div *ngIf="observaciones && observaciones.value?.length > 1500 && observaciones.value?.length < 2000">
-                            <small class="text-secondary">Quedan {{2000 - observaciones.value?.length}} caracteres.</small>
+                        <div
+                            *ngIf="observaciones && observaciones.value?.length > 1500 && observaciones.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - observaciones.value?.length}}
+                                caracteres.</small>
                         </div>
                     </div>
                 </div>
@@ -114,9 +116,15 @@
 
                     <!-- Guardar la anamnesis -->
                     <div class="col-lg-7 text-right">
-                        <button (click)="createAnamnesis()"
+                        <button *ngIf="!anamnesis.idAnamnesis; else updateButton" (click)="createAnamnesis()"
                             [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid"
                             class="btn btn-primary" type="submit">Registrar anamnesis</button>
+
+                        <ng-template #updateButton>
+                            <button (click)="uodateAnamnesis()"
+                                [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid"
+                                class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </ng-template>
                     </div>
 
                     <!-- Para volver atrás -->

@@ -6,6 +6,7 @@ import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import swal from 'sweetalert2';
+import { AnamnesisService } from 'src/app/services/anamnesis/anamnesis.service';
 
 @Component({
   selector: 'app-anamnesis-form',
@@ -23,13 +24,14 @@ export class AnamnesisFormComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private pacienteService: PacienteService) { }
+    private pacienteService: PacienteService,
+    private anamnesisService: AnamnesisService) { }
 
   ngOnInit(): void {
     this.getAssociatedPatient();
   }
 
-  // Para obtener al paciente asociado a la anamnesis a crear
+  // Para obtener al paciente asociado a la anamnesis a crear o actualizar
   getAssociatedPatient() {
     this.activatedRoute.params.subscribe(param => {
       let idPaciente = param['idPaciente'];
@@ -37,16 +39,18 @@ export class AnamnesisFormComponent implements OnInit {
       if (idPaciente) {
         this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
           this.paciente = paciente;
+
+          if (this.paciente.anamnesis) this.anamnesis = this.paciente.anamnesis;
         });
       }
     })
   }
 
-  // Guardar la anamnesis del paciente
+  // Guardar la anamnesis de un paciente
   createAnamnesis() {
     if (this.anamnesis.observaciones == undefined) this.anamnesis.observaciones = "-";
     this.paciente.anamnesis = this.anamnesis;
-    
+
     this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
       this.paciente = paciente;
       console.log(this.paciente);
@@ -59,6 +63,38 @@ export class AnamnesisFormComponent implements OnInit {
         "success"
       )
     })
+  }
+
+  // Actualizar la anamnesis de un paciente
+  uodateAnamnesis() {
+    if (this.anamnesis.observaciones == "") this.anamnesis.observaciones = "-";
+
+    swal.fire({
+      title: 'Guardar cambios',
+      text: '¿Desea guardar los cambios registrados?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.anamnesisService.updateAnamnesis(this.anamnesis, this.anamnesis.idAnamnesis).subscribe(anamnesis => {
+          this.anamnesis = anamnesis;
+
+          this.router.navigate(['pacientes/', this.paciente.idPaciente]);
+
+          swal.fire(
+            'Datos actualizados!',
+            'Los datos de la anamnesis del paciente han sido actualizados exitosamente.',
+            'success'
+          );
+
+          console.log(anamnesis);
+        });
+      }
+    });
   }
 
   // Para volver atrás/cancelar la operación

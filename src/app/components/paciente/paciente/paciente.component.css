@@ -37,10 +37,6 @@
     margin-bottom: 40px;
 }
 
-.datos-anamnesis {
-    margin-top: 20px;
-}
-
 .icons {
     font-size: 40px;
 }
@@ -65,8 +61,4 @@ button, button:hover, button:disabled, button:focus {
 i {
     font-size: 200px;
     color: #284b63;
-}
-
-p {
-    font-size: 18px;
 }

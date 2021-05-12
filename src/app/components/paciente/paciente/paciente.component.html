@@ -7,7 +7,8 @@
             </div>
             <div class="col-lg-8 text-center" id="patient-name">
                 <h1>{{paciente.nombre + " " + paciente.apellido}}</h1>
-                <button [routerLink]="['../form', paciente.idPaciente]" class="btn btn-primary options" type="button">Modificar datos</button>
+                <button [routerLink]="['../form', paciente.idPaciente]" class="btn btn-primary options"
+                    type="button">Modificar datos</button>
                 <button (click)="deletePatient()" class="btn btn-primary options" type="button">Eliminar</button>
             </div>
         </div>
@@ -78,56 +79,12 @@
             <div *ngIf="!paciente.anamnesis" class="col-lg-12 text-center">
                 <h4>La anamnesis del paciente no ha sido registrada.</h4>
                 <h5>¿Desea registrarla?</h5>
-                <button [routerLink]="['../../pacientes/anamnesis/', paciente.idPaciente]" class="btn btn-primary" type="button">Registrar anamnesis</button>
+                <button [routerLink]="['../anamnesis/', paciente.idPaciente]" class="btn btn-primary"
+                    type="button">Registrar anamnesis</button>
             </div>
 
             <div *ngIf="paciente.anamnesis" class="col-lg-12 text-center">
-                <h2>Anamnesis</h2>
-
-                <!-- Fecha de la anamnesis -->
-                <div class="row datos-anamnesis">
-                    <div class="col-lg-12">
-                        <i class="bi bi-calendar-event icons"></i>
-                        <h5 class="color">Fecha anamnesis</h5>
-                        <p class="overflow">{{fechaAnamnesis}}</p>
-                    </div>
-                </div>
-
-                <!-- Motivo de la consulta -->
-                <div class="row datos-anamnesis">
-                    <div class="col-lg-12">
-                        <i class="bi bi-question-circle-fill icons"></i>
-                        <h5 class="color">Motivo consulta</h5>
-                        <p class="overflow">{{paciente?.anamnesis?.motivoConsultaPaciente}}</p>
-                    </div>
-                </div>
-
-                <!-- Antecedentes del paciente -->
-                <div class="row datos-anamnesis">
-                    <div class="col-lg-12">
-                        <i class="bi bi-person-fill icons"></i>
-                        <h5 class="color">Antecedentes</h5>
-                        <p class="overflow">{{paciente?.anamnesis?.antecedentesPaciente}}</p>
-                    </div>
-                </div>
-
-                <!-- Antecedentes familiares -->
-                <div class="row datos-anamnesis">
-                    <div class="col-lg-12">
-                        <i class="bi bi-people-fill icons"></i>
-                        <h5 class="color">Antecedentes familiares</h5>
-                        <p class="overflow">{{paciente?.anamnesis?.antecedentesFamiliares}}</p>
-                    </div>
-                </div>
-
-                <!-- Observaciones -->
-                <div class="row datos-anamnesis">
-                    <div class="col-lg-12">
-                        <i class="bi bi-chat-left-dots-fill icons"></i>
-                        <h5 class="color">Observaciones</h5>
-                        <p class="overflow">{{paciente?.anamnesis?.observaciones}}</p>
-                    </div>
-                </div>
+                <app-anamnesis [paciente]="paciente" [fechaAnamnesis]="fechaAnamnesis"></app-anamnesis>
             </div>
         </div>
 

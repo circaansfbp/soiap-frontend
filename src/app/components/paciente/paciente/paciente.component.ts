@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
@@ -28,8 +27,7 @@ export class PacienteComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private pacienteService: PacienteService,
-    private router: Router,
-    private location: Location) { }
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getPatient();
@@ -92,6 +90,6 @@ export class PacienteComponent implements OnInit {
 
   // Para volver a la página anterior
   back(): void {
-    this.location.back();
+    this.router.navigate(['pacientes/page/0']);
   }
 }
