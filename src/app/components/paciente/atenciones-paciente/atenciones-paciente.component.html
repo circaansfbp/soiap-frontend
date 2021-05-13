@@ -27,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let atencion of atenciones | paginate: {id: 'atenciones-paciente', 
+                        <tr *ngFor="let atencion of filtered | paginate: {id: 'atenciones-paciente', 
                                                                             itemsPerPage: 10,
                                                                             currentPage: currentPage,
                                                                             totalItems: total}">

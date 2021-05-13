@@ -21,6 +21,9 @@ export class AtencionesPacienteComponent implements OnInit {
   // Para manejar las atenciones del paciente
   atenciones: HorarioAtencion[] = new Array();
 
+  // Para manejar las atenciones filtradas
+  filtered: HorarioAtencion[] = new Array();
+
   // Número total de registros
   total!: number;
 
@@ -44,6 +47,7 @@ export class AtencionesPacienteComponent implements OnInit {
         this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
           this.paciente = paciente;
           this.atenciones = paciente.atenciones;
+          this.filtered = paciente.atenciones;
 
           // Setea el total de registros
           this.total = this.atenciones.length;
@@ -60,6 +64,21 @@ export class AtencionesPacienteComponent implements OnInit {
   // En el caso de que se quiera realizar una filtración de la lista
   filtrar(value: number) {
 
+    // Atenciones asistidas
+    if (value == 1) { 
+      this.filtered = this.atenciones.filter(atencion => atencion.asistencia == 1);
+      this.total = this.filtered.length;
+
+      if (this.total <= 10) this.currentPage = 1;
+    }
+
+    // Atenciones no asistidas
+    if (value == -1) {
+      this.filtered = this.atenciones.filter(atencion => atencion.asistencia == -1);
+      this.total = this.filtered.length;
+
+      if (this.total <= 10) this.currentPage = 1;
+    }
   }
 
   // Para volver atrás
