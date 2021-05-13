@@ -95,7 +95,7 @@ export class ListaPacientesComponent implements OnInit {
 
     let sixMonthsForward = moment(this.fechaActual).add(6, 'months').format("YYYY[-]MM[-]DD");
     console.log(this.fechaActual);
-    
+
     this.paciente.atenciones.forEach(atencion => {
       if (moment(atencion.fechaAtencion).isBetween(this.fechaActual, sixMonthsForward)) {
         this.atencionesUltimosSeisMeses.push(atencion);
@@ -110,9 +110,9 @@ export class ListaPacientesComponent implements OnInit {
   }
 
   // Para desplegar la fecha de la atención formateada
-  formatDisplayFechaAtencion(horarioAtencion: HorarioAtencion): string {
-    return moment(horarioAtencion.fechaAtencion).format("dddd Do MMMM YYYY");
-  }
+  // formatDisplayFechaAtencion(horarioAtencion: HorarioAtencion): string {
+  //   return moment(horarioAtencion.fechaAtencion).format("dddd Do MMMM YYYY");
+  // }
 
   // Permite filtrar las atenciones de un paciente por asistidas y no asistidas
   filterPatients(asistencia: number): HorarioAtencion[] {
@@ -211,36 +211,9 @@ export class ListaPacientesComponent implements OnInit {
     });
   }
 
-  // Permite la eliminación lógica de un paciente
-  // deletePatient(paciente: Paciente) {
-  //   swal.fire({
-  //     title: '¿Eliminar paciente?',
-  //     text: 'Esta acción es irreversible!',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Sí',
-  //     cancelButtonText: 'Cancelar'
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.pacienteService.eliminarPaciente(paciente, paciente.idPaciente).subscribe(res => {
-  //         console.log(res);
-
-  //         // Para refrescar componente
-  //         let currentUrl = this.router.url;
-  //         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //           this.router.navigate([currentUrl]);
-  //         });
-
-  //         swal.fire(
-  //           'Paciente eliminado!',
-  //           'El registro del paciente ha sido eliminado.',
-  //           'success'
-  //         );
-  //       });
-  //     }
-  //   })
-  // }
+  // Para retornar a la agenda
+  back() {
+    this.router.navigate(['']);
+  }
 }
 

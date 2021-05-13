@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
 import { HorarioComponent } from './components/hora-atencion/agenda/horario/horario.component';
@@ -18,6 +19,7 @@ import { PagoFormComponent } from './components/pago/pago-form/pago-form.compone
 import { PagoComponent } from './components/pago/pago.component';
 import { AnamnesisComponent } from './components/anamnesis/anamnesis.component';
 import { AnamnesisFormComponent } from './components/anamnesis/anamnesis-form/anamnesis-form.component';
+import { AtencionesPacienteComponent } from './components/paciente/atenciones-paciente/atenciones-paciente.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
@@ -27,6 +29,7 @@ const routes = [
   { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent },
   { path: 'pacientes/:idPaciente', component: PacienteComponent },
   { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent },
+  { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent },
   { path: 'horario/pago/:idAtencion', component: PagoFormComponent },
   { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent }
 ];
@@ -46,10 +49,12 @@ const routes = [
     PagoFormComponent,
     PagoComponent,
     AnamnesisComponent,
-    AnamnesisFormComponent
+    AnamnesisFormComponent,
+    AtencionesPacienteComponent
   ],
 
   imports: [
+    NgxPaginationModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,

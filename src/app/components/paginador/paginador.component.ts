@@ -36,7 +36,6 @@ export class PaginadorComponent implements OnInit, OnChanges {
 
     if (this.paginador.totalPages > 5) {
       this.paginas = new Array((this.until - this.from) + 1).fill(0).map((valor, index) => index + this.from);
-
     }
 
     else this.paginas = new Array(this.paginador.totalPages).fill(0).map((valor, index) => index + 1);
