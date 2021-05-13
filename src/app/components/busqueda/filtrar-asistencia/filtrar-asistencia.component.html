@@ -1,16 +1,21 @@
 <form>
     <div class="form-group">
-        <label for="filtra-asistencia">Filtrar por asistencia</label>
+        <label for="filtra-asistencia">Filtrar las atenciones</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-person-check-fill"></i></span>
             <select required name="filtra-asistencia" id="filtra-asistencia" class="form-select" ngModel
                 #asistencia="ngModel">
                 <option value="" selected>Filtrar...</option>
-                <option value="1">Atenciones asistidas</option>
-                <option value="-1">Atenciones no asistidas</option>
+                <option value="1">Asistidas</option>
+                <option value="-1">No asistidas</option>
+                <option value="2">Pagadas</option>
+                <option value="-2">No pagadas</option>
+                <option value="3">Asistidas y pagadas</option>
+                <option value="-3">Asistidas y no pagadas</option>
+                <option value="0">Todas las atenciones</option>
             </select>
         </div>
     </div>
-    <button (click)="filter(asistencia.value)" [disabled]="asistencia.invalid || asistencia.value == 0"
+    <button (click)="filter(asistencia.value)" [disabled]="asistencia.invalid || asistencia.value == ''"
         class="btn btn-primary" type="submit">Filtrar</button>
 </form>

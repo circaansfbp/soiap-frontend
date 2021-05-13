@@ -79,6 +79,46 @@ export class AtencionesPacienteComponent implements OnInit {
 
       if (this.total <= 10) this.currentPage = 1;
     }
+
+    // Atenciones pagadas
+    if (value == 2) {
+      this.filtered = this.atenciones.filter(atencion => atencion.pago);
+      this.total = this.filtered.length;
+
+      if (this.total <= 10) this.currentPage = 1;
+    }
+
+    // Atenciones no pagadas
+    if (value == -2) {
+      this.filtered = this.atenciones.filter(atencion => !atencion.pago);
+      this.total = this.filtered.length;
+
+      if (this.total <= 10) this.currentPage = 1;
+    }
+
+    // Atenciones asistidas y pagadas
+    if (value == 3) {
+      this.filtered = this.atenciones.filter(atencion => atencion.asistencia == 1 && atencion.pago);
+      this.total = this.filtered.length;
+
+      if (this.total <= 10) this.currentPage = 1;
+    }
+
+    // Atenciones asistidas y no pagadas
+    if (value == -3) {
+      this.filtered = this.atenciones.filter(atencion => atencion.asistencia == 1 && !atencion.pago);
+      this.total = this.filtered.length;
+
+      if (this.total <= 10) this.currentPage = 1;
+    }
+
+    // Todas las atenciones
+    if (value == 0) {
+      this.filtered = this.atenciones;
+      this.total = this.filtered.length;
+
+      if (this.total <= 10) this.currentPage = 1;
+    }
   }
 
   // Para volver atrás
