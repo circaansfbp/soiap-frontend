@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2>Ficha de tratamiento</h2>
+
+        <!-- Fecha de la anamnesis -->
+        <div class="row datos-anamnesis">
+            <div class="col-lg-12">
+                <i class="bi bi-calendar-event icons"></i>
+                <h5 class="color">Fecha</h5>
+                <p class="overflow">{{fechaCreacionFicha}}</p>
+            </div>
+        </div>
+
+        <!-- Motivo de la consulta -->
+        <div class="row datos-anamnesis">
+            <div class="col-lg-12">
+                <i class="bi bi-question-circle-fill icons"></i>
+                <h5 class="color">Motivo consulta</h5>
+                <p class="overflow">{{paciente?.fichaTratamiento?.motivoConsultaProfesional}}</p>
+            </div>
+        </div>
+
+        <!-- Resultado del diagnóstico -->
+        <div class="row datos-anamnesis">
+            <div class="col-lg-12">
+                <i class="bi bi-person-check-fill icons"></i>
+                <h5 class="color">Resultado diagnóstico</h5>
+                <p class="overflow">{{paciente?.fichaTratamiento?.resultadoDiagnostico}}</p>
+            </div>
+        </div>
+
+        <!-- Sugerencia de tratamiento -->
+        <div class="row datos-anamnesis">
+            <div class="col-lg-12">
+                <i class="bi bi-chat-dots-fill icons"></i>
+                <h5 class="color">Sugerencia de tratamiento</h5>
+                <p class="overflow">{{paciente?.fichaTratamiento?.sugerenciaTratamiento}}</p>
+            </div>
+        </div>
+
+        <!-- Objetivos de la terapia -->
+        <div class="row datos-anamnesis">
+            <div class="col-lg-12">
+                <i class="bi bi-check2-circle icons"></i>
+                <h5 class="color">Objetivos de la terapia</h5>
+                <p class="overflow">{{paciente?.fichaTratamiento?.objetivosTerapia}}</p>
+            </div>
+        </div>
+
+        <div class="row datos-anamnesis">
+            <div class="col-lg-12">
+                <button [routerLink]="['../ficha-tratamiento/', paciente.idPaciente]" class="btn btn-primary"
+                    type="button">Modificar ficha de tratamiento</button>
+            </div>
+        </div>
+    </div>
+</div>

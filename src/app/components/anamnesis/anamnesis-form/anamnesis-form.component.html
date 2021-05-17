@@ -114,14 +114,14 @@
 
                 <div class="row">
 
-                    <!-- Guardar la anamnesis -->
+                    <!-- Guardar/actualizar la anamnesis -->
                     <div class="col-lg-7 text-right">
                         <button *ngIf="!anamnesis.idAnamnesis; else updateButton" (click)="createAnamnesis()"
                             [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid"
                             class="btn btn-primary" type="submit">Registrar anamnesis</button>
 
                         <ng-template #updateButton>
-                            <button (click)="uodateAnamnesis()"
+                            <button (click)="updateAnamnesis()"
                                 [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid"
                                 class="btn btn-primary" type="submit">Guardar cambios</button>
                         </ng-template>

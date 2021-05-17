@@ -99,7 +99,8 @@ export class NuevoHorarioFormComponent implements OnInit {
       "estadoCivil": "",
       "familiaNuclear": "",
       "atenciones": [],
-      "anamnesis": null!
+      "anamnesis": null!,
+      "fichaTratamiento": null!
     }
 
     this.pacienteService.crearPaciente(this.paciente).subscribe(paciente => {

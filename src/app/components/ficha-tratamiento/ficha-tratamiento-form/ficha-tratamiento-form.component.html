@@ -1,0 +1,154 @@
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-lg-12" id="title">
+            <h2>{{paciente.nombre + " " + paciente.apellido}}</h2>
+            <h5>Complete los campos solicitados para registrar la ficha de tratamiento del paciente.</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12" id="body">
+            <form>
+
+                <!-- Motivo consulta profesional -->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="motivo-consulta-profesional" class="form-label">Motivo de la consulta:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
+                            <textarea name="motivo-consulta-profesional" id="motivo-consulta-profesional" cols="12"
+                                rows="6" class="form-control" ngModel #motivoConsulta="ngModel"
+                                [(ngModel)]="fichaTratamiento.motivoConsultaProfesional" required
+                                maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="motivoConsulta.invalid && (motivoConsulta.touched || motivoConsulta.dirty)">
+                            <div *ngIf="motivoConsulta.errors?.required">
+                                <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
+                            </div>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="motivoConsulta && motivoConsulta.value?.length > 1500 && motivoConsulta.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - motivoConsulta.value?.length}}
+                                caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultado del diagnóstico -->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="resultado-diagnostico" class="form-label">Resultado del diagnóstico:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person-check-fill"></i></span>
+                            <textarea name="resultado-diagnostico" id="resultado-diagnostico" cols="12" rows="6"
+                                class="form-control" ngModel #resultadoDiagnostico="ngModel"
+                                [(ngModel)]="fichaTratamiento.resultadoDiagnostico" required
+                                maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="resultadoDiagnostico.invalid && (resultadoDiagnostico.touched || resultadoDiagnostico.dirty)">
+                            <div *ngIf="resultadoDiagnostico.errors?.required">
+                                <small class="text-danger">Se debe ingresar el resultado del diagnóstico del
+                                    paciente.</small>
+                            </div>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="resultadoDiagnostico && resultadoDiagnostico.value?.length > 1500 && resultadoDiagnostico.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - resultadoDiagnostico.value?.length}}
+                                caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sugerencia de tratamiento -->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="sugerencia-tratamiento" class="form-label">Sugerencia de tratamiento:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-chat-dots-fill"></i></span>
+                            <textarea name="sugerencia-tratamiento" id="sugerencia-tratamiento" cols="12" rows="6"
+                                class="form-control" ngModel #sugerenciaTratamiento="ngModel"
+                                [(ngModel)]="fichaTratamiento.sugerenciaTratamiento" required
+                                maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="sugerenciaTratamiento.invalid && (sugerenciaTratamiento.touched || sugerenciaTratamiento.dirty)">
+                            <div *ngIf="sugerenciaTratamiento.errors?.required">
+                                <small class="text-danger">Se debe ingresar la sugerencia de tratamiento.</small>
+                            </div>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="sugerenciaTratamiento && sugerenciaTratamiento.value?.length > 1500 && sugerenciaTratamiento.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - sugerenciaTratamiento.value?.length}}
+                                caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objetivos de la terapia -->
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="objetivos-terapia" class="form-label">Objetivos de la terapia:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
+                            <textarea name="objetivos-terapia" id="objetivos-terapia" cols="12" rows="6"
+                                class="form-control" ngModel #objetivosTerapia="ngModel"
+                                [(ngModel)]="fichaTratamiento.objetivosTerapia" required maxLength="2000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="objetivosTerapia.invalid && (objetivosTerapia.touched || objetivosTerapia.dirty)">
+                            <div *ngIf="objetivosTerapia.errors?.required">
+                                <small class="text-danger">Se deben ingresar los objetivos de la terapia a
+                                    realizar.</small>
+                            </div>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="objetivosTerapia && objetivosTerapia.value?.length > 1500 && objetivosTerapia.value?.length < 2000">
+                            <small class="text-secondary">Quedan {{2000 - objetivosTerapia.value?.length}}
+                                caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Guardar/actualizar la ficha de tratamiento -->
+                    <div class="col-lg-7 text-right">
+                        <button *ngIf="!fichaTratamiento.idFichaTratamiento; else updateButton" (click)="createFichaTratamiento()"
+                            [disabled]="motivoConsulta.invalid || resultadoDiagnostico.invalid || sugerenciaTratamiento.invalid || objetivosTerapia.invalid"
+                            class="btn btn-primary" type="submit">Registrar ficha</button>
+
+                        <ng-template #updateButton>
+                            <button (click)="updateFichaTratamiento()"
+                                [disabled]="motivoConsulta.invalid || resultadoDiagnostico.invalid || sugerenciaTratamiento.invalid || objetivosTerapia.invalid"
+                                class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </ng-template>
+                    </div>
+
+                    <!-- Para volver atrás -->
+                    <div class="col-lg-5 text-right">
+                        <button
+                            (click)="back(motivoConsulta.value, resultadoDiagnostico.value, sugerenciaTratamiento.value, objetivosTerapia.value)"
+                            class="btn btn-primary" type="button">Volver</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

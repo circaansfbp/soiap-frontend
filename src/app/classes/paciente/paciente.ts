@@ -1,4 +1,5 @@
 import { Anamnesis } from '../anamnesis/anamnesis';
+import { FichaTratamiento } from '../ficha-tratamiento/ficha-tratamiento';
 import { HorarioAtencion } from '../horario-atencion/horario-atencion';
 
 export class Paciente {
@@ -13,7 +14,8 @@ export class Paciente {
   estadoCivil!: string;
   familiaNuclear!: string;
   atenciones!: HorarioAtencion[];
-  anamnesis!: Anamnesis;  
+  anamnesis!: Anamnesis;
+  fichaTratamiento!: FichaTratamiento;
 
   constructor() {
 

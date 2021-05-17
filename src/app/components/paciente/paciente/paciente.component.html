@@ -75,9 +75,10 @@
             </ng-template>
         </div>
 
-        <div class="row" id="anamnesis-paciente">
+        <!-- Anamnesis del paciente -->
+        <div class="row info-paciente">
             <div *ngIf="!paciente.anamnesis" class="col-lg-12 text-center">
-                <h4>La anamnesis del paciente no ha sido registrada.</h4>
+                <h4>La anamnesis no ha sido registrada.</h4>
                 <h5>¿Desea registrarla?</h5>
                 <button [routerLink]="['../anamnesis/', paciente.idPaciente]" class="btn btn-primary"
                     type="button">Registrar anamnesis</button>
@@ -85,6 +86,21 @@
 
             <div *ngIf="paciente.anamnesis" class="col-lg-12 text-center">
                 <app-anamnesis [paciente]="paciente" [fechaAnamnesis]="fechaAnamnesis"></app-anamnesis>
+            </div>
+        </div>
+
+        <!-- Ficha de tratamiento -->
+        <div class="row info-paciente">
+            <div *ngIf="!paciente.fichaTratamiento" class="col-lg-12 text-center">
+                <h4>La ficha de tratamiento no ha sido registrada</h4>
+                <h5>¿Desea registrarla?</h5>
+                <button [routerLink]="['../ficha-tratamiento/', paciente.idPaciente]" class="btn btn-primary"
+                    type="button">Registrar ficha de tratamiento</button>
+            </div>
+
+            <div *ngIf="paciente.fichaTratamiento" class="col-lg-12 text-center">
+                <app-ficha-tratamiento [paciente]="paciente" [fechaCreacionFicha]="fechaCreacionFichaTratamiento">
+                </app-ficha-tratamiento>
             </div>
         </div>
 

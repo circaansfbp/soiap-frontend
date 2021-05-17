@@ -61,12 +61,12 @@ export class AnamnesisFormComponent implements OnInit {
         "Anamnesis registrada!",
         "La anamnesis del paciente ha sido registrada exitosamente",
         "success"
-      )
-    })
+      );
+    });
   }
 
   // Actualizar la anamnesis de un paciente
-  uodateAnamnesis() {
+  updateAnamnesis() {
     if (this.anamnesis.observaciones == "") this.anamnesis.observaciones = "-";
 
     swal.fire({

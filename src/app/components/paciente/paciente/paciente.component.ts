@@ -25,6 +25,9 @@ export class PacienteComponent implements OnInit {
   // Para desplegar la fecha de la anamnesis
   fechaAnamnesis!: string;
 
+  // Para desplegar la fecha en la que se creó la ficha de tratamiento del paciente
+  fechaCreacionFichaTratamiento!: string;
+
   constructor(private activatedRoute: ActivatedRoute,
     private pacienteService: PacienteService,
     private router: Router) { }
@@ -47,6 +50,7 @@ export class PacienteComponent implements OnInit {
           else this.birthday = "-";
 
           if (this.paciente.anamnesis != undefined) this.fechaAnamnesis = moment(this.paciente.anamnesis.fechaAnamnesis).format("dddd Do MMMM YYYY");
+          if (this.paciente.fichaTratamiento != undefined) this.fechaCreacionFichaTratamiento = moment(this.paciente.fichaTratamiento.fechaDiagnostico).format("dddd Do MMMM YYYY");
         });
       }
     });
