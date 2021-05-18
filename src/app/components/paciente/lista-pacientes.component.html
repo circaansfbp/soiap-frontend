@@ -1,0 +1,53 @@
+<div class="container card" id="main">
+    <div class="row" id="title">
+        <div class="col-lg-6 date">
+            <h1>Pacientes</h1>
+        </div>
+        <div class="col-lg-6" id="search-by-name-input">
+            <app-busqueda-paciente (searchPatientEvent)="getPatients($event)"></app-busqueda-paciente>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive-lg text-center">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Número de contacto</th>
+                            <th>Afiliación de salud</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let paciente of pacientes">
+                            <td>{{paciente.nombre + " " + paciente.apellido}}</td>
+                            <td>{{paciente.telefono}}</td>
+                            <td>{{paciente.afiliacionSalud}}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary"
+                                            type="button">Ver detalle</button>
+                                        <button [routerLink]="['../../atenciones', paciente.idPaciente]"
+                                            class="btn btn-primary" type="button">Ver
+                                            atenciones</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <app-paginador *ngIf="paginador" [paginador]='paginador'></app-paginador>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

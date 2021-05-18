@@ -1,0 +1,54 @@
+<!-- Agenda (Horas del día + agendar horas disponibles)-->
+<div class="container" id="main">
+    <div class="row" id="title">
+        <div class="col-lg-6 date">
+            <h1>Agenda</h1>
+        </div>
+
+        <!-- Input que permite buscar horarios por fecha -->
+        <div class="col-lg-6" id="search-date-input">
+            <form>
+                <div class="form-group">
+                    <label for="fecha-atencion">Buscar horarios para la fecha:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
+                        <input required type="date" class="form-control" id="fecha-atencion" ngModel
+                            name="fecha-atencion" #fechaAtencion="ngModel">
+                    </div>
+                </div>
+                <button [disabled]="fechaAtencion.invalid" type="submit" class="btn btn-primary"
+                    (click)="searchBySpecificDate(fechaAtencion.value)">Buscar</button>
+            </form>
+        </div>
+    </div>
+    <!-- Botones de día siguiente y anterior -->
+    <div class="row" id="fecha">
+        <div class="col-lg-2 date">
+            <button (click)="previousDay()" class="btn btn-primary" type="button"><i
+                    class="bi bi-arrow-left-short"></i>Día anterior</button>
+        </div>
+        <div class="col-lg-8 text-center date">
+            <h2>
+                {{titleDate}}
+            </h2>
+        </div>
+        <div class="col-lg-2 date">
+            <button (click)="nextDay()" class="btn btn-primary" type="button">Día siguiente<i
+                    class="bi bi-arrow-right-short"></i></button>
+        </div>
+    </div>
+    <div class="row" id="subtitles">
+        <div class="col-lg-8 date">
+            <h3>Horarios del día</h3>
+        </div>
+        <div class="col-lg-4 text-right" id="button-div">
+            <button class="btn btn-primary" [routerLink]="['nuevo-horario']"><i class="bi bi-plus"></i>Nuevo
+                horario</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <app-horario [fechaActual]="actualDate"></app-horario>
+        </div>
+    </div>
+</div>

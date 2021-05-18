@@ -1,0 +1,81 @@
+#button-div {
+    padding-top: 30px;
+}
+
+#fecha {
+    margin-bottom: 25px;
+}
+
+#main {
+    margin-top: 40px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    background-color: #fff;
+    border-radius: 15px;
+    padding-top: 20px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 80px;
+}
+
+#no-patients {
+    font-size: 150px;
+    background-color: #fff;
+    color: #284b63;
+}
+
+#search-date-input {
+    margin-top: 7px;
+}
+
+#subtitles {
+    padding-bottom: 20px;
+    border-bottom: 5px solid #284b63;
+    border-top: 5px solid #284b63;
+}
+
+#title {
+    padding-bottom: 25px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid #284b63;
+}
+
+.bi-plus {
+    margin-right: 4px;
+    font-size: 16px;
+}
+
+.date {
+    margin-top: 30px;
+}
+
+.form { 
+    margin-right: 0%;
+}
+
+.modal-content {
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 60px;
+}
+
+.modal-header {
+    border-bottom: 5px solid #284b63;
+}
+
+.table-dark {
+    background-color: #284b63;
+}
+
+button, button:disabled, button:focus, button:hover {
+    background-color: #284b63;
+    border-color: #284b63;
+}
+
+i, span {
+    background-color: #284b63;
+    color: #fff;
+}
+
+
+

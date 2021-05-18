@@ -1,10 +1,17 @@
-#date {
-    margin-top: 40px;
+#brand {
+    font-size: 28px;
 }
 
-#main {
-    margin-top: 100px;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-    background-color: #fefae0;
-    border-radius: 30px;
+#contenido {
+    border-left: 2px solid #fff;
+    padding-left: 20px;
+}
+
+.navbar {
+    height: 100px;
+}
+
+a {
+    color: #fff;
+    font-size: 25px;
 }

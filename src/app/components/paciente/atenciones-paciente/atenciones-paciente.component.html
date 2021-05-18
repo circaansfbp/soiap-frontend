@@ -1,0 +1,63 @@
+<div class="container" id="main">
+
+    <!-- Título -->
+    <div class="row" id="title">
+        <div class="col-lg-7" id="text">
+            <h2>{{paciente.nombre + " " + paciente.apellido}}</h2>
+            <h5>El/la paciente ha agendado las siguientes atenciones.</h5>
+        </div>
+        <div class="col-lg-5">
+            <app-filtrar-asistencia (filterEvent)="filtrar($event)"></app-filtrar-asistencia>
+        </div>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="row" id="body">
+        <div *ngIf="filtered.length > 0" class="col-lg-12 text-center">
+
+            <!-- Tabla que muestra las atenciones-->
+            <div class="table table-responsive-lg">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Asistencia</th>
+                            <th>Pago</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let atencion of filtered | paginate: {id: 'atenciones-paciente', 
+                                                                            itemsPerPage: 10,
+                                                                            currentPage: currentPage,
+                                                                            totalItems: total}">
+                            <!-- Fecha -->
+                            <td>{{formatDisplayFechaAtencion(atencion)}}</td>
+
+                            <!-- Asistencia -->
+                            <td *ngIf="atencion.asistencia == 1">Asiste a su sesión</td>
+                            <td *ngIf="atencion.asistencia == -1">No asiste a su sesión </td>
+                            <td *ngIf="atencion.asistencia == 0">Asistencia pendiente</td>
+
+                            <!-- Pago por atención -->
+                            <td *ngIf="atencion.pago">La sesión fue pagada</td>
+                            <td *ngIf="!atencion.pago">La sesión no ha sido pagada</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="currentPage = $event" id="atenciones-paciente" [maxSize]="5" [directionLinks]="true"
+                    previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            </div>
+        </div>
+
+        <!-- Si el paciente no tiene atenciones asociadas -->
+        <div *ngIf="filtered.length == 0" class="col-lg-12 text-center">
+            <i class="bi bi-exclamation-diamond-fill color"></i>
+            <h3 class="color">No se encontraron horarios de atención.</h3>
+        </div>
+
+        <!-- Botón que permite volver atrás -->
+        <div class="col-lg-12 text-center">
+            <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+        </div>
+    </div>
+</div>

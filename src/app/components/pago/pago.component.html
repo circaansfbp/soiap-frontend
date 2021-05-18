@@ -1,0 +1,29 @@
+<div class="container">
+
+    <!-- Afiliaciónd de salud del paciente -->
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <i class="bi bi-file-medical-fill"></i>
+            <h5 class="color">Afiliación de salud asociada al pago</h5>
+            <h5 class="overflow">{{horarioAtencion.pago?.afiliacionPaciente}}</h5>
+        </div>
+    </div>
+
+    <!-- Medio de pago -->
+    <div *ngIf="horarioAtencion.pago" class="row">
+        <div class="col-lg-12 text-center">
+            <i class="bi bi-wallet-fill"></i>
+            <h5 class="color">Medio de pago</h5>
+            <h5 class="overflow">{{horarioAtencion.pago.medioPago}}</h5>
+        </div>
+    </div>
+
+    <!-- Monto pagado -->
+    <div *ngIf="horarioAtencion.pago && horarioAtencion.pago.montoPago != null" class="row">
+        <div class="col-lg-12 text-center">
+            <i class="bi bi-cash-stack"></i>
+            <h5 class="color">Monto pagado</h5>
+            <h5 class="overflow">${{horarioAtencion.pago.montoPago}}</h5>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+#btn-back {
+    margin-top: 40px;
+}
+
+#main {
+    margin-top: 40px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    background-color: #fff;
+    border-radius: 15px;
+    padding-top: 20px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 80px;
+}
+
+#no-patients {
+    font-size: 150px;
+    background-color: #fff;
+    color: #284b63;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+#title {
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid #284b63;
+}
+
+.btn-icons {
+    width: 60%;
+    margin-right: 30px;
+}
+
+.btn-save-modify {
+    margin-top: 15px;
+}
+
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+.form-control.ng-valid {
+    border: 2px solid green;
+}
+
+.icon-row {
+    height: 200px;
+}
+
+.icons {
+    font-size: 160px;
+    background-color: #fff;
+    color: #284b63;
+    margin-left: 35px;
+}
+
+.on-display-icon {
+    color: #284b63;
+    background-color: #fff;
+    font-size: 50px;
+}
+
+.on-display-text {
+    margin-bottom: 30px;
+    overflow-wrap: break-word;
+}
+
+.table-dark {
+    background-color: #284b63;
+}
+
+button, button:disabled, button:focus, button:hover {
+    background-color: #284b63;
+    border-color: #284b63;
+}
+
+i {
+    background-color: #284b63;
+    color: #fff;
+}
+
+h2 {
+    padding-top: 40px;
+}
+
+span {
+    margin-bottom: 5px;
+    background-color: #284b63;
+    color: #fff;
+}
+

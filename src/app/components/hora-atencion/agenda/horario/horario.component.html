@@ -1,0 +1,198 @@
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="table-responsive-lg">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Hora</th>
+                            <th>Nombre paciente</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let hora of horasFechaDelDia">
+                            <td>{{hora.horaAtencion.slice(0, 5)}} hrs.</td>
+                            <td>{{hora.paciente.nombre + " " + hora.paciente.apellido}}</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <button (click)="verDetalle(hora)" data-toggle="modal"
+                                            data-target="#detalleHora" class="btn btn-primary" type="button">Ver
+                                            detalle</button>
+                                        <button [routerLink]="['/nuevo-horario', hora.idAtencion]"
+                                            class="btn btn-primary" type="button">Modificar</button>
+                                        <button (click)="eliminarHorario(hora.idAtencion)" class="btn btn-primary"
+                                            type="button">Eliminar</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal que muestra el detalle de un horario de atención -->
+<div class="modal fade bd-example-modal-lg" id="detalleHora" tabindex="-1" role="dialog"
+    aria-labelledby="detalleHoraLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>Detalle Horario</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <!-- Nombre del paciente asociado al horario de atención -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-person-fill"></i>
+                        <h4>{{horario.paciente.nombre + " " + horario.paciente.apellido}}</h4>
+                    </div>
+                </div>
+                <!-- Teléfono del paciente -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-telephone-forward-fill resized-icons"></i>
+                        <h4>{{horario.paciente.telefono}}</h4>
+                    </div>
+                </div>
+                <!-- Afiliación de salud del paciente -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-file-medical-fill resized-icons"></i>
+                        <h4>{{horario.paciente.afiliacionSalud}}</h4>
+                    </div>
+                </div>
+                <!-- Fecha de la atención -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-calendar2-check-fill resized-icons"></i>
+                        <h4>{{fecha}}</h4>
+                    </div>
+                </div>
+
+                <!-- Hora de la atención -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-clock-fill resized-icons"></i>
+                        <h4>{{hora}}</h4>
+                    </div>
+                </div>
+
+                <!-- Opciones -->
+                <div class="row" id="options">
+                    <div class="col-lg-12 text-left">
+                        <h3>Opciones</h3>
+                    </div>
+                </div>
+
+                <!-- Confirmación de asistencia -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h5 *ngIf="horario.confirmaAsistencia == 0">
+                                ¿El paciente confirmó previamente su asistencia?
+                            </h5>
+                            <i class="bi bi-check-circle-fill icon-confirm" *ngIf="horario.confirmaAsistencia == 1"></i>
+                            <h5 *ngIf="horario.confirmaAsistencia == 1">
+                                ¡El paciente confirmó su asistencia!
+                            </h5>
+                            <i class="bi bi-x-circle-fill icon-fail" *ngIf="horario.confirmaAsistencia == -1"></i>
+                            <h5 *ngIf="horario.confirmaAsistencia == -1">
+                                El paciente no confirmó su asistencia
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center" *ngIf="horario.confirmaAsistencia == 0">
+                            <button (click)="confirmaAsistencia(1)" class="btn btn-success confirmacion"
+                                type="button">Sí</button>
+                            <button (click)="confirmaAsistencia(-1)" class="btn btn-success no-confirma"
+                                type="button">No</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registro de asistencia del paciente -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center" *ngIf="horario.asistencia == 0">
+                            <h5>La asistencia del paciente no ha sido registrada aún</h5>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="horario.asistencia == 0">
+                            <h5>¿El paciente asiste a su hora de atención?</h5>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="horario.asistencia == 0">
+                            <button (click)="asistencia(1)" class="btn btn-success confirmacion" type="button">El
+                                paciente asiste a su sesión</button>
+                            <button (click)="asistencia(-1)" class="btn btn-success no-confirma" type="button">El
+                                paciente no asiste a su sesión</button>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="horario.asistencia == 1">
+                            <i class="bi bi-check-circle-fill icon-confirm"></i>
+                            <h5>¡El paciente sí asistió a su sesión de
+                                terapia!
+                            </h5>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="horario.asistencia == -1">
+                            <i class="bi bi-x-circle-fill icon-fail"></i>
+                            <h5>El paciente no asistió a su sesión de terapia
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registro del pago del horario de atención -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center" *ngIf="!horario.pago">
+                            <h5>No se ha registrado el pago por este horario de atención</h5>
+                            <h5>¿Desea registrarlo?</h5>
+                            <button [routerLink]="['horario/pago', horario.idAtencion]"
+                                class="btn btn-primary confirmacion" type="button" data-dismiss="modal">Registrar
+                                pago</button>
+                        </div>
+                        <div class="col-lg-12 text-center" *ngIf="horario.pago">
+                            <i class="bi bi-check-circle-fill icon-confirm"></i>
+                            <h5>¡El horario de atención fue pagado!</h5>
+                            <button class="btn btn-primary confirmacion" type="button" data-dismiss="modal"
+                                data-toggle="modal" data-target="#detallePago">Ver detalle</button>
+                            <button [routerLink]="['horario/pago', horario.idAtencion, horario.pago.idPago]"
+                                class="btn btn-primary confirmacion" type="button"
+                                data-dismiss="modal">Modificar</button>
+                            <button class="btn btn-primary no-confirma" type="button">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal que permite ver el detalle del pago -->
+<div class="modal fade" id="detallePago" tabindex="-1" role="dialog" aria-labelledby="detallePagoLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>Detalle Pago</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <app-pago [horarioAtencion]="horario"></app-pago>
+            </div>
+            <div class=" modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>

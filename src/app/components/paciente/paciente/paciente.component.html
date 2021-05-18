@@ -1,0 +1,113 @@
+<div class="container" id="main">
+    <div class="container">
+        <!-- Ícono y nombre del paciente -->
+        <div class="row" id="header">
+            <div class="col-lg-4">
+                <i class="bi bi-person-lines-fill"></i>
+            </div>
+            <div class="col-lg-8 text-center" id="patient-name">
+                <h1>{{paciente.nombre + " " + paciente.apellido}}</h1>
+                <button [routerLink]="['../form', paciente.idPaciente]" class="btn btn-primary options"
+                    type="button">Modificar datos</button>
+                <button (click)="deletePatient()" class="btn btn-primary options" type="button">Eliminar</button>
+            </div>
+        </div>
+
+        <div class="row" id="datos-paciente">
+            <!-- Fecha de nacimiento -->
+            <div class="col-lg-3 text-center datos">
+                <i class="bi bi-calendar-event icons"></i>
+                <h5 class="color">Fecha de nacimiento</h5>
+                <h5 class="overflow">{{birthday}}</h5>
+            </div>
+
+            <!-- Edad -->
+            <div class="col-lg-3 text-center datos">
+                <i class="bi bi-person-circle icons"></i>
+                <h5 class="color">Edad</h5>
+                <h5 class="overflow">{{age()}}</h5>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="col-lg-3 text-center datos">
+                <i class="bi bi-telephone-forward-fill icons"></i>
+                <h5 class="color">N° de contacto</h5>
+                <h5 class="overflow">{{paciente.telefono}}</h5>
+            </div>
+
+            <!-- Estado civil -->
+            <div class="col-lg-3 text-center datos">
+                <i class="bi bi-people-fill icons"></i>
+                <h5 class="color">Estado Civil</h5>
+                <h5 class="overflow" *ngIf="paciente.estadoCivil;else empty">{{paciente.estadoCivil}}</h5>
+            </div>
+
+            <!-- Afiliacion de salud -->
+            <div class="col-lg-4 text-center datos">
+                <i class="bi bi-journal-medical icons"></i>
+                <h5 class="color">Afiliación de salud</h5>
+                <h5 class="overflow">{{paciente.afiliacionSalud}}</h5>
+            </div>
+
+            <!-- Ocupación/Profesión -->
+            <div class="col-lg-4 text-center datos">
+                <i class="bi bi-briefcase-fill icons"></i>
+                <h5 class="color">Profesión/Ocupación</h5>
+                <h5 class="overflow" *ngIf="paciente.ocupacion;else empty">{{paciente.ocupacion}}</h5>
+            </div>
+
+            <!-- Institución -->
+            <div class="col-lg-4 text-center datos">
+                <i class="bi bi-person-badge-fill icons"></i>
+                <h5 class="color">Institución</h5>
+                <h5 class="overflow" *ngIf="paciente.institucion;else empty">{{paciente.institucion}}</h5>
+            </div>
+
+            <!-- Familia nuclear -->
+            <div class="col-lg-12 text-center datos">
+                <i class="bi bi-people-fill icons"></i>
+                <h5 class="color">Grupo familiar</h5>
+                <h5 class="overflow" *ngIf="paciente.familiaNuclear;else empty">{{paciente.familiaNuclear}}</h5>
+            </div>
+
+            <ng-template #empty>
+                <h5>-</h5>
+            </ng-template>
+        </div>
+
+        <!-- Anamnesis del paciente -->
+        <div class="row info-paciente">
+            <div *ngIf="!paciente.anamnesis" class="col-lg-12 text-center">
+                <h4>La anamnesis no ha sido registrada.</h4>
+                <h5>¿Desea registrarla?</h5>
+                <button [routerLink]="['../anamnesis/', paciente.idPaciente]" class="btn btn-primary"
+                    type="button">Registrar anamnesis</button>
+            </div>
+
+            <div *ngIf="paciente.anamnesis" class="col-lg-12 text-center">
+                <app-anamnesis [paciente]="paciente" [fechaAnamnesis]="fechaAnamnesis"></app-anamnesis>
+            </div>
+        </div>
+
+        <!-- Ficha de tratamiento -->
+        <div class="row info-paciente">
+            <div *ngIf="!paciente.fichaTratamiento" class="col-lg-12 text-center">
+                <h4>La ficha de tratamiento no ha sido registrada</h4>
+                <h5>¿Desea registrarla?</h5>
+                <button [routerLink]="['../ficha-tratamiento/', paciente.idPaciente]" class="btn btn-primary"
+                    type="button">Registrar ficha de tratamiento</button>
+            </div>
+
+            <div *ngIf="paciente.fichaTratamiento" class="col-lg-12 text-center">
+                <app-ficha-tratamiento [paciente]="paciente" [fechaCreacionFicha]="fechaCreacionFichaTratamiento">
+                </app-ficha-tratamiento>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>

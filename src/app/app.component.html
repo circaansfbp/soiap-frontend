@@ -1,8 +1,22 @@
-<div class="container card" id="main">
-    <div class="row">
-        <div class="col-12 text-center" id="date">
-            <h1>{{fechaActual}}</h1>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #284b63;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="" id="brand">Dr. Patricio Lara Hadi | Consulta psicológica</a>
+        <!-- ARREGLAR BOTÓN DE COLAPSE! -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#contenido"
+            aria-controls="contenido" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="contenido">
+            <ul class="navbar-nav me-auto mb-2  mb-lg-0">
+                <li class="nav-item">
+                    <a [routerLink]="['']" class="nav-link active" aria-current="page">Agenda</a>
+                </li>
+                <li class="nav-item">
+                    <a [routerLink]="['pacientes/page/0']" class="nav-link active" aria-current="page">Pacientes</a>
+                </li>
+            </ul>   
         </div>
     </div>
-    <app-horario></app-horario>
-</div>
+</nav>
+
+<router-outlet></router-outlet>

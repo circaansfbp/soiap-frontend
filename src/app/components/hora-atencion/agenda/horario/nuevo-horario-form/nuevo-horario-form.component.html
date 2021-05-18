@@ -1,0 +1,454 @@
+<div class="container" id="main">
+  <!-- Título -->
+  <div class="row" id="title">
+    <div class="col-lg-12">
+      <h2>Horario de atención</h2>
+      <h5>Ingrese los datos solicitados para agendar el horario de atención.</h5>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="row">
+
+    <!-- Despliega vista que permite la elección entre un paciente permanente y uno nuevo -->
+    <div class="col-lg-6" *ngIf="!paciente && pacientePermanente == undefined">
+      <div class="row">
+        <h5>Seleccione el tipo de paciente; si este es nuevo en la consulta, se le permitirá ingresar sus datos.
+        </h5>
+      </div>
+      <div class="row icon-row">
+        <div class="col-lg-6">
+          <i class="bi bi-person-check-fill icons"></i>
+        </div>
+        <div class="col-lg-6">
+          <i class="bi bi-person-plus-fill icons"></i>
+        </div>
+      </div>
+      <div class="row button-row">
+        <div class="col-lg-6 text-center">
+          <button (click)="permanentOrNewPatient(true)" class="btn btn-primary btn-icons"
+            type="button">Permanente</button>
+        </div>
+        <div class="col-lg-6 text-center">
+          <button (click)="permanentOrNewPatient(false)" class="btn btn-primary btn-icons" type="button">Nuevo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vista paciente permanente -->
+    <div class="col-lg-6" *ngIf="!paciente && pacientePermanente">
+      <div class="row">
+        <div class="col-lg-12">
+          <h5>Ingrese el nombre del paciente, su apellido o ambos campos para buscar al paciente.</h5>
+        </div>
+        <div class="col-lg-12">
+          <!-- Permite la búsqueda entre todos los pacientes -->
+          <app-busqueda-paciente (searchPatientEvent)="searchPatients($event)"></app-busqueda-paciente>
+        </div>
+      </div>
+      <div class="row" id="results">
+        <div class="col-lg-12 text-center" *ngIf="!pacientes">
+          <i class="bi bi-people-fill" id="no-patients"></i>
+          <h3>Los pacientes encontrados serán desplegados aquí</h3>
+          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Cancelar</button>
+        </div>
+        <div class="col-lg-12 text-center" *ngIf="pacientes">
+          <table class="table table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>Nombre</th>
+                <th>Afiliación</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let paciente of pacientes">
+                <td>{{paciente.nombre + " " + paciente.apellido}}</td>
+                <td>{{paciente.afiliacionSalud}}</td>
+                <td>
+                  <div class="row">
+                    <div class="col-lg text-center">
+                      <button (click)="loadPatientData(paciente.idPaciente)" class="btn btn-primary" type="button"
+                        data-dismiss="modal">Seleccionar</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button (click)="goBack()" class="btn btn-primary my-2" type="button">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vista paciente nuevo -->
+    <div class="col-lg-6" *ngIf="!paciente && pacientePermanente == false">
+      <h5 class="mx-3">Registrar paciente nuevo</h5>
+
+      <!-- Formulario para crear al nuevo paciente -->
+      <form>
+
+        <!-- Nombre paciente-->
+        <div class="col-lg-12">
+          <label for="nombre" class="form-label">Nombre(s)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+            <input type="text" class="form-control" id="nombre" name="nombre" ngModel #nombrePaciente="ngModel" required
+              minlength="3" maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" [(ngModel)]="nombre">
+
+            <!-- Manejo de errores del campo -->
+            <div *ngIf="nombrePaciente?.invalid && (nombrePaciente?.touched || nombrePaciente?.dirty)"
+              class="col-lg-12">
+              <div *ngIf="nombrePaciente.errors?.required">
+                <small class="text-danger">Se debe ingresar el nombre del paciente!</small>
+              </div>
+              <div *ngIf="nombrePaciente.errors?.minlength">
+                <small class="text-danger">El nombre debe poseer un mínimo de tres
+                  caracteres!</small>
+              </div>
+              <div *ngIf="nombrePaciente.errors?.pattern">
+                <small class="text-danger">El nombre no debe contener dígitos ni caracteres
+                  especiales!</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apellido del paciente -->
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="apellido-paciente">Apellido(s)</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input id="apellido-paciente" name="apellido-paciente" type="text" class="form-control"
+                [(ngModel)]="apellido" ngModel #apellidoPaciente="ngModel" required minlength="3" maxlength="30"
+                pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
+
+              <!-- Manejo de errores  -->
+              <div *ngIf="apellidoPaciente?.invalid && (apellidoPaciente?.touched || apellidoPaciente?.dirty)"
+                class="col-lg-12">
+                <div *ngIf="apellidoPaciente.errors?.required">
+                  <small class="text-danger">Se debe ingresar el/los apellido(s) del
+                    paciente!</small>
+                </div>
+                <div *ngIf="apellidoPaciente.errors?.minlength">
+                  <small class="text-danger">El/los apellido(s) debe(n) poseer un mínimo de tres
+                    caracteres!</small>
+                </div>
+                <div *ngIf="apellidoPaciente.errors?.pattern">
+                  <small class="text-danger">El/los apellido(s) no debe(n) contener dígitos ni
+                    caracteres especiales!</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teléfono del paciente -->
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="telefono-paciente">Telefono</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-telephone-forward-fill"></i></span>
+              <span class="input-group-text">+569</span>
+              <input id="telefono-paciente" name="telefono-paciente" type="text" class="form-control"
+                [(ngModel)]="nroTelefono" ngModel #telefonoPaciente="ngModel" required minlength="8" maxlength="8"
+                pattern="^[0-9]+$">
+              <div class="col-lg-12">
+                <small class="form-text text-secondary">No es necesario que ingrese "+569"</small>
+              </div>
+
+              <!-- Manejo de errores  -->
+              <div *ngIf="telefonoPaciente?.invalid && (telefonoPaciente?.touched || telefonoPaciente?.dirty)"
+                class="col-lg-12">
+                <div *ngIf="telefonoPaciente.errors?.required">
+                  <small class="text-danger">Se debe ingresar el número de teléfono del
+                    paciente!</small>
+                </div>
+                <div *ngIf="telefonoPaciente.errors?.minlength">
+                  <small class="text-danger">El número de teléfono debe poseer un total de 8
+                    dígitos!</small>
+                </div>
+                <div *ngIf="telefonoPaciente.errors?.pattern">
+                  <small class="text-danger">El número de teléfono solo debe contener
+                    dígitos!</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Afiliación de salud -->
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="afiliacion-salud-paciente">Afiliación de salud</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
+              <input id="afiliacion-salud-paciente" name="afiliacion-salud-paciente" type="text" class="form-control"
+                [(ngModel)]="afiliacion" ngModel #afiliacionSaludPaciente="ngModel" required maxlength="30">
+
+              <!-- Manejo de errores  -->
+              <div
+                *ngIf="afiliacionSaludPaciente?.invalid && (afiliacionSaludPaciente?.touched || afiliacionSaludPaciente?.dirty)"
+                class="col-lg-12">
+                <div *ngIf="afiliacionSaludPaciente.errors?.required">
+                  <small class="text-danger">Se debe ingresar la afiliación de salud del
+                    paciente!</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg">
+          <div class="row">
+            <div class="col-lg text-left">
+              <button
+                [disabled]="nombrePaciente.invalid || apellidoPaciente.invalid || telefonoPaciente.invalid || afiliacionSaludPaciente.invalid"
+                (click)="guardarNuevoPaciente()" class="btn btn-primary" type="button">Guardar datos</button>
+            </div>
+            <div class="col-lg text-right">
+              <button (click)="goBack()" class="btn btn-primary" type="button">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Una vez se encuentra o se crea el paciente, se despliegan sus datos -->
+    <div class="col-lg-6 text-center" *ngIf="paciente && modify == false">
+
+      <!-- Nombre del paciente -->
+      <div class="col-lg-12 on-display-text">
+        <i class="bi bi-person-fill on-display-icon"></i>
+        <h4>{{paciente.nombre + " " + paciente.apellido}}</h4>
+      </div>
+
+      <!-- Teléfono del paciente -->
+      <div class="col-lg-12 on-display-text">
+        <i class="bi bi-telephone-forward-fill on-display-icon"></i>
+        <h4>{{paciente.telefono}}</h4>
+      </div>
+
+      <!-- Afiliación de salud del paciente -->
+      <div class="col-lg-12 on-display-text">
+        <i class="bi bi-file-medical-fill on-display-icon"></i>
+        <h4>{{paciente.afiliacionSalud}}</h4>
+      </div>
+
+      <div class="col-lg-12" *ngIf="horarioAtencion.idAtencion">
+        <button (click)="modifyPatient()" class="btn btn-primary" type="button">Modificar datos</button>
+      </div>
+    </div>
+
+    <!-- Si se desea modificar al paciente -->
+    <div class="col-lg-6" *ngIf="paciente && modify">
+      <h5 class="mx-3">Modificar datos del paciente</h5>
+      <form>
+
+        <!-- Nombre paciente-->
+        <div class="col-lg-12">
+          <label for="nombre" class="form-label">Nombre(s)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+            <input type="text" class="form-control" id="nombre" name="nombre" ngModel #nombrePaciente="ngModel" required
+              minlength="3" maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" [(ngModel)]="paciente.nombre">
+
+            <!-- Manejo de errores del campo -->
+            <div *ngIf="nombrePaciente?.invalid && (nombrePaciente?.touched || nombrePaciente?.dirty)"
+              class="col-lg-12">
+              <div *ngIf="nombrePaciente.errors?.required">
+                <small class="text-danger">Se debe ingresar el nombre del paciente!</small>
+              </div>
+              <div *ngIf="nombrePaciente.errors?.minlength">
+                <small class="text-danger">El nombre debe poseer un mínimo de tres
+                  caracteres!</small>
+              </div>
+              <div *ngIf="nombrePaciente.errors?.pattern">
+                <small class="text-danger">El nombre no debe contener dígitos ni caracteres
+                  especiales!</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apellido del paciente -->
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="apellido-paciente">Apellido(s)</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input id="apellido-paciente" name="apellido-paciente" type="text" class="form-control"
+                [(ngModel)]="paciente.apellido" ngModel #apellidoPaciente="ngModel" required minlength="3"
+                maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
+
+              <!-- Manejo de errores  -->
+              <div *ngIf="apellidoPaciente?.invalid && (apellidoPaciente?.touched || apellidoPaciente?.dirty)"
+                class="col-lg-12">
+                <div *ngIf="apellidoPaciente.errors?.required">
+                  <small class="text-danger">Se debe ingresar el/los apellido(s) del
+                    paciente!</small>
+                </div>
+                <div *ngIf="apellidoPaciente.errors?.minlength">
+                  <small class="text-danger">El/los apellido(s) debe(n) poseer un mínimo de tres
+                    caracteres!</small>
+                </div>
+                <div *ngIf="apellidoPaciente.errors?.pattern">
+                  <small class="text-danger">El/los apellido(s) no debe(n) contener dígitos ni
+                    caracteres especiales!</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Teléfono del paciente -->
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="telefono-paciente">Telefono</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-telephone-forward-fill"></i></span>
+              <span class="input-group-text">+569</span>
+              <input id="telefono-paciente" name="telefono-paciente" type="text" class="form-control"
+                [(ngModel)]="paciente.telefono" ngModel #telefonoPaciente="ngModel" required minlength="8" maxlength="8"
+                pattern="^[0-9]+$">
+              <div class="col-lg-12">
+                <small class="form-text text-secondary">No es necesario que ingrese "+569"</small>
+              </div>
+
+              <!-- Manejo de errores  -->
+              <div *ngIf="telefonoPaciente?.invalid && (telefonoPaciente?.touched || telefonoPaciente?.dirty)"
+                class="col-lg-12">
+                <div *ngIf="telefonoPaciente.errors?.required">
+                  <small class="text-danger">Se debe ingresar el número de teléfono del
+                    paciente!</small>
+                </div>
+                <div *ngIf="telefonoPaciente.errors?.minlength">
+                  <small class="text-danger">El número de teléfono debe poseer un total de 8
+                    dígitos!</small>
+                </div>
+                <div *ngIf="telefonoPaciente.errors?.pattern">
+                  <small class="text-danger">El número de teléfono solo debe contener
+                    dígitos!</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Afiliación de salud -->
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label for="afiliacion-salud-paciente">Afiliación de salud</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
+              <input id="afiliacion-salud-paciente" name="afiliacion-salud-paciente" type="text" class="form-control"
+                [(ngModel)]="paciente.afiliacionSalud" ngModel #afiliacionSaludPaciente="ngModel" required
+                maxlength="30">
+
+              <!-- Manejo de errores  -->
+              <div
+                *ngIf="afiliacionSaludPaciente?.invalid && (afiliacionSaludPaciente?.touched || afiliacionSaludPaciente?.dirty)"
+                class="col-lg-12">
+                <div *ngIf="afiliacionSaludPaciente.errors?.required">
+                  <small class="text-danger">Se debe ingresar la afiliación de salud del
+                    paciente!</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Formulario para crear el nuevo horario de atención -->
+    <div class="col-lg-6 text-left">
+      <h5>Registrar nuevo horario de atención</h5>
+      <form>
+        <div class="row">
+          <!-- Fecha de la atención -->
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label for="fecha-atencion" class="form-label">Fecha de la atención:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
+                <input [ngStyle]="fechaAtencion.value < fechaActual ? {'border': '2px solid red'} : {}" [disabled]="!paciente" type="date" class="form-control" id="fecha-atencion" name="fecha-atencion"
+                  ngModel [(ngModel)]="horarioAtencion.fechaAtencion" #fechaAtencion="ngModel" required>
+                <div *ngIf="fechaAtencion?.invalid && (fechaAtencion?.touched || fechaAtencion?.dirty)"
+                  class="col-lg-12">
+                  <small class="text-danger">Se debe ingresar la fecha de la atención.</small>
+                </div>
+                <div *ngIf="(fechaAtencion.touched || fechaAtencion.dirty) && fechaAtencion.value < fechaActual" class="col-lg-12">
+                  <small class="text-danger">No se puede seleccionar una fecha pasada.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Hora de la atención -->
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label for="hora-atencion" class="form-label">Hora de la atención:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-clock-fill"></i></span>
+                <input [disabled]="!paciente" type="time" class="form-control" id="hora-atencion" name="hora-atencion"
+                  ngModel [(ngModel)]="horarioAtencion.horaAtencion" #horaAtencion="ngModel" required>
+                <div *ngIf="horaAtencion?.invalid && (horaAtencion?.touched || horaAtencion?.dirty)" class="col-lg-12">
+                  <small class="text-danger">Se debe ingresar la hora de la atención!</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Número de consulta a la que asiste el paciente -->
+          <div class="col-lg-4">
+            <label for="nro-consulta" class="form-label">N° consulta:</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-hash"></i></span>
+              <input required [disabled]="!paciente" type="number" class="form-control" id="nro-consulta"
+                name="nro-consulta" ngModel [(ngModel)]="horarioAtencion.nroConsulta" #nroConsulta="ngModel"
+                pattern="^[0-9]{1}$" min="1" max="8">
+            </div>
+          </div>
+
+          <!-- Manejo de errores -->
+          <div *ngIf="nroConsulta?.invalid && (nroConsulta?.touched || nroConsulta?.dirty)" class="col-lg-12">
+            <div *ngIf="nroConsulta.errors?.required">
+              <small class="text-danger">Se debe ingresar el número de consulta.</small>
+            </div>
+
+            <div *ngIf="nroConsulta.errors?.pattern">
+              <small class="text-danger">Solo se permite el ingreso de 1 dígito.</small>
+            </div>
+          </div>
+          <div *ngIf="(nroConsulta.touched || nroConsulta.dirty) && (nroConsulta.value < 1 || nroConsulta.value > 8)"
+            class="col-lg-12">
+            <small class="text-danger">El número de consulta debe estar entre el 1 y 8.</small>
+          </div>
+        </div>
+
+        <!-- Si se desea crear una atención, se muestra este botón -->
+        <button
+          [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.value < 1 || nroConsulta.value > 8 || nroConsulta.invalid || !paciente || fechaAtencion.value < fechaActual"
+          type="submit" class="btn btn-primary btn-save-modify" (click)="guardarNuevoHorario()"
+          *ngIf="!horarioAtencion.idAtencion;else updateButton">Guardar
+          horario</button>
+
+        <!-- Si se desea actualizar una atención, se muestra este botón -->
+        <ng-template #updateButton>
+          <button
+            [disabled]="fechaAtencion.invalid || horaAtencion.invalid || nroConsulta.value < 1 || nroConsulta.value > 8 || !paciente || fechaAtencion.value < fechaActual"
+            type="submit" class="btn btn-primary btn-save-modify" (click)="updateHorarioAtencion()">Guardar
+            cambios</button>
+        </ng-template>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-12 text-right">
+    <button [routerLink]="['']" class="btn btn-primary" type="button" id="btn-back">Volver a la agenda</button>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<div class="container" id="main">
+    <div class="row" id="title">
+        <div class="col-lg-12">
+            <h2 *ngIf="!horarioAtencion.pago?.idPago">Registrar pago</h2>
+            <h2 *ngIf="horarioAtencion.pago?.idPago">Modificar pago</h2>
+            <h5>Ingrese los datos solicitados.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <form>
+                <!-- Afiliación del paciente -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="medio-pago">Afiliación de salud asociada a este pago:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
+                                <input required [readOnly]="!modificarAfiliacion.checked"
+                                    value="{{horarioAtencion.paciente.afiliacionSalud}}" type="text" ngModel
+                                    #afiliacionPaciente="ngModel" class="form-control" id="afiliacion-pago"
+                                    name="afiliacion-pago" [(ngModel)]="afiliacion" maxlength="30">
+                            </div>
+                            <div class="col-lg-12 text-left">
+                                <input class="form-check-input" type="checkbox" name="modificar-afiliacion"
+                                    id="modificar-afiliacion" ngModel #modificarAfiliacion>
+                                <label for="modificar-afiliacion" class="form-check-label">Modificar afiliación</label>
+                            </div>
+
+                            <!-- Manejo de errores -->
+                            <div class="col-lg-12"
+                                *ngIf="afiliacionPaciente.invalid && (afiliacionPaciente.touched || afiliacionPaciente.dirty)">
+                                <div *ngIf="afiliacionPaciente.errors?.required">
+                                    <small class="text-danger">Se debe ingresar la afiliación asociada a este
+                                        pago.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medio de pago -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="medio-pago">Medio de pago:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
+                                <select required maxlength="30" name="medio-pago" id="medio-pago" class="form-select"
+                                    ngModel #medioPago="ngModel" [(ngModel)]="pago.medioPago">
+                                    <option value="Bono(s)">Bono(s)</option>
+                                    <option value="Programa">Programa</option>
+                                    <option value="Bonos/Programa">Bonos y programa</option>
+                                    <option value="Efectivo">Efectivo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monto del pago -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="monto-pago">Monto:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
+                                <input [value]="medioPago.value != 'Efectivo' ? '' : montoPago.value"
+                                    [readOnly]="medioPago.value != 'Efectivo'"
+                                    [required]="medioPago.value == 'Efectivo'" pattern="^[0-9]+$" ngModel
+                                    #montoPago="ngModel" type="number" class="form-control" [(ngModel)]="pago.montoPago"
+                                    id="monto-pago" name="monto-pago">
+                                <div class="col-lg-12">
+                                    <small class="form-text text-secondary">Si el paciente paga con efectivo, debe
+                                        ingresar el
+                                        monto.</small>
+                                </div>
+                                <div class="col-lg-12">
+                                    <small class="form-text text-secondary">Ingrese solo dígitos.</small>
+                                </div>
+                            </div>
+
+                            <!-- Manejo de errores -->
+                            <div class="col-lg-12" *ngIf="montoPago.invalid && (montoPago.touched || montoPago.dirty)">
+                                <div *ngIf="montoPago.errors?.required">
+                                    <small class="text-danger">Se debe ingresar el monto del pago.</small>
+                                </div>
+                                <div *ngIf="montoPago.errors?.pattern">
+                                    <small class="text-danger">Se debe ingresar un monto válido.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 text-left">
+                        <button *ngIf="!horarioAtencion.pago?.idPago; else updateButton" (click)="pay()"
+                            [disabled]="medioPago.invalid || montoPago.invalid" class="btn btn-primary" type="button"
+                            data-dismiss="modal">Registrar pago</button>
+
+                        <ng-template #updateButton>
+                            <button (click)="updatePayment()" class="btn btn-primary" type="button"
+                                [disabled]="medioPago.invalid || montoPago.invalid" data-dismiss="modal">Guardar
+                                cambios</button>
+                        </ng-template>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
