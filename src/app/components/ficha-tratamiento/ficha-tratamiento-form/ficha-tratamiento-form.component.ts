@@ -6,6 +6,7 @@ import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import swal from 'sweetalert2';
+import { FichaTratamientoService } from 'src/app/services/ficha-tratamiento/ficha-tratamiento.service';
 
 @Component({
   selector: 'app-ficha-tratamiento-form',
@@ -21,6 +22,7 @@ export class FichaTratamientoFormComponent implements OnInit {
   fichaTratamiento: FichaTratamiento = new FichaTratamiento();
 
   constructor(private pacienteService: PacienteService,
+    private fichaTratamientoService: FichaTratamientoService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location) { }
@@ -57,7 +59,7 @@ export class FichaTratamientoFormComponent implements OnInit {
 
       swal.fire(
         "Ficha de tratamiento registrada!",
-        "La ficha de tratamiento del paciente ha sido registrada exitosamente",
+        "La ficha de tratamiento del paciente ha sido registrada exitosamente.",
         "success"
       );
     });
@@ -65,7 +67,33 @@ export class FichaTratamientoFormComponent implements OnInit {
 
   // Para actualizar la ficha de tratamiento
   updateFichaTratamiento() {
+    swal.fire({
+      title: 'Guardar cambios',
+      text: '¿Desea guardar los cambios registrados?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.fichaTratamientoService.updateFichaTratamiento(this.fichaTratamiento, this.fichaTratamiento.idFichaTratamiento)
+          .subscribe(fichaTratamiento => {
+          this.fichaTratamiento = fichaTratamiento;
 
+          this.router.navigate(['pacientes/', this.paciente.idPaciente]);
+
+          swal.fire(
+            'Datos actualizados!',
+            'Los datos de la ficha de tratamiento del paciente han sido actualizados exitosamente.',
+            'success'
+          );
+
+          console.log(this.fichaTratamiento);
+        });
+      }
+    });
   }
 
   // Para volver atrás/cancelar la operación
