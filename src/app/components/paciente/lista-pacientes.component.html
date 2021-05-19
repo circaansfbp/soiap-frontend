@@ -1,10 +1,16 @@
 <div class="container card" id="main">
-    <div class="row" id="title">
-        <div class="col-lg-6 date">
-            <h1>Pacientes</h1>
+    <div class="row title">
+        <div class="col-lg-12 date">
+            <h2>{{title}}</h2>
+            <h5>{{subtitle}}</h5>
         </div>
+    </div>
+    <div class="row title">
         <div class="col-lg-6" id="search-by-name-input">
             <app-busqueda-paciente (searchPatientEvent)="getPatients($event)"></app-busqueda-paciente>
+        </div>
+        <div class="col-lg-6">
+            <app-filtrar-asistencia (filterEvent)="filter($event)" [title]="'Filtrar los pacientes:'" [options]="options"></app-filtrar-asistencia>
         </div>
     </div>
     <div class="row">
@@ -16,6 +22,7 @@
                             <th>Nombre</th>
                             <th>Número de contacto</th>
                             <th>Afiliación de salud</th>
+                            <th>Estado</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -24,6 +31,7 @@
                             <td>{{paciente.nombre + " " + paciente.apellido}}</td>
                             <td>{{paciente.telefono}}</td>
                             <td>{{paciente.afiliacionSalud}}</td>
+                            <td>{{paciente.estado}}</td>
                             <td>
                                 <div class="row">
                                     <div class="col-lg-12 text-center">

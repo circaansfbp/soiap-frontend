@@ -13,6 +13,7 @@ export class Paciente {
   afiliacionSalud!: string;
   estadoCivil!: string;
   familiaNuclear!: string;
+  estado!: string;
   atenciones!: HorarioAtencion[];
   anamnesis!: Anamnesis;
   fichaTratamiento!: FichaTratamiento;

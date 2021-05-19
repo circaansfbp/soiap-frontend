@@ -4,7 +4,6 @@ import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import swal from 'sweetalert2';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-paciente',
@@ -13,8 +12,25 @@ import * as moment from 'moment';
 })
 export class ListaPacientesComponent implements OnInit {
 
+  // Título y subtítulo de la vista
+  title!: string;
+  subtitle!: string;
+
+  // Opciones a entregar al filtro de pacientes
+  options: any[] = [
+    { value: '', text: 'Filtrar...' },
+    { value: 1, text: 'Pacientes activos' },
+    { value: -1, text: 'Pacientes inactivos' },
+    { value: 0, text: 'Ver historial completo de pacientes' }
+  ]
+
+  // Lista de los pacientes
   pacientes!: Paciente[];
+
+  // Paginador
   paginador!: any;
+
+  // Al seleccionarse un paciente específico
   paciente: Paciente = new Paciente();
 
   constructor(private pacienteService: PacienteService,
@@ -24,6 +40,10 @@ export class ListaPacientesComponent implements OnInit {
   // Al iniciar el ciclo de vida, se obtienen todos los pacientes, paginados.
   ngOnInit(): void {
     this.init();
+
+    // Al iniciarse el componente, siempre se mostrarán los pacientes activos.
+    this.title = "Pacientes activos";
+    this.subtitle = "Pacientes que, actualmente, se atienden en la consulta."
   }
 
   // Obtiene todos los pacientes con estado 'Activo'
@@ -42,6 +62,13 @@ export class ListaPacientesComponent implements OnInit {
     });
   }
 
+  // Filtro de pacientes
+  filter(value: number) {
+    if (value == 1) {
+      this.init();
+    }
+  }
+
   // Permite la búsqueda de pacientes mediante su nombre, apellido o ambos; los retorna paginados.
   getPatients(values: any) {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -51,7 +78,7 @@ export class ListaPacientesComponent implements OnInit {
 
       // Búsqueda por nombre
       if (values.nombre && values.apellido == "") {
-        this.pacienteService.obtenerPacientesPorNombre(values.nombre, page).subscribe(res => {
+        this.pacienteService.searchAllPatientsByName(values.nombre, page).subscribe(res => {
           this.pacientes = res.content as Paciente[];
           this.paginador = res;
         },
@@ -69,7 +96,7 @@ export class ListaPacientesComponent implements OnInit {
 
       // Búsqueda por apellido
       else if (values.nombre == "" && values.apellido) {
-        this.pacienteService.obtenerPacientesPorApellido(values.apellido, page).subscribe(res => {
+        this.pacienteService.searchAllPatientsByLastname(values.apellido, page).subscribe(res => {
           this.pacientes = res.content as Paciente[];
           this.paginador = res;
         },
@@ -87,7 +114,7 @@ export class ListaPacientesComponent implements OnInit {
 
       // Búsqueda por nombre y apellido
       else if (values.nombre && values.apellido) {
-        this.pacienteService.obtenerPacientesPorNombreApellido(values.nombre, values.apellido, page).subscribe(res => {
+        this.pacienteService.searchAllPatientsByNameAndLastname(values.nombre, values.apellido, page).subscribe(res => {
           this.pacientes = res.content as Paciente[];
           this.paginador = res;
         },

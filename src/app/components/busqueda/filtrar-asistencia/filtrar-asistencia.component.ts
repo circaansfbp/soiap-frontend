@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-filtrar-asistencia',
@@ -7,6 +7,13 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class FiltrarAsistenciaComponent implements OnInit {
 
+  // Para setear el título del componente
+  @Input() title!: string;
+
+  // Recibe las opciones a desplegar en el select
+  @Input() options: any[] = new Array();
+
+  // Envía el evento al padre
   @Output() filterEvent = new EventEmitter<number>();
 
   constructor() { }

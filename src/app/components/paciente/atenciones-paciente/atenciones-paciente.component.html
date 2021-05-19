@@ -7,7 +7,7 @@
             <h5>El/la paciente ha agendado las siguientes atenciones.</h5>
         </div>
         <div class="col-lg-5">
-            <app-filtrar-asistencia (filterEvent)="filtrar($event)"></app-filtrar-asistencia>
+            <app-filtrar-asistencia [title]="'Filtrar las atenciones'" [options]="options" (filterEvent)="filtrar($event)"></app-filtrar-asistencia>
         </div>
     </div>
 

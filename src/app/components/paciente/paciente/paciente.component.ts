@@ -5,6 +5,8 @@ import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import swal from 'sweetalert2';
 import * as moment from 'moment';
+import { AnamnesisService } from 'src/app/services/anamnesis/anamnesis.service';
+import { FichaTratamientoService } from 'src/app/services/ficha-tratamiento/ficha-tratamiento.service';
 moment.locale('es');
 
 @Component({
@@ -29,8 +31,10 @@ export class PacienteComponent implements OnInit {
   fechaCreacionFichaTratamiento!: string;
 
   constructor(private activatedRoute: ActivatedRoute,
+    private router: Router,
     private pacienteService: PacienteService,
-    private router: Router) { }
+    private anamnesisService: AnamnesisService,
+    private fichaTratamientoService: FichaTratamientoService) { }
 
   ngOnInit(): void {
     this.getPatient();
@@ -77,8 +81,21 @@ export class PacienteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.pacienteService.eliminarPaciente(this.paciente, this.paciente.idPaciente).subscribe(res => {
-          console.log(res);
+        this.pacienteService.eliminarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
+          
+          // Si el paciente posee una anamnesis, también se elimina.
+          if (this.paciente.anamnesis) {
+            this.anamnesisService.deleteAnamnesis(this.paciente.anamnesis, this.paciente.anamnesis.idAnamnesis)
+              .subscribe(anamnesis => console.log(anamnesis));
+          }
+
+          // Si el paciente posee una ficha de tratamiento, también se elimina.
+          if (this.paciente.fichaTratamiento) {
+            this.fichaTratamientoService.deleteFichaTratamiento(this.paciente.fichaTratamiento, this.paciente.fichaTratamiento.idFichaTratamiento)
+              .subscribe(fichaTratamiento => console.log(fichaTratamiento));
+          }
+
+          console.log(paciente);
 
           this.router.navigate(['pacientes/page/0']);
 

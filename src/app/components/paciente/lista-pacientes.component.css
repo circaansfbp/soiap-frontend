@@ -13,12 +13,6 @@
     margin-top: 7px;
 }
 
-#title {
-    padding-bottom: 25px;
-    margin-bottom: 10px;
-    border-bottom: 5px solid #284b63;
-}
-
 .date {
     margin-top: 30px;
 }
@@ -37,6 +31,12 @@
 
 .table-dark {
     background-color: #284b63;
+}
+
+.title {
+    padding-bottom: 25px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid #284b63;
 }
 
 button, button:disabled, button:focus, button:hover {

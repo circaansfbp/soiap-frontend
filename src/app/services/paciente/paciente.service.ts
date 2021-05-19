@@ -34,7 +34,25 @@ export class PacienteService {
     ));
   }
 
-  // Obtener pacientes por nombre, paginados
+  // Buscar pacientes por nombre entre todos los pacientes (activos e inactivos) 
+  searchAllPatientsByName(nombre: string, page: number): Observable<any> {
+    let params = new HttpParams().set('nombre', nombre);
+    return this.http.get<any>(`${this.url}pacientes/get/all/by-name/page/${page}`, { params });
+  }
+
+  // Buscar pacientes por apellido entre todos los pacientes (activos e inactivos)
+  searchAllPatientsByLastname(apellido: string, page: number): Observable<any> {
+    let params = new HttpParams().set('apellido', apellido);
+    return this.http.get<any>(`${this.url}pacientes/get/all/by-lastname/page/${page}`, { params });
+  }
+
+  // Buscar pacientes por nombre y apellido entre todos los pacientes (activos e inactivos)
+  searchAllPatientsByNameAndLastname(nombre: string, apellido: string, page: number): Observable<any> {
+    let params = new HttpParams().set('nombre', nombre).set('apellido', apellido);
+    return this.http.get<any>(`${this.url}pacientes/get/all/by-name-lastname/page/${page}`, { params });
+  }
+
+  // Obtener pacientes activos por nombre, paginados
   obtenerPacientesPorNombre(nombre: string, page: number): Observable<any> {
     let params = new HttpParams().set('nombre', nombre);
     return this.http.get<any>(`${this.url}pacientes/get/by-name/page/${page}`, { params });

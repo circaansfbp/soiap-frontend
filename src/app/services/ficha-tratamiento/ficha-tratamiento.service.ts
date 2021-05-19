@@ -17,4 +17,9 @@ export class FichaTratamientoService {
   updateFichaTratamiento(fichaTratamiento: FichaTratamiento, idFichaTratamiento: number): Observable<FichaTratamiento> {
     return this.http.put<FichaTratamiento>(`${this.url}ficha-tratamiento/update/${idFichaTratamiento}`, fichaTratamiento);
   }
+
+  // Eliminación lógica de una ficha de tratamiento
+  deleteFichaTratamiento(fichaTratamiento: FichaTratamiento, idFichaTratamiento: number): Observable<FichaTratamiento> {
+    return this.http.put<FichaTratamiento>(`${this.url}ficha-tratamiento/delete/${idFichaTratamiento}`, fichaTratamiento);
+  }
 }

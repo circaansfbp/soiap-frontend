@@ -5,7 +5,6 @@ import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atenci
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
-import swal from 'sweetalert2';
 import * as moment from 'moment';
 
 @Component({
@@ -14,6 +13,18 @@ import * as moment from 'moment';
   styleUrls: ['./atenciones-paciente.component.css']
 })
 export class AtencionesPacienteComponent implements OnInit {
+  
+  // Para entregar las opciones al filtro
+  options: any[] = [
+    { value: '', text: 'Filtrar...'},
+    { value: 1, text: 'Asistidas'},
+    { value: -1, text: 'No asistidas'},
+    { value: 2, text: 'Pagadas'},
+    { value: -2, text: 'No pagadas'},
+    { value: 3, text: 'Asistidas y pagadas'},
+    { value: -3, text: 'Asistidas y no pagadas'},
+    { value: 0, text: 'Todas las atenciones'}
+  ];
 
   // Para almacenar el paciente al que le corresponden las atenciones
   paciente: Paciente = new Paciente();

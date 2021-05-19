@@ -98,6 +98,7 @@ export class NuevoHorarioFormComponent implements OnInit {
       "institucion": "",
       "estadoCivil": "",
       "familiaNuclear": "",
+      "estado": "",
       "atenciones": [],
       "anamnesis": null!,
       "fichaTratamiento": null!
