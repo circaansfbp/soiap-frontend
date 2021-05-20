@@ -1,11 +1,11 @@
 <div class="container date" id="main">
     <div class="row title">
         <div class="col-lg-6 date">
-            <h2>{{title}}</h2>
-            <h5>{{subtitle}}</h5>
+            <h2>Historial de pacientes</h2>
+            <h5>Pacientes que han asistido a la consulta, pero que no se atienden actualmente.</h5>
         </div>
         <div class="col-lg-6" id="search-by-name-input">
-            <app-busqueda-paciente (searchPatientEvent)="getPatients($event)"></app-busqueda-paciente>
+            <app-busqueda-paciente (searchPatientEvent)="searchInactivePatients($event)"></app-busqueda-paciente>
         </div>
     </div>
 
@@ -18,24 +18,19 @@
                             <th>Nombre</th>
                             <th>Número de contacto</th>
                             <th>Afiliación de salud</th>
-                            <th>Estado</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let paciente of pacientes">
+                        <tr *ngFor="let paciente of pacientesInactivos">
                             <td>{{paciente.nombre + " " + paciente.apellido}}</td>
                             <td>{{paciente.telefono}}</td>
                             <td>{{paciente.afiliacionSalud}}</td>
-                            <td>{{paciente.estado}}</td>
                             <td>
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
-                                        <button [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary"
+                                        <button [routerLink]="['../../../', paciente.idPaciente]" class="btn btn-primary"
                                             type="button">Ver detalle</button>
-                                        <button [routerLink]="['../../atenciones', paciente.idPaciente]"
-                                            class="btn btn-primary" type="button">Ver
-                                            atenciones</button>
                                     </div>
                                 </div>
                             </td>
@@ -47,12 +42,6 @@
                         <app-paginador *ngIf="paginador" [paginador]='paginador'></app-paginador>
                     </div>
                     <div class="col-lg-6 text-right">
-                        <button [routerLink]="['../../historial/page/0']" class="btn btn-primary"
-                            type="button">Historial de pacientes</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
                         <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
                     </div>
                 </div>

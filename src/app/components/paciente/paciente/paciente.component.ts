@@ -72,7 +72,7 @@ export class PacienteComponent implements OnInit {
   deletePatient() {
     swal.fire({
       title: '¿Eliminar paciente?',
-      text: 'Esta acción es irreversible!',
+      text: 'Si lo desea, podrá recuperar este registro accediendo al historial de pacientes',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -109,8 +109,40 @@ export class PacienteComponent implements OnInit {
     })
   }
 
+  // Para reintegrar un paciente a la consulta
+  reintegrar(paciente: Paciente) {
+    this.paciente = paciente;
+
+    swal.fire({
+      title: '¿Reintegrar paciente?',
+      text: '¿Desea volver a incorporar los registros del paciente?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.pacienteService.reintegrarPaciente(paciente, paciente.idPaciente).subscribe(pacienteRetornado => {
+          this.paciente = pacienteRetornado;
+
+          swal.fire(
+            "Paciente reintegrado!",
+            "El paciente ha sido reincorporado al registro de pacientes que actualmente son atendidos en la consulta.",
+            "success"
+          );
+
+          this.router.navigate(['/pacientes/', this.paciente.idPaciente]);
+          console.log(paciente);
+        });
+      }
+    });
+  }
+
   // Para volver a la página anterior
   back(): void {
-    this.router.navigate(['pacientes/page/0']);
+    if (this.paciente.estado == 'Activo') this.router.navigate(['pacientes/page/0']);
+    else this.router.navigate(['pacientes/historial/page/0']);
   }
 }

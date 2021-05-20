@@ -6,10 +6,22 @@
                 <i class="bi bi-person-lines-fill"></i>
             </div>
             <div class="col-lg-8 text-center" id="patient-name">
-                <h1>{{paciente.nombre + " " + paciente.apellido}}</h1>
-                <button [routerLink]="['../form', paciente.idPaciente]" class="btn btn-primary options"
-                    type="button">Modificar datos</button>
-                <button (click)="deletePatient()" class="btn btn-primary options" type="button">Eliminar</button>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>{{paciente.nombre + " " + paciente.apellido}}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="paciente.estado == 'Activo'" class="col-lg-12">
+                        <button [routerLink]="['../form', paciente.idPaciente]" class="btn btn-primary options"
+                            type="button">Modificar datos</button>
+                        <button (click)="deletePatient()" class="btn btn-primary options"
+                            type="button">Eliminar</button>
+                    </div>
+                    <div *ngIf="paciente.estado == 'Inactivo'" class="col-lg-12">
+                        <button (click)="reintegrar(paciente)" class="btn btn-primary" type="button">Reintegrar paciente</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -77,13 +89,21 @@
 
         <!-- Anamnesis del paciente -->
         <div class="row info-paciente">
-            <div *ngIf="!paciente.anamnesis" class="col-lg-12 text-center">
+            <!-- Si el paciente se atiende en la consulta, y su anamnesis no ha sido registrada -->
+            <div *ngIf="!paciente.anamnesis && paciente.estado == 'Activo'" class="col-lg-12 text-center">
                 <h4>La anamnesis no ha sido registrada.</h4>
                 <h5>¿Desea registrarla?</h5>
                 <button [routerLink]="['../anamnesis/', paciente.idPaciente]" class="btn btn-primary"
                     type="button">Registrar anamnesis</button>
             </div>
+            <!-- Si el paciente fue eliminado y su anamnesis no fue registrada -->
+            <div *ngIf="!paciente.anamnesis && paciente.estado == 'Inactivo'" class="col-lg-12 text-center">
+                <i class="bi bi-file-person-fill icons"></i>
+                <h4>La anamnesis no ha sido registrada.</h4>
+                <h5>Reintegre al paciente a la consulta para registrar su anamnesis.</h5>
+            </div>
 
+            <!-- Si el paciente tiene una anamnesis registrada -->
             <div *ngIf="paciente.anamnesis" class="col-lg-12 text-center">
                 <app-anamnesis [paciente]="paciente" [fechaAnamnesis]="fechaAnamnesis"></app-anamnesis>
             </div>
@@ -91,11 +111,18 @@
 
         <!-- Ficha de tratamiento -->
         <div class="row info-paciente">
-            <div *ngIf="!paciente.fichaTratamiento" class="col-lg-12 text-center">
+            <div *ngIf="!paciente.fichaTratamiento && paciente.estado == 'Activo'" class="col-lg-12 text-center">
                 <h4>La ficha de tratamiento no ha sido registrada</h4>
                 <h5>¿Desea registrarla?</h5>
                 <button [routerLink]="['../ficha-tratamiento/', paciente.idPaciente]" class="btn btn-primary"
                     type="button">Registrar ficha de tratamiento</button>
+            </div>
+
+            <!-- Si el paciente fue eliminado y su ficha de tratamiento no fue registrada -->
+            <div *ngIf="!paciente.fichaTratamiento && paciente.estado == 'Inactivo'" class="col-lg-12 text-center">
+                <i class="bi bi-file-person-fill icons"></i>
+                <h4>La ficha de tratamiento no ha sido registrada.</h4>
+                <h5>Reintegre al paciente a la consulta para registrar su ficha de tratamiento.</h5>
             </div>
 
             <div *ngIf="paciente.fichaTratamiento" class="col-lg-12 text-center">

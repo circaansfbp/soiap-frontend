@@ -24,7 +24,7 @@ export class PacienteService {
     return this.http.get<Paciente>(`${this.url}pacientes/${idPaciente}`);
   }
 
-  // Obtener los pacientes, paginados
+  // Obtener todos los pacientes activos, paginados
   obtenerPacientes(page: number): Observable<any> {
     return this.http.get<any>(`${this.url}pacientes/get/page/${page}`).pipe(tap(
       (response: any) => {
@@ -32,6 +32,11 @@ export class PacienteService {
         (response.content as Paciente[]).forEach(paciente => console.log(paciente.nombre));
       }
     ));
+  }
+
+  // Obtener todos los pacientes inactivos, paginados
+  obtenerPacientesInactivos(page: number): Observable<any> {
+    return this.http.get<any>(`${this.url}pacientes/get/inactive/page/${page}`);
   }
 
   // Buscar pacientes por nombre entre todos los pacientes (activos e inactivos) 
@@ -64,6 +69,12 @@ export class PacienteService {
     return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-name`, { params });
   }
 
+  // Obtener pacientes inactivos por nombre, paginados
+  obtenerPacientesInactivosPorNombre(nombre: string, page: number): Observable<any> {
+    let params = new HttpParams().set('nombre', nombre);
+    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-name/page/${page}`, { params });
+  }
+
   // Obtener pacientes por apellido, paginados
   obtenerPacientesPorApellido(apellido: string, page: number): Observable<any> {
     let params = new HttpParams().set('apellido', apellido);
@@ -74,6 +85,12 @@ export class PacienteService {
   obtenerPacientesPorApellidoSinPaginar(apellido: string): Observable<Paciente[]> {
     let params = new HttpParams().set('apellido', apellido);
     return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-lastname/`, { params });
+  }
+
+  // Obtener pacientes inactivos por apellido
+  obtenerPacientesInactivosPorApellido(apellido: string, page: number): Observable<any> {
+    let params = new HttpParams().set('apellido', apellido);
+    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-lastname/page/${page}`, { params });
   }
 
   // Obtener pacientes por nombre y apellido, paginados 
@@ -88,6 +105,12 @@ export class PacienteService {
     return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-name-lastname`, { params });
   }
 
+  // Obtener pacientes inactivos por nombre y apellido, paginados
+  obtenerPacientesInactivosPorNombreApellido(nombre: string, apellido: string, page: number): Observable<any> {
+    let params = new HttpParams().set('nombre', nombre).set('apellido', apellido);
+    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-name-lastname/page/${page}`, { params });
+  }
+
   // Actualizar un paciente
   actualizarPaciente(paciente: Paciente): Observable<Paciente> {
     return this.http.put<Paciente>(`${this.url}pacientes/update/${paciente.idPaciente}`, paciente);
@@ -96,5 +119,10 @@ export class PacienteService {
   // Eliminar un paciente
   eliminarPaciente(paciente: Paciente, idPaciente: number): Observable<Paciente> {
     return this.http.put<Paciente>(`${this.url}pacientes/delete/${idPaciente}`, paciente);
+  }
+
+  // Reintegrar un paciente a la consulta
+  reintegrarPaciente(paciente: Paciente, idPaciente: number): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.url}pacientes/integrate/${idPaciente}`, paciente);
   }
 }

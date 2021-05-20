@@ -22,12 +22,14 @@ import { AnamnesisFormComponent } from './components/anamnesis/anamnesis-form/an
 import { AtencionesPacienteComponent } from './components/paciente/atenciones-paciente/atenciones-paciente.component';
 import { FichaTratamientoComponent } from './components/ficha-tratamiento/ficha-tratamiento.component';
 import { FichaTratamientoFormComponent } from './components/ficha-tratamiento/ficha-tratamiento-form/ficha-tratamiento-form.component';
+import { HistorialPacientesComponent } from './components/paciente/historial-pacientes/historial-pacientes.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
   { path: 'nuevo-horario', component: NuevoHorarioFormComponent },
   { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent },
   { path: 'pacientes/page/:page', component: ListaPacientesComponent },
+  { path: 'pacientes/historial/page/:page', component: HistorialPacientesComponent},
   { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent },
   { path: 'pacientes/:idPaciente', component: PacienteComponent },
   { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent },
@@ -55,7 +57,8 @@ const routes = [
     AnamnesisFormComponent,
     AtencionesPacienteComponent,
     FichaTratamientoComponent,
-    FichaTratamientoFormComponent
+    FichaTratamientoFormComponent,
+    HistorialPacientesComponent
   ],
 
   imports: [
