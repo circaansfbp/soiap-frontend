@@ -22,7 +22,7 @@
                                             detalle</button>
                                         <button [routerLink]="['/nuevo-horario', hora.idAtencion]"
                                             class="btn btn-primary" type="button">Modificar</button>
-                                        <button (click)="eliminarHorario(hora.idAtencion)" class="btn btn-primary"
+                                        <button (click)="verifyDeletion(hora.idAtencion)" class="btn btn-primary"
                                             type="button">Eliminar</button>
                                     </div>
                                 </div>

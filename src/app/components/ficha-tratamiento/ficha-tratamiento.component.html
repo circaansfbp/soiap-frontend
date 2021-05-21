@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="row datos-anamnesis">
+        <div *ngIf="paciente.estado == 'Activo'" class="row datos-anamnesis">
             <div class="col-lg-12">
                 <button [routerLink]="['../ficha-tratamiento/', paciente.idPaciente]" class="btn btn-primary"
                     type="button">Modificar ficha de tratamiento</button>

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HorarioAtencion } from 'src/app/classes/horario-atencion/horario-atencion';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
@@ -27,7 +28,8 @@ export class HorarioComponent implements OnInit, OnChanges {
   fecha!: string;
   hora!: string;
 
-  constructor(private horarioAtencionService: HorarioAtencionService) { }
+  constructor(private horarioAtencionService: HorarioAtencionService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.horario.paciente = new Paciente();
@@ -92,7 +94,7 @@ export class HorarioComponent implements OnInit, OnChanges {
       }).then(result => {
         if (result.isConfirmed) {
           this.horario.confirmaAsistencia = -1;
-          
+
           this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
             console.log(updatedHorario);
 
@@ -134,7 +136,7 @@ export class HorarioComponent implements OnInit, OnChanges {
           });
         }
       });
-    } else if (value == -1){
+    } else if (value == -1) {
       swal.fire({
         title: 'Registrar asistencia',
         text: '¿El paciente falta a su hora de atención?',
@@ -147,7 +149,7 @@ export class HorarioComponent implements OnInit, OnChanges {
       }).then(result => {
         if (result.isConfirmed) {
           this.horario.asistencia = -1;
-          
+
           this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
             console.log(updatedHorario);
 
@@ -160,6 +162,48 @@ export class HorarioComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+
+  // Método para verificar la viabilidad de eliminar un horario
+  verifyDeletion(idAtencion: number) {
+
+    this.horarioAtencionService.obtenerHorario(idAtencion).subscribe(horario => {
+      let hourToDelete = horario;
+
+      if (hourToDelete) {
+
+        // Si la fecha del horario de atención corresponde a una ya pasada, no se elimina
+        if (moment(hourToDelete.fechaAtencion).isBefore(moment().subtract(1, 'days'))) {
+          swal.fire(
+            "No es posible eliminar el horario!",
+            "No se puede eliminar un horario de atención pasado.",
+            "error"
+          );
+
+          return;
+        }
+
+        // Si la fecha de atención corresponde a una futura, pero está ya pagada, no se elimina.
+        // Sin embargo, se le permite al usuario modificar el horario de atención ya creado, de ser necesario.
+        else if (moment(hourToDelete.fechaAtencion).isAfter(moment().subtract(1, 'days')) && hourToDelete.pago) {
+          swal.fire({
+            title: 'Horario de atención pagado!',
+            text: 'El horario de atención que desea eliminar ya está pagado, por lo que no es posible eliminarlo. Sin embargo, puede asignarle un nuevo horario de atención al paciente.',
+            icon: 'warning',
+            confirmButtonColor: '#007f5f',
+            confirmButtonText: 'Asignar nuevo horario',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancelar'
+          }).then(result => {
+            if (result.isConfirmed) {
+              this.router.navigate(['nuevo-horario', hourToDelete.idAtencion]);
+            }
+          });
+        }
+        else this.eliminarHorario(idAtencion);
+      }
+    });
   }
 
   // Permite eliminar un horario de atención
@@ -177,7 +221,7 @@ export class HorarioComponent implements OnInit, OnChanges {
       if (result.isConfirmed) {
         this.horarioAtencionService.eliminarHorario(idAtencion).subscribe(res => {
           console.log(res);
-          
+
           // Para que el horario eliminado sea removido de la vista.
           this.horasFechaDelDia = [];
           this.getAtencionesFechaActual(this.fechaActual);

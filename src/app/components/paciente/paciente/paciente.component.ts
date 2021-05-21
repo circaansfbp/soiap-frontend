@@ -70,9 +70,31 @@ export class PacienteComponent implements OnInit {
 
   // Permite la eliminación lógica de un paciente
   deletePatient() {
+    let debt = 0;
+
+    // Si el paciente tiene deudas pendientes, no debiese ser eliminado.
+    if (this.paciente.atenciones.length > 0) {
+      this.paciente.atenciones.forEach(atencion => {
+        if (atencion.pago == null) {
+          debt++;
+        }
+      });
+
+      if (debt > 0) {
+        swal.fire(
+          "No es posible eliminar al paciente!",
+          "El/La paciente presenta un total de " + debt + " atenciones no pagadas, por lo que no puede ser eliminado/a.",
+          "info"
+        );
+
+        return;
+      }
+    }
+
+
     swal.fire({
       title: '¿Eliminar paciente?',
-      text: 'Si lo desea, podrá recuperar este registro accediendo al historial de pacientes',
+      text: 'Si lo desea, podrá recuperar este registro accediendo al historial de pacientes.',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -82,7 +104,7 @@ export class PacienteComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.pacienteService.eliminarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
-          
+
           // Si el paciente posee una anamnesis, también se elimina.
           if (this.paciente.anamnesis) {
             this.anamnesisService.deleteAnamnesis(this.paciente.anamnesis, this.paciente.anamnesis.idAnamnesis)
@@ -110,9 +132,7 @@ export class PacienteComponent implements OnInit {
   }
 
   // Para reintegrar un paciente a la consulta
-  reintegrar(paciente: Paciente) {
-    this.paciente = paciente;
-
+  reintegrar() {
     swal.fire({
       title: '¿Reintegrar paciente?',
       text: '¿Desea volver a incorporar los registros del paciente?',
@@ -124,8 +144,20 @@ export class PacienteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then(result => {
       if (result.isConfirmed) {
-        this.pacienteService.reintegrarPaciente(paciente, paciente.idPaciente).subscribe(pacienteRetornado => {
-          this.paciente = pacienteRetornado;
+        this.pacienteService.reintegrarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
+
+          // Si el paciente posee una anamnesis, también se reintegra
+          if (this.paciente.anamnesis) {
+            this.anamnesisService.reintegrarAnamnesis(this.paciente.anamnesis, this.paciente.anamnesis.idAnamnesis)
+              .subscribe(anamnesis => console.log(anamnesis));
+          }
+
+          // Si el paciente posee una ficha de tratamiento, también se reintegra
+          if (this.paciente.fichaTratamiento) {
+            this.fichaTratamientoService
+              .reintegrarFichaTratamiento(this.paciente.fichaTratamiento, this.paciente.fichaTratamiento.idFichaTratamiento)
+              .subscribe(fichaTratamiento => console.log(fichaTratamiento));
+          }
 
           swal.fire(
             "Paciente reintegrado!",
@@ -133,7 +165,7 @@ export class PacienteComponent implements OnInit {
             "success"
           );
 
-          this.router.navigate(['/pacientes/', this.paciente.idPaciente]);
+          this.router.navigate(['/pacientes/page/0']);
           console.log(paciente);
         });
       }

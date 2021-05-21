@@ -22,4 +22,9 @@ export class FichaTratamientoService {
   deleteFichaTratamiento(fichaTratamiento: FichaTratamiento, idFichaTratamiento: number): Observable<FichaTratamiento> {
     return this.http.put<FichaTratamiento>(`${this.url}ficha-tratamiento/delete/${idFichaTratamiento}`, fichaTratamiento);
   }
+
+  // Reintegración lógica de una ficha de tratamiento
+  reintegrarFichaTratamiento(fichaTratamiento: FichaTratamiento, idFichaTratamiento: number): Observable<FichaTratamiento> {
+    return this.http.put<FichaTratamiento>(`${this.url}ficha-tratamiento/integrate/${idFichaTratamiento}`, fichaTratamiento);
+  }
 }
