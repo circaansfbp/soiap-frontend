@@ -1,0 +1,67 @@
+<div class="container" id="main">
+    <div class="row" id="title">
+        <div class="col-lg-6">
+            <h2>{{title}}</h2>
+            <h5>{{subtitle}}</h5>
+        </div>
+        <div class="col-lg-6 text-right my-3">
+            <h5>Hoy es {{fechaActual}}.</h5>
+            <h5>Número de sesión: {{sesion.nroSesion}}</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12" id="body">
+            <form>
+                <!-- Observaciones -->
+                <div class="col-lg-12">
+                    <div class="form-group my-3">
+                        <label for="observaciones-sesion" class="form-label">Observaciones de la sesión:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
+                            <textarea name="observaciones-sesionl" id="observaciones-sesion" cols="12" rows="15"
+                                class="form-control" ngModel #observacionesSesion="ngModel"
+                                [(ngModel)]="sesion.observaciones" required maxLength="3000"></textarea>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="observacionesSesion.invalid && (observacionesSesion.touched || observacionesSesion.dirty)">
+                            <div *ngIf="observacionesSesion.errors?.required">
+                                <small class="text-danger">Se deben ingresar las observaciones.</small>
+                            </div>
+                        </div>
+
+                        <!-- Para mostrar los caracteres restantes -->
+                        <div
+                            *ngIf="observacionesSesion && observacionesSesion.value?.length > 2500 && observacionesSesion.value?.length < 3000">
+                            <small class="text-secondary">Quedan {{3000 - observacionesSesion.value?.length}}
+                                caracteres.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Guardar/actualizar la ficha de tratamiento -->
+                    <div class="col-lg-7 text-right">
+                        <button *ngIf="!sesion.idSesion; else updateButton" (click)="createSesion()"
+                            [disabled]="observacionesSesion.invalid" class="btn btn-primary" type="submit">Registrar
+                            observaciones</button>
+
+                        <ng-template #updateButton>
+                            <button (click)="updateSesion()" [disabled]="observacionesSesion.invalid"
+                                class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </ng-template>
+                    </div>
+
+                    <!-- Para volver atrás -->
+                    <div class="col-lg-5 text-right">
+                        <button
+                            (click)="back(observacionesSesion.value)"
+                            class="btn btn-primary" type="button">Volver</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,7 @@ export class FichaTratamientoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.paciente.fichaTratamiento.sesiones = new Array();
   }
 
 }

@@ -161,10 +161,6 @@
                             <h5>¡El horario de atención fue pagado!</h5>
                             <button class="btn btn-primary confirmacion" type="button" data-dismiss="modal"
                                 data-toggle="modal" data-target="#detallePago">Ver detalle</button>
-                            <button [routerLink]="['horario/pago', horario.idAtencion, horario.pago.idPago]"
-                                class="btn btn-primary confirmacion" type="button"
-                                data-dismiss="modal">Modificar</button>
-                            <button class="btn btn-primary no-confirma" type="button">Eliminar</button>
                         </div>
                     </div>
                 </div>
@@ -187,11 +183,14 @@
                 </div>
             </div>
             <div class="modal-body">
-                <app-pago [horarioAtencion]="horario"></app-pago>
+                <div class="col-lg-12 text-center">
+                    <app-pago [horarioAtencion]="horario"></app-pago>
+                </div>
             </div>
-            <div class=" modal-footer">
+            <div class=" modal-footer" *ngIf="horario.pago">
+                <button [routerLink]="['horario/pago', horario.idAtencion, horario.pago.idPago]"
+                    class="btn btn-primary" type="button" data-dismiss="modal">Modificar pago</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-
             </div>
         </div>
     </div>

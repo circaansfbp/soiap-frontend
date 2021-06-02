@@ -53,5 +53,16 @@
                     type="button">Modificar ficha de tratamiento</button>
             </div>
         </div>
+
+        <div *ngIf="paciente.fichaTratamiento.sesiones && paciente.fichaTratamiento.sesiones.length == 0 
+            && paciente.estado == 'Activo'" class="row sesion-terapia">
+            <div class="col-lg-12">
+                <i class="bi bi-person-x-fill icons"></i>
+                <h4>No existen sesiones de terapia registradas.</h4>
+                <h5>¿Desea ingresar la primera sesión de terapia del paciente?</h5>
+                <button [routerLink]="['../ficha-tratamiento/sesiones', paciente.idPaciente]" class="btn btn-primary" type="button">Registrar sesión</button>
+            </div>
+        </div>
+
     </div>
 </div>

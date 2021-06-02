@@ -15,6 +15,12 @@
     overflow-wrap: break-word;
 }
 
+.sesion-terapia {
+    margin-top: 20px;
+    padding: 40px;
+    border: 5px solid #284b63;
+}
+
 button, button:hover, button:disabled, button:focus {
     background-color: #284b63;
     border-color: #284b63;

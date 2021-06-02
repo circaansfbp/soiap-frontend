@@ -1,3 +1,5 @@
+import { SesionTerapia } from '../sesion-terapia/sesion-terapia';
+
 export class FichaTratamiento {
   idFichaTratamiento!: number;
   fechaDiagnostico!: string;
@@ -5,7 +7,7 @@ export class FichaTratamiento {
   resultadoDiagnostico!: string;
   sugerenciaTratamiento!: string;
   objetivosTerapia!: string;
-  // SESIONES DE TERAPIA
+  sesiones!: SesionTerapia[];
 
   constructor() { }
 }
