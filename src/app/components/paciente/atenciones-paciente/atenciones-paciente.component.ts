@@ -57,8 +57,13 @@ export class AtencionesPacienteComponent implements OnInit {
       if (idPaciente) {
         this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
           this.paciente = paciente;
-          this.atenciones = paciente.atenciones;
-          this.filtered = paciente.atenciones;
+
+          paciente.atenciones.forEach(atencion => {
+            if (moment(atencion.fechaAtencion).isBefore(moment())) {
+              this.atenciones.push(atencion);
+              this.filtered.push(atencion);
+            }
+          });
 
           // Setea el total de registros
           this.total = this.atenciones.length;

@@ -18,11 +18,6 @@ export class AnamnesisService {
     return this.http.put<Anamnesis>(`${this.url}anamnesis/update/${idAnamnesis}`, anamnesis);
   }
 
-  // Eliminación lógica de una ananmnesis
-  deleteAnamnesis(anamnesis: Anamnesis, idAnamnesis: number): Observable<Anamnesis> {
-    return this.http.put<Anamnesis>(`${this.url}anamnesis/delete/${idAnamnesis}`, anamnesis);
-  }
-
   // Reintegración lógica de una anamnesis
   reintegrarAnamnesis(anamnesis: Anamnesis, idAnamnesis: number): Observable<Anamnesis> {
     return this.http.put<Anamnesis>(`${this.url}anamnesis/integrate/${idAnamnesis}`, anamnesis);

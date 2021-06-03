@@ -111,6 +111,16 @@ export class HorarioComponent implements OnInit, OnChanges {
 
   // Registra la asistencia del paciente
   asistencia(value: number) {
+    if (moment(this.horario.fechaAtencion).isAfter(moment())) {
+      swal.fire(
+        'Registro de asistencia erróneo!',
+        'No es posible registrar la asistencia a un horario de atención con fecha futura.',
+        'warning'
+      );
+
+      return;
+    }
+
     if (value == 1) {
       swal.fire({
         title: 'Registrar asistencia',
@@ -166,7 +176,6 @@ export class HorarioComponent implements OnInit, OnChanges {
 
   // Método para verificar la viabilidad de eliminar un horario
   verifyDeletion(idAtencion: number) {
-
     this.horarioAtencionService.obtenerHorario(idAtencion).subscribe(horario => {
       let hourToDelete = horario;
 
@@ -177,7 +186,7 @@ export class HorarioComponent implements OnInit, OnChanges {
           swal.fire(
             "No es posible eliminar el horario!",
             "No se puede eliminar un horario de atención pasado.",
-            "error"
+            "warning"
           );
 
           return;
@@ -201,6 +210,17 @@ export class HorarioComponent implements OnInit, OnChanges {
             }
           });
         }
+          // Si la asistencia del horario ya fue registrada, no se permite la eliminación del horario
+        else if (hourToDelete.asistencia == 1 || hourToDelete.asistencia == -1) {
+          swal.fire(
+            'Asistencia registrada!',
+            'La asistencia de este horario de atención fue registrada, por lo que no es posible eliminarlo.',
+            'warning'
+          );
+
+          return;
+        }
+          
         else this.eliminarHorario(idAtencion);
       }
     });

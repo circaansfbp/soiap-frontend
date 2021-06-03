@@ -93,7 +93,6 @@ export class PacienteComponent implements OnInit {
       }
     }
 
-
     swal.fire({
       title: '¿Eliminar paciente?',
       text: 'Si lo desea, podrá recuperar este registro accediendo al historial de pacientes.',
@@ -106,28 +105,15 @@ export class PacienteComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.pacienteService.eliminarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
-
-          // Si el paciente posee una anamnesis, también se elimina.
-          if (this.paciente.anamnesis) {
-            this.anamnesisService.deleteAnamnesis(this.paciente.anamnesis, this.paciente.anamnesis.idAnamnesis)
-              .subscribe(anamnesis => console.log(anamnesis));
-          }
-
-          // Si el paciente posee una ficha de tratamiento, también se elimina.
-          if (this.paciente.fichaTratamiento) {
-            this.fichaTratamientoService.deleteFichaTratamiento(this.paciente.fichaTratamiento, this.paciente.fichaTratamiento.idFichaTratamiento)
-              .subscribe(fichaTratamiento => console.log(fichaTratamiento));
-          }
-
           console.log(paciente);
-
-          this.router.navigate(['pacientes/page/0']);
 
           swal.fire(
             'Paciente eliminado!',
             'El registro del paciente ha sido eliminado.',
             'success'
           );
+
+          this.router.navigate(['pacientes/page/0']);
         });
       }
     })
@@ -147,20 +133,6 @@ export class PacienteComponent implements OnInit {
     }).then(result => {
       if (result.isConfirmed) {
         this.pacienteService.reintegrarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
-
-          // Si el paciente posee una anamnesis, también se reintegra
-          if (this.paciente.anamnesis) {
-            this.anamnesisService.reintegrarAnamnesis(this.paciente.anamnesis, this.paciente.anamnesis.idAnamnesis)
-              .subscribe(anamnesis => console.log(anamnesis));
-          }
-
-          // Si el paciente posee una ficha de tratamiento, también se reintegra
-          if (this.paciente.fichaTratamiento) {
-            this.fichaTratamientoService
-              .reintegrarFichaTratamiento(this.paciente.fichaTratamiento, this.paciente.fichaTratamiento.idFichaTratamiento)
-              .subscribe(fichaTratamiento => console.log(fichaTratamiento));
-          }
-
           swal.fire(
             "Paciente reintegrado!",
             "El paciente ha sido reincorporado al registro de pacientes que actualmente son atendidos en la consulta.",
