@@ -1,0 +1,76 @@
+<div class="container" id="main">
+
+    <!-- Título -->
+    <div class="row" id="title">
+        <div class="col-lg-12">
+            <h2>{{paciente.nombre + " " + paciente.apellido}}</h2>
+            <h5>El paciente registra las siguientes sesiones de terapia.</h5>
+        </div>
+    </div>
+
+    <!-- Listado de sesiones de terapia -->
+    <div class="row" id="body">
+        <div class="col-lg-12 text-center">
+            <div class="table table-responsive-lg">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Número de sesión</th>
+                            <th>Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let sesion of sesiones | paginate: 
+                        {id: 'sesiones-paciente', itemsPerPage: 10, currentPage: currentPage, totalItems: totalSesiones}">
+
+                            <!-- Fecha -->
+                            <td>{{formatDisplayFechaSesion(sesion)}}</td>
+
+                            <!-- Número de la sesión -->
+                            <td>{{sesion.nroSesion}}</td>
+
+                            <!-- Observaciones -->
+                            <td><button (click)="setSesion(sesion)" class="btn btn-primary" type="button"
+                                    data-toggle="modal" data-target="#observacionesSesion">Ver observaciones</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="currentPage = $event" id="sesiones-paciente" [maxSize]="5"
+                    [directionLinks]="true" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            </div>
+        </div>
+
+        <div class="col-lg-12 text-right">
+            <button [routerLink]="['../../../ficha-tratamiento/nueva-sesion', paciente.idPaciente]"
+                class="btn btn-primary mx-4" type="button">Registrar nueva sesión</button>
+            <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para mostrar las observaciones de cada sesión -->
+<div class="modal fade" id="observacionesSesion" tabindex="-1" role="dialog" aria-labelledby="observacionesSesion"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>Observaciones de la sesión</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <p>{{sesion.observaciones}}</p>
+                </div>
+            </div>
+            <div class=" modal-footer">
+                <button [routerLink]="['../../modificar-sesion', sesion.idSesion]" data-dismiss="modal"
+                    class="btn btn-primary" type="button">Modificar observaciones</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

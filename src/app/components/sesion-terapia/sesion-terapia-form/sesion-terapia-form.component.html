@@ -6,37 +6,69 @@
         </div>
         <div class="col-lg-6 text-right my-3">
             <h5>Hoy es {{fechaActual}}.</h5>
-            <h5>Número de sesión: {{sesion.nroSesion}}</h5>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-12" id="body">
             <form>
-                <!-- Observaciones -->
-                <div class="col-lg-12">
-                    <div class="form-group my-3">
-                        <label for="observaciones-sesion" class="form-label">Observaciones de la sesión:</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
-                            <textarea name="observaciones-sesionl" id="observaciones-sesion" cols="12" rows="15"
-                                class="form-control" ngModel #observacionesSesion="ngModel"
-                                [(ngModel)]="sesion.observaciones" required maxLength="3000"></textarea>
-                        </div>
+                <!-- Número de sesión -->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="nro-sesion" class="form-label">N° Sesión:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                                <input required type="number" class="form-control" id="nro-sesion" name="nro-sesion"
+                                    ngModel [(ngModel)]="sesion.nroSesion" #nroSesion="ngModel" pattern="^[0-9]{1}$"
+                                    min="1" max="8">
+                            </div>
 
-                        <!-- Manejo de errores -->
-                        <div class="col-lg-12"
-                            *ngIf="observacionesSesion.invalid && (observacionesSesion.touched || observacionesSesion.dirty)">
-                            <div *ngIf="observacionesSesion.errors?.required">
-                                <small class="text-danger">Se deben ingresar las observaciones.</small>
+                            <!-- Manejo de errores -->
+                            <div *ngIf="nroSesion?.invalid && (nroSesion?.touched || nroSesion?.dirty)"
+                                class="col-lg-12">
+                                <div *ngIf="nroSesion.errors?.required">
+                                    <small class="text-danger">Se debe ingresar el número de consulta.</small>
+                                </div>
+
+                                <div *ngIf="nroSesion.errors?.pattern">
+                                    <small class="text-danger">Solo se permite el ingreso de 1 dígito.</small>
+                                </div>
+                            </div>
+                            <div *ngIf="(nroSesion.touched || nroSesion.dirty) && (nroSesion.value < 1 || nroSesion.value > 8)"
+                                class="col-lg-12">
+                                <small class="text-danger">El número de consulta debe estar entre el 1 y 8.</small>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Para mostrar los caracteres restantes -->
-                        <div
-                            *ngIf="observacionesSesion && observacionesSesion.value?.length > 2500 && observacionesSesion.value?.length < 3000">
-                            <small class="text-secondary">Quedan {{3000 - observacionesSesion.value?.length}}
-                                caracteres.</small>
+                <!-- Observaciones -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group my-3">
+                            <label for="observaciones-sesion" class="form-label">Observaciones de la sesión:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
+                                <textarea name="observaciones-sesionl" id="observaciones-sesion" cols="12" rows="15"
+                                    class="form-control" ngModel #observacionesSesion="ngModel"
+                                    [(ngModel)]="sesion.observaciones" required maxLength="3000"></textarea>
+                            </div>
+
+                            <!-- Manejo de errores -->
+                            <div class="col-lg-12"
+                                *ngIf="observacionesSesion.invalid && (observacionesSesion.touched || observacionesSesion.dirty)">
+                                <div *ngIf="observacionesSesion.errors?.required">
+                                    <small class="text-danger">Se deben ingresar las observaciones.</small>
+                                </div>
+                            </div>
+
+                            <!-- Para mostrar los caracteres restantes -->
+                            <div
+                                *ngIf="observacionesSesion && observacionesSesion.value?.length > 2500 && observacionesSesion.value?.length < 3000">
+                                <small class="text-secondary">Quedan {{3000 - observacionesSesion.value?.length}}
+                                    caracteres.</small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,20 +77,21 @@
                     <!-- Guardar/actualizar la ficha de tratamiento -->
                     <div class="col-lg-7 text-right">
                         <button *ngIf="!sesion.idSesion; else updateButton" (click)="createSesion()"
-                            [disabled]="observacionesSesion.invalid" class="btn btn-primary" type="submit">Registrar
-                            observaciones</button>
+                            [disabled]="observacionesSesion.invalid || nroSesion.invalid || nroSesion.value < 1 || nroSesion.value > 8"
+                            class="btn btn-primary" type="submit">Registrar
+                            sesión</button>
 
                         <ng-template #updateButton>
-                            <button (click)="updateSesion()" [disabled]="observacionesSesion.invalid"
+                            <button (click)="updateSesion()"
+                                [disabled]="observacionesSesion.invalid || nroSesion.invalid || nroSesion.value < 1 || nroSesion.value > 8"
                                 class="btn btn-primary" type="submit">Guardar cambios</button>
                         </ng-template>
                     </div>
 
                     <!-- Para volver atrás -->
                     <div class="col-lg-5 text-right">
-                        <button
-                            (click)="back(observacionesSesion.value)"
-                            class="btn btn-primary" type="button">Volver</button>
+                        <button (click)="back(observacionesSesion.value)" class="btn btn-primary"
+                            type="button">Volver</button>
                     </div>
                 </div>
             </form>

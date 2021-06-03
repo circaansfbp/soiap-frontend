@@ -55,6 +55,8 @@ export class PacienteComponent implements OnInit {
 
           if (this.paciente.anamnesis != undefined) this.fechaAnamnesis = moment(this.paciente.anamnesis.fechaAnamnesis).format("dddd Do MMMM YYYY");
           if (this.paciente.fichaTratamiento != undefined) this.fechaCreacionFichaTratamiento = moment(this.paciente.fichaTratamiento.fechaDiagnostico).format("dddd Do MMMM YYYY");
+
+          console.log(this.paciente);
         });
       }
     });

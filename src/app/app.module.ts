@@ -24,6 +24,7 @@ import { FichaTratamientoComponent } from './components/ficha-tratamiento/ficha-
 import { FichaTratamientoFormComponent } from './components/ficha-tratamiento/ficha-tratamiento-form/ficha-tratamiento-form.component';
 import { HistorialPacientesComponent } from './components/paciente/historial-pacientes/historial-pacientes.component';
 import { SesionTerapiaFormComponent } from './components/sesion-terapia/sesion-terapia-form/sesion-terapia-form.component';
+import { ListaSesionesComponent } from './components/sesion-terapia/lista-sesiones.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
@@ -35,7 +36,9 @@ const routes = [
   { path: 'pacientes/:idPaciente', component: PacienteComponent },
   { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent },
   { path: 'pacientes/ficha-tratamiento/:idPaciente', component: FichaTratamientoFormComponent },
-  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: SesionTerapiaFormComponent },
+  { path: 'pacientes/ficha-tratamiento/nueva-sesion/:idPaciente', component: SesionTerapiaFormComponent },
+  { path: 'pacientes/ficha-tratamiento/modificar-sesion/:idSesion', component: SesionTerapiaFormComponent},
+  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent},
   { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent },
   { path: 'horario/pago/:idAtencion', component: PagoFormComponent },
   { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent }
@@ -61,7 +64,8 @@ const routes = [
     FichaTratamientoComponent,
     FichaTratamientoFormComponent,
     HistorialPacientesComponent,
-    SesionTerapiaFormComponent
+    SesionTerapiaFormComponent,
+    ListaSesionesComponent
   ],
 
   imports: [

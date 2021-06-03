@@ -17,4 +17,14 @@ export class SesionTerapiaService {
   createSession(sesion: SesionTerapia): Observable<SesionTerapia> {
     return this.http.post<SesionTerapia>(`${this.url}sesion-terapia`, sesion);
   }
+
+  // Obtener una sesión de terapia específica
+  getSesion(idSesion: number): Observable<SesionTerapia> {
+    return this.http.get<SesionTerapia>(`${this.url}sesion-terapia/${idSesion}`);
+  }
+
+  // Actualizar una sesión de terapia
+  updateSesion(sesion: SesionTerapia, idSesion: number): Observable<SesionTerapia> {
+    return this.http.put<SesionTerapia>(`${this.url}sesion-terapia/update/${idSesion}`, sesion);
+  }
 }

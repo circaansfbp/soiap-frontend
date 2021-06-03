@@ -54,7 +54,7 @@ export class PagoFormComponent implements OnInit {
         'success'
       );
       console.log(horario);
-      this.router.navigate(['']);
+      this.location.back();
     },
       error => {
         if (error.status == 404) {

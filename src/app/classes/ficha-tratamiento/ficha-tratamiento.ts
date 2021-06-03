@@ -7,7 +7,7 @@ export class FichaTratamiento {
   resultadoDiagnostico!: string;
   sugerenciaTratamiento!: string;
   objetivosTerapia!: string;
-  sesiones!: SesionTerapia[];
+  sesionesDeTerapia!: SesionTerapia[];
 
   constructor() { }
 }
