@@ -6,6 +6,9 @@ import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import * as moment from 'moment';
+import swal from 'sweetalert2';
+import { Pago } from 'src/app/classes/pago/pago';
+import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
 
 @Component({
   selector: 'app-atenciones-paciente',
@@ -13,17 +16,17 @@ import * as moment from 'moment';
   styleUrls: ['./atenciones-paciente.component.css']
 })
 export class AtencionesPacienteComponent implements OnInit {
-  
+
   // Para entregar las opciones al filtro
   options: any[] = [
-    { value: '', text: 'Filtrar...'},
-    { value: 1, text: 'Asistidas'},
-    { value: -1, text: 'No asistidas'},
-    { value: 2, text: 'Pagadas'},
-    { value: -2, text: 'No pagadas'},
-    { value: 3, text: 'Asistidas y pagadas'},
-    { value: -3, text: 'Asistidas y no pagadas'},
-    { value: 0, text: 'Todas las atenciones'}
+    { value: '', text: 'Filtrar...' },
+    { value: 1, text: 'Asistidas' },
+    { value: -1, text: 'No asistidas' },
+    { value: 2, text: 'Pagadas' },
+    { value: -2, text: 'No pagadas' },
+    { value: 3, text: 'Asistidas y pagadas' },
+    { value: -3, text: 'Asistidas y no pagadas' },
+    { value: 0, text: 'Todas las atenciones' }
   ];
 
   // Para almacenar el paciente al que le corresponden las atenciones
@@ -41,9 +44,25 @@ export class AtencionesPacienteComponent implements OnInit {
   // Página actual
   currentPage: number = 1;
 
+  // Para manejar selección de múltiples horarios de atención
+  selected: boolean = false;
+
+  // Arreglo que contiene los horarios a pagar
+  appointmentsToPay: HorarioAtencion[] = new Array();
+
+  // Manejo del botón
+  clicked: boolean = false;
+
+  // Para manejar el pago
+  pago: Pago = new Pago();
+
+  // Afiliación asociada al pago
+  afiliacion!: string;
+
   constructor(private activatedRoute: ActivatedRoute,
     private location: Location,
-    private pacienteService: PacienteService) { }
+    private pacienteService: PacienteService,
+    private horarioAtencionService: HorarioAtencionService) { }
 
   ngOnInit(): void {
     this.getPatient();
@@ -81,7 +100,7 @@ export class AtencionesPacienteComponent implements OnInit {
   filtrar(value: number) {
 
     // Atenciones asistidas
-    if (value == 1) { 
+    if (value == 1) {
       this.filtered = this.atenciones.filter(atencion => atencion.asistencia == 1);
       this.total = this.filtered.length;
 
@@ -134,6 +153,55 @@ export class AtencionesPacienteComponent implements OnInit {
       this.total = this.filtered.length;
 
       if (this.total <= 10) this.currentPage = 1;
+    }
+  }
+
+  // Permite comenzar la selección de múltiples horarios de atención que se desean pagar
+  payMultiple() {
+    swal.fire({
+      position: 'top',
+      icon: 'info',
+      title: 'Seleccione las atenciones que desea pagar!',
+      text: 'Una vez finalizado, presione el botón "Confirmar pago".',
+      showConfirmButton: false,
+      timer: 3500
+    });
+
+    this.selected = true;
+  }
+
+  // Para añadir a un array los horarios de atención a pagar
+  addHorarioParaPagarlo(horario: HorarioAtencion) {
+    horario.pagoMultiple = true;
+    this.appointmentsToPay.push(horario);
+  }
+
+  // Para remover un horario específico del array de los horarios de atención a pagar
+  removerHorario(horario: HorarioAtencion) {
+    horario.pagoMultiple = false;
+
+    if (this.appointmentsToPay.length > 0) {
+      let index = this.appointmentsToPay.findIndex(atencion => atencion.idAtencion == horario.idAtencion);
+      this.appointmentsToPay.splice(index, 1);
+    }
+  }
+
+  // Para registrar el pago de los horarios de atención contenidos en el array
+  confirmPayment() {
+    if (this.appointmentsToPay.length > 0) {
+      if (this.afiliacion == undefined) this.pago.afiliacionPaciente = this.paciente.afiliacionSalud;
+      else this.pago.afiliacionPaciente = this.afiliacion;
+
+      this.pago.cantidadHorasPagadas = this.appointmentsToPay.length;
+
+      // REALIZA UN NUEVO PAGO POR CADA ATENCIÓN, DEBE SER EL MISMO PARA TODAS LAS ATENCIONES!
+      this.appointmentsToPay.forEach(atencion => {
+        atencion.pago = this.pago;
+
+        this.horarioAtencionService.modificarHorario(atencion).subscribe(atencionPagada => {
+          console.log(atencionPagada);
+        });
+      });
     }
   }
 

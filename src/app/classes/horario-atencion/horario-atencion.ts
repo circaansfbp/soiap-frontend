@@ -10,6 +10,7 @@ export class HorarioAtencion {
   nroConsulta!: number;
   paciente!: Paciente;
   pago!: Pago;
+  pagoMultiple: boolean = false;
 
   constructor() { }
 }

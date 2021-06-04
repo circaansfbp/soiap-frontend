@@ -1,3 +1,8 @@
+#add-icon {
+    font-size: 15px;
+    background-color: #007f5f;
+}
+
 #back-button {
     margin-top: 30px;
 }
@@ -13,19 +18,59 @@
     padding-bottom: 80px;
 }
 
+#multiple-payment-btn-remove, #multiple-payment-btn-remove:hover {
+    background-color: #d33;
+    border-color: #d33;
+}
+
+#remove-icon {
+    font-size: 15px;
+    background-color: #d33;
+}
+
 #text {
     padding-top: 30px;
 }
 
-#title {
+.color {
+    color: #284b63;
+}
+
+.form-check-input {
+    margin-left: -.75rem;
+    margin-top: .4rem;
+}
+
+.form-check-label {
+    margin-left: 7px;
+}
+
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+.form-control.ng-valid {
+    border: 2px solid green;
+}
+
+.modal-content {
+    padding: 20px 40px;
+}
+
+.modal-header {
+    border-bottom: 5px solid #284b63;
+}
+
+.multiple-payment-btn-add, .multiple-payment-btn-add:hover {
+    background-color: #007f5f;
+    border-color: #007f5f;
+}
+
+.separate {
     padding-bottom: 25px;
     margin-top: 20px;
     margin-bottom: 10px;
     border-bottom: 5px solid #284b63;
-}
-
-.color {
-    color: #284b63;
 }
 
 .table-dark {
@@ -37,8 +82,15 @@ button, button:disabled, button:focus, button:hover {
     border-color: #284b63;
 }
 
-i {
-    font-size: 80px;
+i, span {
+    background-color: #284b63;
+    color: #fff;
+}
+
+select {
+    width: 343px;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
 }
 
 table {
