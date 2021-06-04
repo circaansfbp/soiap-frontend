@@ -140,7 +140,7 @@
                         </div>
                         <div class="col-lg-12 text-center" *ngIf="horario.asistencia == -1">
                             <i class="bi bi-x-circle-fill icon-fail"></i>
-                            <h5>El paciente no asistió a su sesión de terapia
+                            <h5>El paciente no asistió a su sesión de terapia.
                             </h5>
                         </div>
                     </div>
@@ -149,13 +149,20 @@
                 <!-- Registro del pago del horario de atención -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12 text-center" *ngIf="!horario.pago">
+                        <div class="col-lg-12 text-center" *ngIf="!horario.pago && horario.asistencia != -1">
                             <h5>No se ha registrado el pago por este horario de atención</h5>
                             <h5>¿Desea registrarlo?</h5>
                             <button [routerLink]="['horario/pago', horario.idAtencion]"
                                 class="btn btn-primary confirmacion" type="button" data-dismiss="modal">Registrar
                                 pago</button>
                         </div>
+
+                        <div class="col-lg-12 text-center" *ngIf="!horario.pago && horario.asistencia == -1">
+                            <i class="bi bi-x-circle-fill icon-fail"></i>
+                            <h5>El paciente no asistió a su horario de atención</h5>
+                            <h5>por lo que no es posible realizar el pago de este.</h5>
+                        </div>
+
                         <div class="col-lg-12 text-center" *ngIf="horario.pago">
                             <i class="bi bi-check-circle-fill icon-confirm"></i>
                             <h5>¡El horario de atención fue pagado!</h5>

@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import swal from 'sweetalert2';
 import { Pago } from 'src/app/classes/pago/pago';
 import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
+import { PagoService } from 'src/app/services/pago/pago.service';
 
 @Component({
   selector: 'app-atenciones-paciente',
@@ -62,7 +63,8 @@ export class AtencionesPacienteComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private location: Location,
     private pacienteService: PacienteService,
-    private horarioAtencionService: HorarioAtencionService) { }
+    private horarioAtencionService: HorarioAtencionService,
+    private pagoService: PagoService) { }
 
   ngOnInit(): void {
     this.getPatient();
@@ -158,12 +160,29 @@ export class AtencionesPacienteComponent implements OnInit {
 
   // Permite comenzar la selección de múltiples horarios de atención que se desean pagar
   payMultiple() {
+    let horario: any = this.filtered.find(atencion => atencion.pago == undefined);
+
+    if (!horario) {
+      swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Atenciones pagadas!',
+        text: 'El paciente no presenta horarios de atención impagados.',
+        showConfirmButton: true,
+        confirmButtonText: 'OK!',
+        timer: 3500
+      });
+
+      return;
+    }
+
     swal.fire({
       position: 'top',
       icon: 'info',
       title: 'Seleccione las atenciones que desea pagar!',
       text: 'Una vez finalizado, presione el botón "Confirmar pago".',
-      showConfirmButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'OK!',
       timer: 3500
     });
 
@@ -194,15 +213,47 @@ export class AtencionesPacienteComponent implements OnInit {
 
       this.pago.cantidadHorasPagadas = this.appointmentsToPay.length;
 
-      // REALIZA UN NUEVO PAGO POR CADA ATENCIÓN, DEBE SER EL MISMO PARA TODAS LAS ATENCIONES!
-      this.appointmentsToPay.forEach(atencion => {
-        atencion.pago = this.pago;
-
-        this.horarioAtencionService.modificarHorario(atencion).subscribe(atencionPagada => {
-          console.log(atencionPagada);
+      this.pagoService.registerPayment(this.pago).subscribe(pagoRegistrado => {
+        this.appointmentsToPay.forEach(atencion => {
+          atencion.pago = pagoRegistrado;
+          this.horarioAtencionService.modificarHorario(atencion).subscribe(atencionPagada => console.log(atencionPagada));
         });
+
+        this.appointmentsToPay = [];
+
+        swal.fire(
+          'Horarios pagados!',
+          'El pago de los horarios de atención seleccionados fue registrado exitosamente.',
+          'success'
+        );
+
+        this.selected = false;
       });
     }
+  }
+
+  // En caso de que se quiera cancelar la operación de pago múltiple
+  cancelPayment() {
+    if (this.appointmentsToPay.length > 0) {
+      swal.fire({
+        title: '¿Cancelar operación?',
+        text: '¿Está seguro que desea cancelar el pago de los horarios de atención?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.selected = false;
+
+          this.appointmentsToPay.forEach(horario => horario.pagoMultiple = false);
+          this.appointmentsToPay = [];
+        }
+      });
+    }
+    else this.selected = false;
   }
 
   // Para volver atrás

@@ -14,14 +14,19 @@
 
     <!-- Cuerpo -->
     <!-- Botón que permite realización de pago múltiple -->
-    <div class="row separate">
+    <div *ngIf="filtered.length > 0" class="row separate">
         <div class="col-lg-12 text-center">
-            <button *ngIf="!selected" (click)="payMultiple()" class="btn btn-primary" type="button">Realizar pago de
+            <button [disabled]="atenciones.length <= 1" *ngIf="!selected" (click)="payMultiple()"
+                class="btn btn-primary" type="button">Realizar pago de
                 múltiples atenciones</button>
 
-            <button *ngIf="selected" class="btn btn-primary multiple-payment-btn-add" type="button" data-toggle="modal"
+            <button [disabled]="appointmentsToPay.length == 0" *ngIf="selected"
+                class="btn btn-primary multiple-payment-btn-add mx-3" type="button" data-toggle="modal"
                 data-target="#pay-multiple">Confirmar
                 pago</button>
+
+            <button (click)="cancelPayment()" *ngIf="selected" class="btn btn-primary multiple-payment-btn-remove"
+                type="button">Cancelar</button>
         </div>
     </div>
 
@@ -55,23 +60,27 @@
 
                             <!-- Pago por atención -->
                             <td *ngIf="atencion.pago">La sesión fue pagada</td>
-                            <td *ngIf="!atencion.pago">La sesión no ha sido pagada</td>
+                            <td *ngIf="!atencion.pago && atencion.asistencia != -1">La sesión no ha sido pagada</td>
+                            <td *ngIf="!atencion.pago && atencion.asistencia == -1">-</td>
 
                             <!-- Opciones -->
-                            <td *ngIf="atencion.pago">-</td>
-                            <td *ngIf="!atencion.pago">
-                                <button [routerLink]="['../../../horario/pago', atencion.idAtencion]"
+                            <td *ngIf="atencion.pago && !selected">-</td>
+                            <td *ngIf="!atencion.pago && !selected">
+                                <button [disabled]="atencion.asistencia == -1"
+                                    [routerLink]="['../../../horario/pago', atencion.idAtencion]"
                                     class="btn btn-primary" type="button">Registrar pago</button>
                             </td>
                             <td *ngIf="selected">
-                                <button *ngIf="!atencion.pago && !atencion.pagoMultiple"
+                                <button [disabled]="atencion.asistencia == -1"
+                                    *ngIf="!atencion.pago && !atencion.pagoMultiple"
                                     class="btn btn-primary multiple-payment-btn-add" type="button"
                                     (click)="addHorarioParaPagarlo(atencion)"><i id="add-icon"
                                         class="bi bi-plus"></i>Agregar</button>
 
-                                <button *ngIf="!atencion.pago && atencion.pagoMultiple" id="multiple-payment-btn-remove"
-                                    class="btn btn-primary" type="button" (click)="removerHorario(atencion)"><i
-                                        id="remove-icon" class="bi bi-dash"></i>Remover</button>
+                                <button *ngIf="!atencion.pago && atencion.pagoMultiple"
+                                    class="btn btn-primary multiple-payment-btn-remove" type="button"
+                                    (click)="removerHorario(atencion)"><i id="remove-icon"
+                                        class="bi bi-dash"></i>Remover</button>
                             </td>
                         </tr>
                     </tbody>
@@ -83,7 +92,7 @@
 
         <!-- Si el paciente no tiene atenciones asociadas -->
         <div *ngIf="filtered.length == 0" class="col-lg-12 text-center">
-            <i class="bi bi-exclamation-diamond-fill color"></i>
+            <i id="sin-atenciones" class="bi bi-exclamation-diamond-fill color"></i>
             <h3 class="color">No se encontraron horarios de atención.</h3>
         </div>
 

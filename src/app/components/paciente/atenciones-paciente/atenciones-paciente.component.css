@@ -18,14 +18,14 @@
     padding-bottom: 80px;
 }
 
-#multiple-payment-btn-remove, #multiple-payment-btn-remove:hover {
-    background-color: #d33;
-    border-color: #d33;
-}
-
 #remove-icon {
     font-size: 15px;
     background-color: #d33;
+}
+
+#sin-atenciones {
+    font-size: 80px;
+    background-color: #fff;
 }
 
 #text {
@@ -61,9 +61,14 @@
     border-bottom: 5px solid #284b63;
 }
 
-.multiple-payment-btn-add, .multiple-payment-btn-add:hover {
+.multiple-payment-btn-add, .multiple-payment-btn-add:hover, .multiple-payment-btn-add:disabled {
     background-color: #007f5f;
     border-color: #007f5f;
+}
+
+.multiple-payment-btn-remove, .multiple-payment-btn-remove:hover {
+    background-color: #d33;
+    border-color: #d33;
 }
 
 .separate {
