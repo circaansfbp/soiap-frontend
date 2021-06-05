@@ -51,7 +51,9 @@
                                     <option value="Bono(s)">Bono(s)</option>
                                     <option value="Programa">Programa</option>
                                     <option value="Bonos/Programa">Bonos y programa</option>
-                                    <option value="Efectivo">Efectivo</option>
+                                    <option
+                                        *ngIf="afiliacionPaciente.value == 'particular' || afiliacionPaciente.value == 'Particular'"
+                                        value="Efectivo">Efectivo</option>
                                 </select>
                             </div>
                         </div>

@@ -26,8 +26,6 @@ export class AgendaComponent implements OnInit {
 
     this.actualDate = moment(this.today).format("YYYY[-]MM[-]DD");
     this.titleDate = moment(this.today).format("dddd Do MMMM YYYY");
-
-    console.log(this.today.format("YYYY MM DD"));
   }
 
   // Día anterior
@@ -37,8 +35,6 @@ export class AgendaComponent implements OnInit {
 
     this.actualDate = moment(this.today).format("YYYY[-]MM[-]DD");
     this.titleDate = moment(this.today).format("dddd Do MMMM YYYY");
-
-    console.log(this.today.format("YYYY MM DD"));
   }
 
   // Búsqueda mediante input fecha

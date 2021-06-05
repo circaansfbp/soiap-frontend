@@ -25,6 +25,7 @@ import { FichaTratamientoFormComponent } from './components/ficha-tratamiento/fi
 import { HistorialPacientesComponent } from './components/paciente/historial-pacientes/historial-pacientes.component';
 import { SesionTerapiaFormComponent } from './components/sesion-terapia/sesion-terapia-form/sesion-terapia-form.component';
 import { ListaSesionesComponent } from './components/sesion-terapia/lista-sesiones.component';
+import { BusquedaFechaComponent } from './components/busqueda/busqueda-fecha/busqueda-fecha.component';
 
 const routes = [
   { path: '', component: AgendaComponent },
@@ -65,7 +66,8 @@ const routes = [
     FichaTratamientoFormComponent,
     HistorialPacientesComponent,
     SesionTerapiaFormComponent,
-    ListaSesionesComponent
+    ListaSesionesComponent,
+    BusquedaFechaComponent
   ],
 
   imports: [

@@ -1,3 +1,7 @@
+#date {
+    margin-top: 10px;
+}
+
 #main {
     margin-top: 40px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -7,6 +11,16 @@
     padding-left: 80px;
     padding-right: 80px;
     padding-bottom: 80px;
+}
+
+#sin-atenciones {
+    font-size: 80px;
+    background-color: #fff;
+    color: #284b63;
+}
+
+#sin-sesiones {
+    padding-bottom: 50px;
 }
 
 #title {

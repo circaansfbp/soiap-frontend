@@ -99,7 +99,7 @@ export class PagoFormComponent implements OnInit {
         'success'
       );
 
-      this.router.navigate(['']);
+      this.location.back();
     });
   }
 

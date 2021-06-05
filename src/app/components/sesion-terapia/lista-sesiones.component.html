@@ -2,15 +2,25 @@
 
     <!-- Título -->
     <div class="row" id="title">
-        <div class="col-lg-12">
+        <div class="col-lg-6" id="date">
             <h2>{{paciente.nombre + " " + paciente.apellido}}</h2>
             <h5>El paciente registra las siguientes sesiones de terapia.</h5>
+        </div>
+        <div class="col-lg-6">
+            <app-busqueda-fecha (searchDateEvent)="searchBySpecificDate($event)"></app-busqueda-fecha>
         </div>
     </div>
 
     <!-- Listado de sesiones de terapia -->
     <div class="row" id="body">
-        <div class="col-lg-12 text-center">
+
+        <!-- Si no se encuentran sesiones de terapia para la fecha buscada -->
+        <div id="sin-sesiones" *ngIf="sesiones.length == 0" class="col-lg-12 text-center">
+            <i id="sin-atenciones" class="bi bi-exclamation-diamond-fill"></i>
+            <h3 class="color">No se encontraron sesiones de terapia.</h3>
+        </div>
+
+        <div *ngIf="sesiones.length > 0" class="col-lg-12 text-center">
             <div class="table table-responsive-lg">
                 <table class="table table-bordered">
                     <thead class="table-dark">
@@ -43,7 +53,11 @@
             </div>
         </div>
 
-        <div class="col-lg-12 text-right">
+        <div class="col-lg-6 text-left">
+            <button (click)="displayAll()" [disabled]="sesiones.length > 1" class="btn btn-primary"
+                type="button">Mostrar todas las sesiones</button>
+        </div>
+        <div class="col-lg-6 text-right">
             <button [routerLink]="['../../../ficha-tratamiento/nueva-sesion', paciente.idPaciente]"
                 class="btn btn-primary mx-4" type="button">Registrar nueva sesión</button>
             <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
@@ -63,7 +77,7 @@
             </div>
             <div class="modal-body">
                 <div class="col-lg-12">
-                    <p>{{sesion.observaciones}}</p>
+                    <p class="text-justify">{{sesion.observaciones}}</p>
                 </div>
             </div>
             <div class=" modal-footer">

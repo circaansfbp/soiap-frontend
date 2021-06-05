@@ -60,6 +60,9 @@ export class AtencionesPacienteComponent implements OnInit {
   // Afiliación asociada al pago
   afiliacion!: string;
 
+  // Para mostrar el detalle de un pago
+  horario: HorarioAtencion = new HorarioAtencion();
+
   constructor(private activatedRoute: ActivatedRoute,
     private location: Location,
     private pacienteService: PacienteService,
@@ -160,7 +163,11 @@ export class AtencionesPacienteComponent implements OnInit {
 
   // Permite comenzar la selección de múltiples horarios de atención que se desean pagar
   payMultiple() {
-    let horario: any = this.filtered.find(atencion => atencion.pago == undefined);
+    let horario!: any;
+    let horariosImpagados: HorarioAtencion[] = this.filtered.filter(atencion => atencion.pago == undefined);
+    horariosImpagados.forEach(horarioImpagado => {
+      if (horarioImpagado.asistencia != -1) horario = horarioImpagado;
+    });
 
     if (!horario) {
       swal.fire({
@@ -254,6 +261,11 @@ export class AtencionesPacienteComponent implements OnInit {
       });
     }
     else this.selected = false;
+  }
+
+  // Mostrar el detalle de un pago
+  detallePago(horarioAtencion: HorarioAtencion) {
+    this.horario = horarioAtencion;
   }
 
   // Para volver atrás

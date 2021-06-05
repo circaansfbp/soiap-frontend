@@ -7,7 +7,7 @@
 
         <!-- Input que permite buscar horarios por fecha -->
         <div class="col-lg-6" id="search-date-input">
-            <form>
+            <!-- <form>
                 <div class="form-group">
                     <label for="fecha-atencion">Buscar horarios para la fecha:</label>
                     <div class="input-group">
@@ -18,7 +18,9 @@
                 </div>
                 <button [disabled]="fechaAtencion.invalid" type="submit" class="btn btn-primary"
                     (click)="searchBySpecificDate(fechaAtencion.value)">Buscar</button>
-            </form>
+            </form> -->
+
+            <app-busqueda-fecha (searchDateEvent)="searchBySpecificDate($event)"></app-busqueda-fecha>
         </div>
     </div>
     <!-- Botones de día siguiente y anterior -->

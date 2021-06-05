@@ -16,7 +16,7 @@
     <!-- Botón que permite realización de pago múltiple -->
     <div *ngIf="filtered.length > 0" class="row separate">
         <div class="col-lg-12 text-center">
-            <button [disabled]="atenciones.length <= 1" *ngIf="!selected" (click)="payMultiple()"
+            <button [disabled]="filtered.length <= 1" *ngIf="!selected" (click)="payMultiple()"
                 class="btn btn-primary" type="button">Realizar pago de
                 múltiples atenciones</button>
 
@@ -64,7 +64,10 @@
                             <td *ngIf="!atencion.pago && atencion.asistencia == -1">-</td>
 
                             <!-- Opciones -->
-                            <td *ngIf="atencion.pago && !selected">-</td>
+                            <td *ngIf="atencion.pago">
+                                <button (click)="detallePago(atencion)" data-toggle="modal" data-target="#detallePago" class="btn btn-primary"
+                                    type="button">Ver detalle pago</button>
+                            </td>
                             <td *ngIf="!atencion.pago && !selected">
                                 <button [disabled]="atencion.asistencia == -1"
                                     [routerLink]="['../../../horario/pago', atencion.idAtencion]"
@@ -162,7 +165,9 @@
                                                 <option value="Bono(s)">Bono(s)</option>
                                                 <option value="Programa">Programa</option>
                                                 <option value="Bonos/Programa">Bonos y programa</option>
-                                                <option value="Efectivo">Efectivo</option>
+                                                <option
+                                                    *ngIf="afiliacionPaciente.value == 'particular' || afiliacionPaciente.value == 'Particular'"
+                                                    value="Efectivo">Efectivo</option>
                                             </select>
                                         </div>
                                     </div>
@@ -213,6 +218,30 @@
                 <button (click)="confirmPayment()" data-dismiss="modal" class="btn btn-primary" type="button">Registrar
                     pago</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal que permite ver el detalle del pago -->
+<div class="modal fade" id="detallePago" tabindex="-1" role="dialog" aria-labelledby="detallePagoLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h3>Detalle Pago</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12 text-center">
+                    <app-pago [horarioAtencion]="horario"></app-pago>
+                </div>
+            </div>
+            <div class=" modal-footer" *ngIf="horario.pago">
+                <button [routerLink]="['../../../horario/pago', horario.idAtencion, horario.pago.idPago]" class="btn btn-primary"
+                    type="button" data-dismiss="modal">Modificar pago</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

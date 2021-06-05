@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as moment from 'moment';
+
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { SesionTerapia } from 'src/app/classes/sesion-terapia/sesion-terapia';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
+
+import * as moment from 'moment';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lista-sesiones',
@@ -46,7 +49,7 @@ export class ListaSesionesComponent implements OnInit {
           this.sesiones = paciente.fichaTratamiento.sesionesDeTerapia;
 
           this.sesiones.sort((firstDate, secondDate) => {
-            return +new Date(firstDate.fechaSesion) - +new Date(secondDate.fechaSesion);
+            return +new Date(secondDate.fechaSesion) - +new Date(firstDate.fechaSesion);
           });
 
           this.totalSesiones = this.paciente.fichaTratamiento.sesionesDeTerapia.length;
@@ -62,6 +65,24 @@ export class ListaSesionesComponent implements OnInit {
   // Para setear el objeto 'sesion' con una sesion de terapia especifica
   setSesion(sesionEspecifica: SesionTerapia) {
     this.sesion = sesionEspecifica;
+  }
+
+  // Búsqueda mediante input fecha
+  searchBySpecificDate(date: string) {
+    this.sesiones = this.sesiones.filter(sesion => moment(sesion.fechaSesion).isSame(moment(date)));
+
+    if (this.sesiones.length == 0) {
+      swal.fire(
+        'No se encontraron sesiones!',
+        'El paciente no registra sesiones de terapia en la fecha especificada.',
+        'error'
+      );
+    }
+  }
+
+  // Para volver a mostrar todas las sesiones de terapia
+  displayAll() {
+    this.sesiones = this.paciente.fichaTratamiento.sesionesDeTerapia;
   }
 
   // Para volver atrás
