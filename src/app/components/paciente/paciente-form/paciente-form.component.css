@@ -1,3 +1,15 @@
+#dictado-btn {
+    margin-top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#stop-dictado-btn {
+    margin-top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
 #main {
     margin-top: 40px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;

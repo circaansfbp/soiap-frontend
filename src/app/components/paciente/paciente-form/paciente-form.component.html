@@ -247,17 +247,34 @@
                                 <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
                                 <textarea name="grupo-familiar-paciente" id="grupo-familiar-paciente" cols="12" rows="3"
                                     class="form-control" ngModel [(ngModel)]="paciente.familiaNuclear"
-                                    #familiaNuclear="ngModel" required maxlength="255"></textarea>
+                                    #familiaNuclear="ngModel" required maxlength="1000"></textarea>
+                                <span class="input-group-text">
+                                    <!-- Si no se ha comenzado a grabar, se despliega botón que permite iniciar el dictado -->
+                                    <button (click)="record()" *ngIf="!recording" title="Iniciar dictado por voz"
+                                        class="btn btn-primary" id="dictado-btn" type="button">
+                                        <i class="bi bi-mic-fill"></i>
+                                    </button>
+
+                                    <!-- Si se está grabando, se despliega botón que permite detener la grabación -->
+                                    <button (click)="stopRecording()" *ngIf="recording" class="btn btn-primary"
+                                        type="button" title="Detener dictado por voz" id="stop-dictado-btn">
+                                        <i class="bi bi-mic-mute-fill"></i>
+                                    </button>
+
+                                </span>
                             </div>
                             <div *ngIf="familiaNuclear?.invalid && (familiaNuclear?.touched || familiaNuclear?.dirty)"
                                 class="col-lg-12">
                                 <div *ngIf="familiaNuclear.errors?.required">
                                     <small class="text-danger">Se debe ingresar el grupo familiar del paciente!</small>
                                 </div>
+                                <div *ngIf="familiaNuclear.errors && !familiaNuclear.errors?.required">
+                                    <small class="text-danger">Sólo se permite un máximo de 1000 caracteres!</small>
+                                </div>
                             </div>
-                            <div *ngIf="familiaNuclear && familiaNuclear.value?.length > 205 && familiaNuclear.value?.length < 255"
+                            <div *ngIf="familiaNuclear && familiaNuclear.value?.length > 900 && familiaNuclear.value?.length < 1000"
                                 class="col-lg-12">
-                                <small class="text-secondary">Quedan {{255 -
+                                <small class="text-secondary">Quedan {{1000 -
                                     familiaNuclear.value?.length}} caracteres.</small>
                             </div>
                         </div>
@@ -267,14 +284,18 @@
                 <div class="row">
                     <div class="col-lg-7 text-right">
                         <!-- Guardar cambios -->
-                        <button [disabled]="nombrePaciente.invalid && apellidoPaciente.invalid && telefonoPaciente.invalid 
-&& fechaNacimientoPaciente.invalid && ocupacionPaciente.invalid && institucionPaciente.invalid
-&& afiliacionSaludPaciente.invalid && estadoCivilPaciente.invalid && familiaNuclear.invalid" type="submit"
+                        <button [disabled]="nombrePaciente.invalid || apellidoPaciente.invalid || telefonoPaciente.invalid 
+|| fechaNacimientoPaciente.invalid || ocupacionPaciente.invalid || institucionPaciente.invalid
+|| afiliacionSaludPaciente.invalid || estadoCivilPaciente.invalid || familiaNuclear.invalid" type="submit"
                             class="btn btn-primary">Guardar cambios</button>
                     </div>
                     <div class="col-lg-5 text-right">
                         <!-- Cancelar operación/volver -->
-                        <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
+                        <button
+                            (click)="back(nombrePaciente.value, apellidoPaciente.value, telefonoPaciente.value, 
+                            fechaNacimientoPaciente.value, ocupacionPaciente.value, institucionPaciente.value, 
+                            afiliacionSaludPaciente.value, estadoCivilPaciente.value, familiaNuclear.value)"
+                            class="btn btn-primary" type="button">Volver</button>
                     </div>
                 </div>
             </form>
