@@ -7,6 +7,7 @@ import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import swal from 'sweetalert2';
 import { AnamnesisService } from 'src/app/services/anamnesis/anamnesis.service';
+import { DictadoService } from 'src/app/services/dictado/dictado.service';
 
 @Component({
   selector: 'app-anamnesis-form',
@@ -21,11 +22,15 @@ export class AnamnesisFormComponent implements OnInit {
   // Para almacenar la anamnesis del paciente
   anamnesis: Anamnesis = new Anamnesis();
 
+  // Para manejar el dictado por voz
+  recording: boolean = false;
+
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
     private pacienteService: PacienteService,
-    private anamnesisService: AnamnesisService) { }
+    private anamnesisService: AnamnesisService,
+    private dictadoService: DictadoService) { this.dictadoService.init(); }
 
   ngOnInit(): void {
     this.getAssociatedPatient();
@@ -95,6 +100,50 @@ export class AnamnesisFormComponent implements OnInit {
         });
       }
     });
+  }
+
+  // Para iniciar el dictado por voz
+  // Para iniciar dictado por voz
+  record() {
+    swal.fire({
+      position: 'top',
+      icon: 'info',
+      title: 'Grabación iniciada!',
+      text: 'Ya puede comenzar a dictar la información. Una vez finalizado, presione el mismo botón para detener la grabación.',
+      showConfirmButton: true,
+      confirmButtonText: 'OK!',
+      timer: 4000
+    });
+
+    this.recording = true;
+    this.dictadoService.start();
+  }
+
+  // Para detener el dictado por voz
+  stopRecording(whichInput: number) {
+    this.recording = false;
+
+    // Para saber a cuál input del formulario corresponde 
+    if (whichInput == 1) {
+      if (this.anamnesis.motivoConsultaPaciente == undefined) this.anamnesis.motivoConsultaPaciente = "";
+      this.anamnesis.motivoConsultaPaciente = this.anamnesis.motivoConsultaPaciente + " " + this.dictadoService.stop();
+    }
+
+    else if (whichInput == 2) {
+      if (this.anamnesis.antecedentesPaciente == undefined) this.anamnesis.antecedentesPaciente = "";
+      this.anamnesis.antecedentesPaciente = this.anamnesis.antecedentesPaciente + " " + this.dictadoService.stop();
+    }
+
+    else if (whichInput == 3) {
+      if (this.anamnesis.antecedentesFamiliares == undefined) this.anamnesis.antecedentesFamiliares = "";
+      this.anamnesis.antecedentesFamiliares = this.anamnesis.antecedentesFamiliares + " " + this.dictadoService.stop();
+    }
+
+    else if (whichInput == 4) {
+      if (this.anamnesis.observaciones == undefined) this.anamnesis.observaciones = "";
+      this.anamnesis.observaciones = this.anamnesis.observaciones + " " + this.dictadoService.stop();
+    }
+    // this.paciente.familiaNuclear = this.paciente.familiaNuclear + " " + this.dictadoService.stop();
   }
 
   // Para volver atrás/cancelar la operación

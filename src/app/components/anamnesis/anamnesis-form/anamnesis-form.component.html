@@ -17,7 +17,20 @@
                             <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
                             <textarea name="motivo-consulta-paciente" id="motivo-consulta-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #motivoConsulta="ngModel"
-                                [(ngModel)]="anamnesis.motivoConsultaPaciente" required maxLength="2000"></textarea>
+                                [(ngModel)]="anamnesis.motivoConsultaPaciente" required maxlength="2000"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="record()"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button *ngIf="recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="stopRecording(1)"><i
+                                        class="bi bi-mic-fill"></i></button>
+                            </span>
                         </div>
 
                         <!-- Manejo de errores -->
@@ -25,6 +38,9 @@
                             *ngIf="motivoConsulta.invalid && (motivoConsulta.touched || motivoConsulta.dirty)">
                             <div *ngIf="motivoConsulta.errors?.required">
                                 <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
+                            </div>
+                            <div *ngIf="motivoConsulta.errors && !motivoConsulta.errors.required">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
                         </div>
 
@@ -45,13 +61,32 @@
                             <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
                             <textarea name="antecedentes-paciente" id="antecedentes-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #antecedentesPaciente="ngModel"
-                                [(ngModel)]="anamnesis.antecedentesPaciente" required maxLength="2000"></textarea>
+                                [(ngModel)]="anamnesis.antecedentesPaciente" required maxlength="2000"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="record()"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button *ngIf="recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="stopRecording(2)"><i
+                                        class="bi bi-mic-fill"></i></button>
+                            </span>
                         </div>
 
                         <!-- Manejo de errores -->
                         <div class="col-lg-12"
                             *ngIf="antecedentesPaciente.invalid && (antecedentesPaciente.touched || antecedentesPaciente.dirty)">
-                            <small class="text-danger">Se deben ingresar los antecedentes del paciente.</small>
+                            <div *ngIf="antecedentesPaciente.errors?.required">
+                                <small class="text-danger">Se deben ingresar los antecedentes del paciente.</small>
+                            </div>
+
+                            <div *ngIf="antecedentesPaciente.errors && !antecedentesPaciente.errors.required">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
+                            </div>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -73,14 +108,34 @@
                             <textarea name="antecedentes-familiares-paciente" id="antecedentes-familiares-paciente"
                                 cols="12" rows="6" class="form-control" ngModel
                                 #antecedentesFamiliaresPaciente="ngModel" [(ngModel)]="anamnesis.antecedentesFamiliares"
-                                required maxLength="2000"></textarea>
+                                required maxlength="2000"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="record()"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button *ngIf="recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="stopRecording(3)"><i
+                                        class="bi bi-mic-fill"></i></button>
+                            </span>
                         </div>
 
                         <!-- Manejo de errores -->
                         <div class="col-lg-12"
                             *ngIf="antecedentesFamiliaresPaciente.invalid && (antecedentesFamiliaresPaciente.touched || antecedentesFamiliaresPaciente.dirty)">
-                            <small class="text-danger">Se deben ingresar los antecedentes familiares del
-                                paciente.</small>
+                            <div *ngIf="antecedentesFamiliaresPaciente.errors?.required">
+                                <small class="text-danger">Se deben ingresar los antecedentes familiares del
+                                    paciente.</small>
+                            </div>
+
+                            <div
+                                *ngIf="antecedentesFamiliaresPaciente.errors && !antecedentesFamiliaresPaciente.errors?.required">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
+                            </div>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -100,7 +155,28 @@
                             <span class="input-group-text"><i class="bi bi-chat-left-dots-fill"></i></span>
                             <textarea name="observaciones" id="observaciones" cols="12" rows="6" class="form-control"
                                 ngModel #observaciones="ngModel" [(ngModel)]="anamnesis.observaciones"
-                                maxLength="2000"></textarea>
+                                maxlength="2000"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="record()"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button *ngIf="recording" class="btn btn-primary" type="button"
+                                    title="Iniciar dictado por voz" (click)="stopRecording(4)"><i
+                                        class="bi bi-mic-fill"></i></button>
+                            </span>
+                        </div>
+
+                        <!-- Manejo de errores -->
+                        <div class="col-lg-12"
+                            *ngIf="observaciones.errors || observaciones.invalid && (observaciones.touched || observaciones.dirty)">
+                            <div *ngIf="observaciones.errors">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
+                            </div>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
