@@ -24,6 +24,12 @@
     border: 2px solid green;
 }
 
+.btn-dictado, .btn-dictado:hover, .btn-dictado:disabled, .btn-dictado:focus {
+    margin-top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
 button, button:hover, button:disabled, button:focus {
     margin-top: 30px;
     background-color: #284b63;

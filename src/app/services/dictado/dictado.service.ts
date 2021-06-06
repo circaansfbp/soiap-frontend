@@ -23,11 +23,13 @@ export class DictadoService {
   start() {
     this.transcript = '';
     this.recognition.start();
-
+    
     this.recognition.onresult = (event: any) => {
       const results = event.results;
       this.transcript += results[results.length - 1][0].transcript;
       console.log(this.transcript);
+    }, (error: any) => {
+      console.log(error);
     };
   }
 

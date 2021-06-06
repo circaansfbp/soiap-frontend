@@ -4,10 +4,10 @@ import { Location } from '@angular/common';
 import { Anamnesis } from 'src/app/classes/anamnesis/anamnesis';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
-
-import swal from 'sweetalert2';
 import { AnamnesisService } from 'src/app/services/anamnesis/anamnesis.service';
 import { DictadoService } from 'src/app/services/dictado/dictado.service';
+
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anamnesis-form',
@@ -24,6 +24,9 @@ export class AnamnesisFormComponent implements OnInit {
 
   // Para manejar el dictado por voz
   recording: boolean = false;
+
+  // Arreglo con constantes que permiten deshabilitar los botones de grabación
+  disable: boolean[] = [false, false, false, false];
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -103,8 +106,7 @@ export class AnamnesisFormComponent implements OnInit {
   }
 
   // Para iniciar el dictado por voz
-  // Para iniciar dictado por voz
-  record() {
+  record(whichInput: number) {
     swal.fire({
       position: 'top',
       icon: 'info',
@@ -114,6 +116,22 @@ export class AnamnesisFormComponent implements OnInit {
       confirmButtonText: 'OK!',
       timer: 4000
     });
+
+    if (whichInput == 1) {
+      this.disable = [false, true, true, true];
+    }
+
+    else if (whichInput == 2) {
+      this.disable = [true, false, true, true];
+    }
+
+    else if (whichInput == 3) {
+      this.disable = [true, true, false, true];
+    }
+
+    else if (whichInput == 4) {
+      this.disable = [true, true, true, false];
+    }
 
     this.recording = true;
     this.dictadoService.start();
@@ -125,25 +143,44 @@ export class AnamnesisFormComponent implements OnInit {
 
     // Para saber a cuál input del formulario corresponde 
     if (whichInput == 1) {
-      if (this.anamnesis.motivoConsultaPaciente == undefined) this.anamnesis.motivoConsultaPaciente = "";
+      if (this.anamnesis.motivoConsultaPaciente == undefined) this.anamnesis.motivoConsultaPaciente = '';
       this.anamnesis.motivoConsultaPaciente = this.anamnesis.motivoConsultaPaciente + " " + this.dictadoService.stop();
+      
+      // Para eliminar el espacio en blanco si es que existe.
+      if (this.anamnesis.motivoConsultaPaciente[0] == ' ') {
+        this.anamnesis.motivoConsultaPaciente = this.anamnesis.motivoConsultaPaciente.slice(1, this.anamnesis.motivoConsultaPaciente.length);
+      }
     }
 
     else if (whichInput == 2) {
-      if (this.anamnesis.antecedentesPaciente == undefined) this.anamnesis.antecedentesPaciente = "";
+      if (this.anamnesis.antecedentesPaciente == undefined) this.anamnesis.antecedentesPaciente = '';
       this.anamnesis.antecedentesPaciente = this.anamnesis.antecedentesPaciente + " " + this.dictadoService.stop();
+
+      // Para eliminar el espacio en blanco, si es que existe.
+      if (this.anamnesis.antecedentesPaciente[0] == ' ') {
+        this.anamnesis.antecedentesPaciente = this.anamnesis.antecedentesPaciente.slice(1, this.anamnesis.antecedentesPaciente.length);
+      }
     }
 
     else if (whichInput == 3) {
-      if (this.anamnesis.antecedentesFamiliares == undefined) this.anamnesis.antecedentesFamiliares = "";
+      if (this.anamnesis.antecedentesFamiliares == undefined) this.anamnesis.antecedentesFamiliares = '';
       this.anamnesis.antecedentesFamiliares = this.anamnesis.antecedentesFamiliares + " " + this.dictadoService.stop();
+
+      // Para eliminar el espacio en blanco, si es que existe
+      if (this.anamnesis.antecedentesFamiliares[0] == ' ') {
+        this.anamnesis.antecedentesFamiliares = this.anamnesis.antecedentesFamiliares.slice(1, this.anamnesis.antecedentesFamiliares.length);
+      }
     }
 
     else if (whichInput == 4) {
-      if (this.anamnesis.observaciones == undefined) this.anamnesis.observaciones = "";
+      if (this.anamnesis.observaciones == undefined) this.anamnesis.observaciones = '';
       this.anamnesis.observaciones = this.anamnesis.observaciones + " " + this.dictadoService.stop();
+
+      // Para eliminar el espacio en blanco, si es que existe
+      if (this.anamnesis.observaciones[0] == ' ') {
+        this.anamnesis.observaciones = this.anamnesis.observaciones.slice(1, this.anamnesis.observaciones.length);
+      }
     }
-    // this.paciente.familiaNuclear = this.paciente.familiaNuclear + " " + this.dictadoService.stop();
   }
 
   // Para volver atrás/cancelar la operación
