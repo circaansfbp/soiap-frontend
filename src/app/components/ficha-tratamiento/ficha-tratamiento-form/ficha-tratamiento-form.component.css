@@ -16,6 +16,12 @@
     border-bottom: 5px solid #284b63;
 }
 
+.btn-dictado, .btn-dictado:hover, .btn-dictado:disabled, .btn-dictado:focus {
+    margin-top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
 .form-control.ng-touched.ng-invalid {
     border: 2px solid red;
 }

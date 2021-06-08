@@ -52,7 +52,24 @@
                                 <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
                                 <textarea name="observaciones-sesionl" id="observaciones-sesion" cols="12" rows="15"
                                     class="form-control" ngModel #observacionesSesion="ngModel"
-                                    [(ngModel)]="sesion.observaciones" required maxLength="3000"></textarea>
+                                    [(ngModel)]="sesion.observaciones" required maxLength="3000"
+                                    pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+
+                                <!-- Para manejar el dictado por voz -->
+                                <span class="input-group-text">
+                                    <!-- Si no se ha comenzado a grabar, se despliega botón que permite iniciar el dictado -->
+                                    <button (click)="record()" *ngIf="!recording" title="Iniciar dictado por voz"
+                                        class="btn btn-primary" id="dictado-btn" type="button">
+                                        <i class="bi bi-mic-fill"></i>
+                                    </button>
+
+                                    <!-- Si se está grabando, se despliega botón que permite detener la grabación -->
+                                    <button (click)="stopRecording()" *ngIf="recording" class="btn btn-primary"
+                                        type="button" title="Detener dictado por voz" id="stop-dictado-btn">
+                                        <i class="bi bi-mic-mute-fill"></i>
+                                    </button>
+
+                                </span>
                             </div>
 
                             <!-- Manejo de errores -->
@@ -60,6 +77,9 @@
                                 *ngIf="observacionesSesion.invalid && (observacionesSesion.touched || observacionesSesion.dirty)">
                                 <div *ngIf="observacionesSesion.errors?.required">
                                     <small class="text-danger">Se deben ingresar las observaciones.</small>
+                                </div>
+                                <div *ngIf="observacionesSesion.errors?.pattern">
+                                    <small class="text-danger">La sesión de terapia no puede quedar en blanco!</small>
                                 </div>
                             </div>
 

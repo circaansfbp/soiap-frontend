@@ -18,7 +18,7 @@
                             <textarea name="motivo-consulta-paciente" id="motivo-consulta-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #motivoConsulta="ngModel"
                                 [(ngModel)]="anamnesis.motivoConsultaPaciente" required maxlength="2000"
-                                pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$"></textarea>
+                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -67,7 +67,7 @@
                             <textarea name="antecedentes-paciente" id="antecedentes-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #antecedentesPaciente="ngModel"
                                 [(ngModel)]="anamnesis.antecedentesPaciente" required maxlength="2000"
-                                pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$"></textarea>
+                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -119,7 +119,8 @@
                             <textarea name="antecedentes-familiares-paciente" id="antecedentes-familiares-paciente"
                                 cols="12" rows="6" class="form-control" ngModel
                                 #antecedentesFamiliaresPaciente="ngModel" [(ngModel)]="anamnesis.antecedentesFamiliares"
-                                required maxlength="2000" pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$"></textarea>
+                                required maxlength="2000"
+                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">

@@ -9,6 +9,7 @@ import { SesionTerapiaService } from 'src/app/services/sesion-terapia/sesion-ter
 import swal from 'sweetalert2';
 import * as moment from 'moment';
 import { Location } from '@angular/common';
+import { DictadoService } from 'src/app/services/dictado/dictado.service';
 moment.locale('es');
 
 @Component({
@@ -28,11 +29,15 @@ export class SesionTerapiaFormComponent implements OnInit {
   // Sesión de terapia a registrar
   sesion: SesionTerapia = new SesionTerapia();
 
+  // Manejar el dictado por voz
+  recording: boolean = false;
+
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
     private pacienteService: PacienteService,
-    private sesionTerapiaService: SesionTerapiaService) { }
+    private sesionTerapiaService: SesionTerapiaService,
+    private dictadoService: DictadoService) { this.dictadoService.init(); }
 
   ngOnInit(): void {
     this.title = "Nueva sesión de terapia."
@@ -106,6 +111,35 @@ export class SesionTerapiaFormComponent implements OnInit {
       }
     });
   }
+
+    // Para iniciar dictado por voz
+    record() {
+      swal.fire({
+        position: 'top',
+        icon: 'info',
+        title: 'Grabación iniciada!',
+        text: 'Ya puede comenzar a dictar la información. Una vez finalizado, presione el mismo botón para detener la grabación.',
+        showConfirmButton: true,
+        confirmButtonText: 'OK!',
+        timer: 4000
+      });
+  
+      this.recording = true;
+      this.dictadoService.start();
+    }
+  
+    // Para detener el dictado por voz
+    stopRecording() {
+      this.recording = false;
+      
+      if (this.sesion.observaciones == undefined) this.sesion.observaciones = '';
+      this.sesion.observaciones = this.sesion.observaciones + " " + this.dictadoService.stop();
+  
+      // Para eliminar el posible espacio en blanco que se genera
+      if (this.sesion.observaciones[0] == ' ') {
+        this.sesion.observaciones = this.sesion.observaciones.slice(1, this.sesion.observaciones.length);
+      } 
+    }
 
   // Para volver atrás
   back(observaciones: string) {

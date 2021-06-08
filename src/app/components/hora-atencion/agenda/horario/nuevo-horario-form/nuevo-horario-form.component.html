@@ -95,7 +95,7 @@
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
             <input type="text" class="form-control" id="nombre" name="nombre" ngModel #nombrePaciente="ngModel" required
-              minlength="3" maxlength="30" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" [(ngModel)]="nombre">
+              minlength="3" maxlength="30" pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" [(ngModel)]="nombre">
 
             <!-- Manejo de errores del campo -->
             <div *ngIf="nombrePaciente?.invalid && (nombrePaciente?.touched || nombrePaciente?.dirty)"
@@ -108,7 +108,8 @@
                   caracteres!</small>
               </div>
               <div *ngIf="nombrePaciente.errors?.pattern">
-                <small class="text-danger">El nombre no debe contener dígitos ni caracteres
+                <small class="text-danger">El nombre no debe comenzar con un espacio en blanco, contener dígitos o
+                  caracteres
                   especiales!</small>
               </div>
             </div>
@@ -123,7 +124,7 @@
               <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
               <input id="apellido-paciente" name="apellido-paciente" type="text" class="form-control"
                 [(ngModel)]="apellido" ngModel #apellidoPaciente="ngModel" required minlength="3" maxlength="30"
-                pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
+                pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
               <!-- Manejo de errores  -->
               <div *ngIf="apellidoPaciente?.invalid && (apellidoPaciente?.touched || apellidoPaciente?.dirty)"
@@ -137,7 +138,8 @@
                     caracteres!</small>
                 </div>
                 <div *ngIf="apellidoPaciente.errors?.pattern">
-                  <small class="text-danger">El/los apellido(s) no debe(n) contener dígitos ni
+                  <small class="text-danger">El/los apellido(s) no debe(n) comenzar con un espacio en blanco, contener
+                    dígitos o
                     caracteres especiales!</small>
                 </div>
               </div>
@@ -154,7 +156,7 @@
               <span class="input-group-text">+569</span>
               <input id="telefono-paciente" name="telefono-paciente" type="text" class="form-control"
                 [(ngModel)]="nroTelefono" ngModel #telefonoPaciente="ngModel" required minlength="8" maxlength="8"
-                pattern="^[0-9]+$">
+                pattern="^(?!\s)^[0-9]+$">
               <div class="col-lg-12">
                 <small class="form-text text-secondary">No es necesario que ingrese "+569"</small>
               </div>
@@ -186,7 +188,8 @@
             <div class="input-group">
               <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
               <input id="afiliacion-salud-paciente" name="afiliacion-salud-paciente" type="text" class="form-control"
-                [(ngModel)]="afiliacion" ngModel #afiliacionSaludPaciente="ngModel" required maxlength="30">
+                [(ngModel)]="afiliacion" ngModel #afiliacionSaludPaciente="ngModel" required maxlength="30"
+                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
 
               <!-- Manejo de errores  -->
               <div
@@ -195,6 +198,10 @@
                 <div *ngIf="afiliacionSaludPaciente.errors?.required">
                   <small class="text-danger">Se debe ingresar la afiliación de salud del
                     paciente!</small>
+                </div>
+                <div *ngIf="afiliacionSaludPaciente.errors?.pattern">
+                  <small class="text-danger">Este campo no puede quedar en blanco, ni se permite el ingreso de
+                    caracteres especiales.</small>
                 </div>
               </div>
             </div>
@@ -372,13 +379,15 @@
               <label for="fecha-atencion" class="form-label">Fecha de la atención:</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-calendar2-check-fill"></i></span>
-                <input [ngStyle]="fechaAtencion.value < fechaActual ? {'border': '2px solid red'} : {}" [disabled]="!paciente" type="date" class="form-control" id="fecha-atencion" name="fecha-atencion"
+                <input [ngStyle]="fechaAtencion.value < fechaActual ? {'border': '2px solid red'} : {}"
+                  [disabled]="!paciente" type="date" class="form-control" id="fecha-atencion" name="fecha-atencion"
                   ngModel [(ngModel)]="horarioAtencion.fechaAtencion" #fechaAtencion="ngModel" required>
                 <div *ngIf="fechaAtencion?.invalid && (fechaAtencion?.touched || fechaAtencion?.dirty)"
                   class="col-lg-12">
                   <small class="text-danger">Se debe ingresar la fecha de la atención.</small>
                 </div>
-                <div *ngIf="(fechaAtencion.touched || fechaAtencion.dirty) && fechaAtencion.value < fechaActual" class="col-lg-12">
+                <div *ngIf="(fechaAtencion.touched || fechaAtencion.dirty) && fechaAtencion.value < fechaActual"
+                  class="col-lg-12">
                   <small class="text-danger">No se puede seleccionar una fecha pasada.</small>
                 </div>
               </div>

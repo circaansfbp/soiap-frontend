@@ -18,8 +18,21 @@
                             <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
                             <textarea name="motivo-consulta-profesional" id="motivo-consulta-profesional" cols="12"
                                 rows="6" class="form-control" ngModel #motivoConsulta="ngModel"
-                                [(ngModel)]="fichaTratamiento.motivoConsultaProfesional" required
-                                maxLength="2000"></textarea>
+                                [(ngModel)]="fichaTratamiento.motivoConsultaProfesional" required maxLength="2000"
+                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary btn-dictado" type="button"
+                                    title="Iniciar dictado por voz" (click)="record(1)"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button [disabled]="disable[0]" *ngIf="recording" class="btn btn-primary btn-dictado"
+                                    type="button" title="Detener dictado por voz" (click)="stopRecording(1)"><i
+                                        class="bi bi-mic-mute-fill"></i></button>
+                            </span>
                         </div>
 
                         <!-- Manejo de errores -->
@@ -27,6 +40,13 @@
                             *ngIf="motivoConsulta.invalid && (motivoConsulta.touched || motivoConsulta.dirty)">
                             <div *ngIf="motivoConsulta.errors?.required">
                                 <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
+                            </div>
+                            <div *ngIf="motivoConsulta.errors?.pattern">
+                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
+                            </div>
+                            <div
+                                *ngIf="motivoConsulta.errors && !motivoConsulta.errors.required && !motivoConsulta.errors.pattern">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
                         </div>
 
@@ -47,8 +67,21 @@
                             <span class="input-group-text"><i class="bi bi-person-check-fill"></i></span>
                             <textarea name="resultado-diagnostico" id="resultado-diagnostico" cols="12" rows="6"
                                 class="form-control" ngModel #resultadoDiagnostico="ngModel"
-                                [(ngModel)]="fichaTratamiento.resultadoDiagnostico" required
-                                maxLength="2000"></textarea>
+                                [(ngModel)]="fichaTratamiento.resultadoDiagnostico" required maxLength="2000"
+                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary btn-dictado" type="button"
+                                    title="Iniciar dictado por voz" (click)="record(2)"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button [disabled]="disable[1]" *ngIf="recording" class="btn btn-primary btn-dictado"
+                                    type="button" title="Detener dictado por voz" (click)="stopRecording(2)"><i
+                                        class="bi bi-mic-mute-fill"></i></button>
+                            </span>
                         </div>
 
                         <!-- Manejo de errores -->
@@ -57,6 +90,13 @@
                             <div *ngIf="resultadoDiagnostico.errors?.required">
                                 <small class="text-danger">Se debe ingresar el resultado del diagnóstico del
                                     paciente.</small>
+                            </div>
+                            <div *ngIf="resultadoDiagnostico.errors?.pattern">
+                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
+                            </div>
+                            <div
+                                *ngIf="resultadoDiagnostico.errors && !resultadoDiagnostico.errors.required && !resultadoDiagnostico.errors.pattern">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
                         </div>
 
@@ -77,8 +117,21 @@
                             <span class="input-group-text"><i class="bi bi-chat-dots-fill"></i></span>
                             <textarea name="sugerencia-tratamiento" id="sugerencia-tratamiento" cols="12" rows="6"
                                 class="form-control" ngModel #sugerenciaTratamiento="ngModel"
-                                [(ngModel)]="fichaTratamiento.sugerenciaTratamiento" required
-                                maxLength="2000"></textarea>
+                                [(ngModel)]="fichaTratamiento.sugerenciaTratamiento" required maxLength="2000"
+                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary btn-dictado" type="button"
+                                    title="Iniciar dictado por voz" (click)="record(3)"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button [disabled]="disable[2]" *ngIf="recording" class="btn btn-primary btn-dictado"
+                                    type="button" title="Detener dictado por voz" (click)="stopRecording(3)"><i
+                                        class="bi bi-mic-mute-fill"></i></button>
+                            </span>
                         </div>
 
                         <!-- Manejo de errores -->
@@ -86,6 +139,13 @@
                             *ngIf="sugerenciaTratamiento.invalid && (sugerenciaTratamiento.touched || sugerenciaTratamiento.dirty)">
                             <div *ngIf="sugerenciaTratamiento.errors?.required">
                                 <small class="text-danger">Se debe ingresar la sugerencia de tratamiento.</small>
+                            </div>
+                            <div *ngIf="sugerenciaTratamiento.errors?.pattern">
+                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
+                            </div>
+                            <div
+                                *ngIf="sugerenciaTratamiento.errors && !sugerenciaTratamiento.errors.required && !sugerenciaTratamiento.errors.pattern">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
                         </div>
 
@@ -106,7 +166,21 @@
                             <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
                             <textarea name="objetivos-terapia" id="objetivos-terapia" cols="12" rows="6"
                                 class="form-control" ngModel #objetivosTerapia="ngModel"
-                                [(ngModel)]="fichaTratamiento.objetivosTerapia" required maxLength="2000"></textarea>
+                                [(ngModel)]="fichaTratamiento.objetivosTerapia" required maxLength="2000"
+                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+
+                            <!-- Para manejar el dictado por voz -->
+                            <span class="input-group-text">
+                                <!-- Botón que inicia el dictado por voz -->
+                                <button *ngIf="!recording" class="btn btn-primary btn-dictado" type="button"
+                                    title="Iniciar dictado por voz" (click)="record(4)"><i
+                                        class="bi bi-mic-fill"></i></button>
+
+                                <!-- Botón que detiene el dictado por voz -->
+                                <button [disabled]="disable[3]" *ngIf="recording" class="btn btn-primary btn-dictado"
+                                    type="button" title="Detener dictado por voz" (click)="stopRecording(4)"><i
+                                        class="bi bi-mic-mute-fill"></i></button>
+                            </span>
                         </div>
 
                         <!-- Manejo de errores -->
@@ -115,6 +189,13 @@
                             <div *ngIf="objetivosTerapia.errors?.required">
                                 <small class="text-danger">Se deben ingresar los objetivos de la terapia a
                                     realizar.</small>
+                            </div>
+                            <div *ngIf="objetivosTerapia.errors?.pattern">
+                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
+                            </div>
+                            <div
+                                *ngIf="objetivosTerapia.errors && !objetivosTerapia.errors.required && !objetivosTerapia.errors.pattern">
+                                <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
                         </div>
 
@@ -130,7 +211,8 @@
                 <div class="row">
                     <!-- Guardar/actualizar la ficha de tratamiento -->
                     <div class="col-lg-7 text-right">
-                        <button *ngIf="!fichaTratamiento.idFichaTratamiento; else updateButton" (click)="createFichaTratamiento()"
+                        <button *ngIf="!fichaTratamiento.idFichaTratamiento; else updateButton"
+                            (click)="createFichaTratamiento()"
                             [disabled]="motivoConsulta.invalid || resultadoDiagnostico.invalid || sugerenciaTratamiento.invalid || objetivosTerapia.invalid"
                             class="btn btn-primary" type="submit">Registrar ficha</button>
 

@@ -3,12 +3,24 @@
         <label for="nombre-paciente">Buscar paciente:</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
-            <input required maxlength="30" minlength="3" type="text" class="form-control" id="nombre-paciente" ngModel
-                name="nombre-paciente" #nombrePaciente="ngModel" placeholder="Nombre(s)">
-            <input required type="text" class="form-control" name="apellido-paciente" id="apellido-paciente" maxlength="30"
-                minlength="3" ngModel #apellidoPaciente="ngModel" placeholder="Apellido(s)">
+            <input required maxlength="30" pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" type="text"
+                class="form-control" id="nombre-paciente" ngModel name="nombre-paciente" #nombrePaciente="ngModel"
+                placeholder="Nombre(s)">
+            <input required type="text" class="form-control" name="apellido-paciente" id="apellido-paciente"
+                maxlength="30" pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" ngModel #apellidoPaciente="ngModel"
+                placeholder="Apellido(s)">
+        </div>
+
+        <!-- Manejo de posibles errores -->
+        <div *ngIf="(nombrePaciente.invalid && (nombrePaciente.touched || nombrePaciente.dirty)) 
+    || (apellidoPaciente.invalid && (apellidoPaciente.touched || apellidoPaciente.dirty))" class="col-lg-12">
+            <div *ngIf="nombrePaciente.errors?.pattern || apellidoPaciente.errors?.pattern">
+                <small class="text-danger">Búsqueda inválida.</small>
+            </div>
         </div>
     </div>
-    <button [disabled]="nombrePaciente.invalid && apellidoPaciente.invalid" type="submit" class="btn btn-primary"
+
+    <button [disabled]="(nombrePaciente.errors?.required && apellidoPaciente.errors?.required) 
+        || (nombrePaciente.errors?.pattern || apellidoPaciente.errors?.pattern)" type="submit" class="btn btn-primary"
         (click)="eventEmitter(nombrePaciente.value, apellidoPaciente.value)">Buscar</button>
 </form>

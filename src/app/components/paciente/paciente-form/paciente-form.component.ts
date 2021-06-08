@@ -60,8 +60,9 @@ export class PacienteFormComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         if (this.paciente) {
-          this.pacienteService.actualizarPaciente(this.paciente).subscribe(res => {
-            this.router.navigate(['pacientes/page/0']);
+          this.pacienteService.actualizarPaciente(this.paciente).subscribe(pacienteActualizado => {
+            this.paciente = pacienteActualizado;
+            this.router.navigate(['pacientes/', this.paciente.idPaciente]);
 
             swal.fire(
               'Datos actualizados!',
@@ -93,7 +94,13 @@ export class PacienteFormComponent implements OnInit {
   // Para detener el dictado por voz
   stopRecording() {
     this.recording = false;
+
     this.paciente.familiaNuclear = this.paciente.familiaNuclear + " " + this.dictadoService.stop();
+
+    // Para eliminar el posible espacio en blanco que se genera
+    if (this.paciente.familiaNuclear[0] == " ") {
+      this.paciente.familiaNuclear = this.paciente.familiaNuclear.slice(1, this.paciente.familiaNuclear.length);
+    } 
   }
 
   // Para volver a la página anterior
