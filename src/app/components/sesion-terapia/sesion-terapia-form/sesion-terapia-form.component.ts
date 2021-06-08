@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Paciente } from 'src/app/classes/paciente/paciente';
 import { SesionTerapia } from 'src/app/classes/sesion-terapia/sesion-terapia';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import { SesionTerapiaService } from 'src/app/services/sesion-terapia/sesion-terapia.service';
+import { DictadoService } from 'src/app/services/dictado/dictado.service';
 
 import swal from 'sweetalert2';
 import * as moment from 'moment';
-import { Location } from '@angular/common';
-import { DictadoService } from 'src/app/services/dictado/dictado.service';
 moment.locale('es');
 
 @Component({
@@ -18,6 +18,7 @@ moment.locale('es');
   styleUrls: ['./sesion-terapia-form.component.css']
 })
 export class SesionTerapiaFormComponent implements OnInit {
+  texto: string = '';
 
   title!: string;
   subtitle!: string;
@@ -112,34 +113,24 @@ export class SesionTerapiaFormComponent implements OnInit {
     });
   }
 
-    // Para iniciar dictado por voz
-    record() {
-      swal.fire({
-        position: 'top',
-        icon: 'info',
-        title: 'Grabación iniciada!',
-        text: 'Ya puede comenzar a dictar la información. Una vez finalizado, presione el mismo botón para detener la grabación.',
-        showConfirmButton: true,
-        confirmButtonText: 'OK!',
-        timer: 4000
-      });
-  
-      this.recording = true;
-      this.dictadoService.start();
+  // Para iniciar dictado por voz
+  record() {
+    this.recording = true;
+    this.dictadoService.start();
+  }
+
+  // Para detener el dictado por voz
+  stopRecording() {
+    this.recording = false;
+
+    if (this.sesion.observaciones == undefined) this.sesion.observaciones = '';
+    this.sesion.observaciones = this.sesion.observaciones + " " + this.dictadoService.stop();
+
+    // Para eliminar el posible espacio en blanco que se genera
+    if (this.sesion.observaciones[0] == ' ') {
+      this.sesion.observaciones = this.sesion.observaciones.slice(1, this.sesion.observaciones.length);
     }
-  
-    // Para detener el dictado por voz
-    stopRecording() {
-      this.recording = false;
-      
-      if (this.sesion.observaciones == undefined) this.sesion.observaciones = '';
-      this.sesion.observaciones = this.sesion.observaciones + " " + this.dictadoService.stop();
-  
-      // Para eliminar el posible espacio en blanco que se genera
-      if (this.sesion.observaciones[0] == ' ') {
-        this.sesion.observaciones = this.sesion.observaciones.slice(1, this.sesion.observaciones.length);
-      } 
-    }
+  }
 
   // Para volver atrás
   back(observaciones: string) {

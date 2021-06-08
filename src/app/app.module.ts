@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { HorarioComponent } from './components/hora-atencion/agenda/horario/horario.component';
@@ -32,14 +34,14 @@ const routes = [
   { path: 'nuevo-horario', component: NuevoHorarioFormComponent },
   { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent },
   { path: 'pacientes/page/:page', component: ListaPacientesComponent },
-  { path: 'pacientes/historial/page/:page', component: HistorialPacientesComponent},
+  { path: 'pacientes/historial/page/:page', component: HistorialPacientesComponent },
   { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent },
   { path: 'pacientes/:idPaciente', component: PacienteComponent },
   { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent },
   { path: 'pacientes/ficha-tratamiento/:idPaciente', component: FichaTratamientoFormComponent },
   { path: 'pacientes/ficha-tratamiento/nueva-sesion/:idPaciente', component: SesionTerapiaFormComponent },
-  { path: 'pacientes/ficha-tratamiento/modificar-sesion/:idSesion', component: SesionTerapiaFormComponent},
-  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent},
+  { path: 'pacientes/ficha-tratamiento/modificar-sesion/:idSesion', component: SesionTerapiaFormComponent },
+  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent },
   { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent },
   { path: 'horario/pago/:idAtencion', component: PagoFormComponent },
   { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent }
@@ -73,10 +75,15 @@ const routes = [
   imports: [
     NgxPaginationModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-full-width',
+      timeOut: 7000
+    })
   ],
 
   providers: [],

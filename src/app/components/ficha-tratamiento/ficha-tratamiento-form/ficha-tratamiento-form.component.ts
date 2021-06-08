@@ -106,16 +106,6 @@ export class FichaTratamientoFormComponent implements OnInit {
 
   // Para iniciar el dictado por voz
   record(whichInput: number) {
-    swal.fire({
-      position: 'top',
-      icon: 'info',
-      title: 'Grabación iniciada!',
-      text: 'Ya puede comenzar a dictar la información. Una vez finalizado, presione el mismo botón para detener la grabación.',
-      showConfirmButton: true,
-      confirmButtonText: 'OK!',
-      timer: 4000
-    });
-
     if (whichInput == 1) {
       this.disable = [false, true, true, true];
     }
