@@ -42,6 +42,8 @@ export class PacienteFormComponent implements OnInit {
         this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
           paciente.telefono = paciente.telefono.slice(4, 12);
           this.paciente = paciente;
+
+          console.log(paciente);
         });
       }
     })
@@ -69,6 +71,8 @@ export class PacienteFormComponent implements OnInit {
               'La información ha sido actualizada exitosamente.',
               'success'
             );
+
+            console.log(pacienteActualizado);
           });
         }
       }
@@ -90,32 +94,33 @@ export class PacienteFormComponent implements OnInit {
     // Para eliminar el posible espacio en blanco que se genera
     if (this.paciente.familiaNuclear[0] == " ") {
       this.paciente.familiaNuclear = this.paciente.familiaNuclear.slice(1, this.paciente.familiaNuclear.length);
-    } 
+    }
   }
 
   // Para volver a la página anterior
   back(nombrePaciente: string, apellidoPaciente: string, telefonoPaciente: string, fechaNacimientoPaciente: string,
     ocupacionPaciente: string, institucionPaciente: string, afiliacionSaludPaciente: string, estadoCivilPaciente: string,
-    familiaNuclearPaciente: string): void {
+    familiaNuclearPaciente: string, emailPaciente: string): void {
 
     if (nombrePaciente != undefined || apellidoPaciente != undefined || telefonoPaciente != undefined ||
       fechaNacimientoPaciente != undefined || ocupacionPaciente != undefined || institucionPaciente != undefined ||
-      afiliacionSaludPaciente != undefined || estadoCivilPaciente != undefined || familiaNuclearPaciente != undefined) {
+      afiliacionSaludPaciente != undefined || estadoCivilPaciente != undefined || familiaNuclearPaciente != undefined
+      || emailPaciente != undefined) {
 
-        swal.fire({
-          title: 'Cencelar operación',
-          text: '¿Está seguro/a que desea cancelar el registro de los datos del paciente? Los datos ingresados no serán guardados.',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Sí, estoy seguro/a',
-          cancelButtonText: 'Cancelar'
-        }).then(result => {
-          if (result.isConfirmed) {
-            this.location.back();
-          }
-        })
+      swal.fire({
+        title: 'Cencelar operación',
+        text: '¿Está seguro/a que desea cancelar el registro de los datos del paciente? Los datos ingresados no serán guardados.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, estoy seguro/a',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.location.back();
+        }
+      })
     }
     else this.location.back();
   }

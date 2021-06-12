@@ -35,6 +35,7 @@ export class NuevoHorarioFormComponent implements OnInit {
   apellido!: string;
   nroTelefono!: string;
   afiliacion!: string;
+  email!: string;
 
   idAtencion!: number;
   idPaciente!: number;
@@ -92,6 +93,7 @@ export class NuevoHorarioFormComponent implements OnInit {
       "nombre": this.nombre,
       "apellido": this.apellido,
       "telefono": this.nroTelefono,
+      "email": this.email,
       "afiliacionSalud": this.afiliacion,
       "fechaNacimiento": "",
       "ocupacion": "",
@@ -104,9 +106,19 @@ export class NuevoHorarioFormComponent implements OnInit {
       "fichaTratamiento": null!
     }
 
+    console.log(this.paciente.email);
+
     this.pacienteService.crearPaciente(this.paciente).subscribe(paciente => {
       this.paciente = paciente;
       swal.fire("Paciente creado!", "Ahora puede proceder a agendar la hora de atención.", "success");
+    }, error => {
+      if (error.status == 400) {
+        swal.fire(
+          'Error!',
+          error.error.message,
+          'error'
+        );
+      }
     });
   }
 
@@ -121,8 +133,6 @@ export class NuevoHorarioFormComponent implements OnInit {
 
             horario.paciente.telefono = horario.paciente.telefono.slice(4, 12);
             this.paciente = horario.paciente;
-
-            console.log(horario);
           }
         );
       }
@@ -215,7 +225,6 @@ export class NuevoHorarioFormComponent implements OnInit {
   loadPatientData(idPaciente: number) {
     this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
       this.paciente = paciente;
-
       swal.fire("Paciente seleccionado!", "Ahora puede proceder a agendar la hora de atención.", "success");
     });
   }

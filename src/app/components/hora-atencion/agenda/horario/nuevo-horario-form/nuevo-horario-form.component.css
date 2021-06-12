@@ -68,6 +68,10 @@
     overflow-wrap: break-word;
 }
 
+.overflow {
+    overflow-wrap: break-word;
+}
+
 .table-dark {
     background-color: #284b63;
 }

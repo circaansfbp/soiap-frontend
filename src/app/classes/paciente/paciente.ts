@@ -7,6 +7,7 @@ export class Paciente {
   nombre!: string;
   apellido!: string;
   telefono!: string;
+  email!: string;
   fechaNacimiento!: string;
   ocupacion!: string;
   institucion!: string;

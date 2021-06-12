@@ -27,28 +27,28 @@
 
         <div class="row" id="datos-paciente">
             <!-- Fecha de nacimiento -->
-            <div class="col-lg-3 text-center datos">
+            <div class="col-lg-4 text-center datos">
                 <i class="bi bi-calendar-event icons"></i>
                 <h5 class="color">Fecha de nacimiento</h5>
                 <h5 class="overflow">{{birthday}}</h5>
             </div>
 
             <!-- Edad -->
-            <div class="col-lg-3 text-center datos">
+            <div class="col-lg-4 text-center datos">
                 <i class="bi bi-person-circle icons"></i>
                 <h5 class="color">Edad</h5>
                 <h5 class="overflow">{{age()}}</h5>
             </div>
 
             <!-- Teléfono -->
-            <div class="col-lg-3 text-center datos">
+            <div class="col-lg-4 text-center datos">
                 <i class="bi bi-telephone-forward-fill icons"></i>
                 <h5 class="color">N° de contacto</h5>
                 <h5 class="overflow">{{paciente.telefono}}</h5>
             </div>
 
             <!-- Estado civil -->
-            <div class="col-lg-3 text-center datos">
+            <div class="col-lg-4 text-center datos">
                 <i class="bi bi-people-fill icons"></i>
                 <h5 class="color">Estado Civil</h5>
                 <h5 class="overflow" *ngIf="paciente.estadoCivil;else empty">{{paciente.estadoCivil}}</h5>
@@ -61,15 +61,22 @@
                 <h5 class="overflow">{{paciente.afiliacionSalud}}</h5>
             </div>
 
-            <!-- Ocupación/Profesión -->
+            <!-- E-mail -->
             <div class="col-lg-4 text-center datos">
+                <i class="bi bi-at icons"></i>
+                <h5 class="color">E-mail</h5>
+                <h5 class="overflow">{{paciente.email}}</h5>
+            </div>
+
+            <!-- Ocupación/Profesión -->
+            <div class="col-lg-6 text-center datos">
                 <i class="bi bi-briefcase-fill icons"></i>
                 <h5 class="color">Profesión/Ocupación</h5>
                 <h5 class="overflow" *ngIf="paciente.ocupacion;else empty">{{paciente.ocupacion}}</h5>
             </div>
 
             <!-- Institución -->
-            <div class="col-lg-4 text-center datos">
+            <div class="col-lg-6 text-center datos">
                 <i class="bi bi-person-badge-fill icons"></i>
                 <h5 class="color">Institución</h5>
                 <h5 class="overflow" *ngIf="paciente.institucion;else empty">{{paciente.institucion}}</h5>

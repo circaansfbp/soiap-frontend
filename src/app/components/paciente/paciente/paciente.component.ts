@@ -5,8 +5,6 @@ import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import swal from 'sweetalert2';
 import * as moment from 'moment';
-import { AnamnesisService } from 'src/app/services/anamnesis/anamnesis.service';
-import { FichaTratamientoService } from 'src/app/services/ficha-tratamiento/ficha-tratamiento.service';
 moment.locale('es');
 
 @Component({
@@ -32,9 +30,7 @@ export class PacienteComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
-    private pacienteService: PacienteService,
-    private anamnesisService: AnamnesisService,
-    private fichaTratamientoService: FichaTratamientoService) { }
+    private pacienteService: PacienteService) { }
 
   ngOnInit(): void {
     this.getPatient();
@@ -55,6 +51,8 @@ export class PacienteComponent implements OnInit {
 
           if (this.paciente.anamnesis != undefined) this.fechaAnamnesis = moment(this.paciente.anamnesis.fechaAnamnesis).format("dddd Do MMMM YYYY");
           if (this.paciente.fichaTratamiento != undefined) this.fechaCreacionFichaTratamiento = moment(this.paciente.fichaTratamiento.fechaDiagnostico).format("dddd Do MMMM YYYY");
+
+          if (this.paciente.email == null) this.paciente.email = "-";
 
           console.log(this.paciente);
         });
