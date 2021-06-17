@@ -28,9 +28,11 @@ import { HistorialPacientesComponent } from './components/paciente/historial-pac
 import { SesionTerapiaFormComponent } from './components/sesion-terapia/sesion-terapia-form/sesion-terapia-form.component';
 import { ListaSesionesComponent } from './components/sesion-terapia/lista-sesiones.component';
 import { BusquedaFechaComponent } from './components/busqueda/busqueda-fecha/busqueda-fecha.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes = [
-  { path: '', component: AgendaComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'agenda', component: AgendaComponent },
   { path: 'nuevo-horario', component: NuevoHorarioFormComponent },
   { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent },
   { path: 'pacientes/page/:page', component: ListaPacientesComponent },
@@ -44,7 +46,8 @@ const routes = [
   { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent },
   { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent },
   { path: 'horario/pago/:idAtencion', component: PagoFormComponent },
-  { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent }
+  { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
@@ -69,7 +72,8 @@ const routes = [
     HistorialPacientesComponent,
     SesionTerapiaFormComponent,
     ListaSesionesComponent,
-    BusquedaFechaComponent
+    BusquedaFechaComponent,
+    LoginComponent
   ],
 
   imports: [

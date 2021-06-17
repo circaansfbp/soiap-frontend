@@ -1,0 +1,37 @@
+#title {
+    border-bottom: 5px solid #284b63;   
+    padding-bottom: 5px;
+}
+
+.body {
+    margin-top: 20px;
+}
+
+.container {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    background-color: #fff;
+    border-radius: 15px;
+    width: 35vw;
+    height: 60vh;
+    padding: 40px 90px;
+    margin-top: 100px;
+}
+
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+.form-control.ng-valid {
+    border: 2px solid green;
+}
+
+button, button:disabled, button:focus, button:hover {
+    background-color: #284b63;
+    border-color: #284b63;
+    margin-top: 20px;
+}
+
+i, span {
+    background-color: #284b63;
+    color: #fff;
+}

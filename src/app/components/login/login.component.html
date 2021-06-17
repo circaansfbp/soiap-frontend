@@ -1,0 +1,68 @@
+<div class="container">
+
+    <!-- Header -->
+    <div class="row" id="title">
+        <div class="col-lg-12 text-center">
+            <h2>{{title}}</h2>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="row">
+        <div class="col-lg-12 body text-center">
+            <form>
+
+                <!-- Usuario -->
+                <div class="row">
+                    <div class="col-lg-12 text-left">
+                        <div class="form-group">
+                            <label for="username">Usuario:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input id="username" name="username" type="text" class="form-control" ngModel
+                                    #username="ngModel" [(ngModel)]="usuario.username" autofocus required
+                                    maxlength="20">
+                            </div>
+
+                            <!-- Manejo de errores -->
+                            <div *ngIf="username.invalid && (username.dirty || username.touched)" class="col-lg-12">
+                                <div *ngIf="username.errors?.required">
+                                    <small class="text-danger">Debe ingresar su nombre de usuario.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="row">
+                    <div class="col-lg-12 text-left">
+                        <div class="form-group">
+                            <label for="password">Contraseña:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                <input id="password" name="password" type="password" class="form-control" ngModel
+                                    #password="ngModel" [(ngModel)]="usuario.password" required>
+                            </div>
+
+                            <!-- Manejo de errores -->
+                            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="col-lg-12">
+                                <div *ngIf="password.errors?.required">
+                                    <small class="text-danger">Debe ingresar su contraseña.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login button -->
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button (click)="login()" [disabled]="username.invalid || password.invalid"
+                            class="btn btn-primary" type="submit">Ingresar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
