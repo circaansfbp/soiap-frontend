@@ -29,25 +29,27 @@ import { SesionTerapiaFormComponent } from './components/sesion-terapia/sesion-t
 import { ListaSesionesComponent } from './components/sesion-terapia/lista-sesiones.component';
 import { BusquedaFechaComponent } from './components/busqueda/busqueda-fecha/busqueda-fecha.component';
 import { LoginComponent } from './components/login/login.component';
+
 import { AuthGuard } from './guards/auth/auth.guard';
+import { RoleGuard } from './guards/role/role.guard';
 
 const routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full'},
-  { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },
-  { path: 'nuevo-horario', component: NuevoHorarioFormComponent, canActivate: [AuthGuard] },
-  { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/page/:page', component: ListaPacientesComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/historial/page/:page', component: HistorialPacientesComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/:idPaciente', component: PacienteComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/ficha-tratamiento/:idPaciente', component: FichaTratamientoFormComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/ficha-tratamiento/nueva-sesion/:idPaciente', component: SesionTerapiaFormComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/ficha-tratamiento/modificar-sesion/:idSesion', component: SesionTerapiaFormComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent, canActivate: [AuthGuard] },
-  { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent, canActivate: [AuthGuard] },
-  { path: 'horario/pago/:idAtencion', component: PagoFormComponent, canActivate: [AuthGuard] },
-  { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE', 'ROLE_COLABORADOR'] } },
+  { path: 'nuevo-horario', component: NuevoHorarioFormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE', 'ROLE_COLABORADOR'] } },
+  { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE', 'ROLE_COLABORADOR'] } },
+  { path: 'pacientes/page/:page', component: ListaPacientesComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE', 'ROLE_COLABORADOR'] } },
+  { path: 'pacientes/historial/page/:page', component: HistorialPacientesComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/:idPaciente', component: PacienteComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/ficha-tratamiento/:idPaciente', component: FichaTratamientoFormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/ficha-tratamiento/nueva-sesion/:idPaciente', component: SesionTerapiaFormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/ficha-tratamiento/modificar-sesion/:idSesion', component: SesionTerapiaFormComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE'] } },
+  { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE', 'ROLE_COLABORADOR'] } },
+  { path: 'horario/pago/:idAtencion', component: PagoFormComponent, canActivate: [AuthGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE', 'ROLE_COLABORADOR'] } },
+  { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent, canActivate: [AuthGuard], data: { role: ['ROLE_PSICOLOGO_TRATANTE', 'ROLE_COLABORADOR'] } },
   { path: 'login', component: LoginComponent }
 ];
 
