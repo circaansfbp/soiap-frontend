@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Usuario } from 'src/app/classes/usuario/usuario';
 
+import swal from 'sweetalert2';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,8 +45,21 @@ export class AuthService {
   // Para verificar si es un usuario autorizado
   // AGREGAR CHECKEO DE AUTORIZACIÓN A TODOS LOS SERVICIOS?
   isUnauthorized(error: any): boolean {
-    if (error.status == 401 || error.status == 403) {
+    if (error.status == 401) {
+      if (this.isAuthenticated()) this.logout();
+
       this.router.navigate(['/login']);
+      return true;
+    }
+
+    if (error.status == 403) {
+      swal.fire(
+        'Acceso denegado',
+        `${this.usuario.nombre}, no posees acceso a este recurso.`,
+        'warning'
+      );
+
+      this.router.navigate(['/agenda']);
       return true;
     }
 
@@ -92,10 +107,23 @@ export class AuthService {
   }
 
   getDataFromAccessToken(accessToken: string): any {
-    if (accessToken != null) {
+    if (accessToken != null && accessToken != '') {
       return JSON.parse(atob(accessToken.split(".")[1]));
     }
 
     return null;
+  }
+
+  hasRole(role: string): boolean {
+    if (this.usuario.roles.includes(role)) return true;
+
+    return false;
+  }
+
+  logout() {
+    this._token = null!;
+    this._usuario = null!;
+
+    sessionStorage.clear();
   }
 }

@@ -4,6 +4,7 @@ import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-paciente',
@@ -26,6 +27,7 @@ export class ListaPacientesComponent implements OnInit {
   paciente: Paciente = new Paciente();
 
   constructor(private pacienteService: PacienteService,
+    public auth: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
