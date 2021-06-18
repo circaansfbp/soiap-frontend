@@ -29,24 +29,25 @@ import { SesionTerapiaFormComponent } from './components/sesion-terapia/sesion-t
 import { ListaSesionesComponent } from './components/sesion-terapia/lista-sesiones.component';
 import { BusquedaFechaComponent } from './components/busqueda/busqueda-fecha/busqueda-fecha.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 const routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'agenda', component: AgendaComponent },
-  { path: 'nuevo-horario', component: NuevoHorarioFormComponent },
-  { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent },
-  { path: 'pacientes/page/:page', component: ListaPacientesComponent },
-  { path: 'pacientes/historial/page/:page', component: HistorialPacientesComponent },
-  { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent },
-  { path: 'pacientes/:idPaciente', component: PacienteComponent },
-  { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent },
-  { path: 'pacientes/ficha-tratamiento/:idPaciente', component: FichaTratamientoFormComponent },
-  { path: 'pacientes/ficha-tratamiento/nueva-sesion/:idPaciente', component: SesionTerapiaFormComponent },
-  { path: 'pacientes/ficha-tratamiento/modificar-sesion/:idSesion', component: SesionTerapiaFormComponent },
-  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent },
-  { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent },
-  { path: 'horario/pago/:idAtencion', component: PagoFormComponent },
-  { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
+  { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },
+  { path: 'nuevo-horario', component: NuevoHorarioFormComponent, canActivate: [AuthGuard] },
+  { path: 'nuevo-horario/:idAtencion', component: NuevoHorarioFormComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/page/:page', component: ListaPacientesComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/historial/page/:page', component: HistorialPacientesComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/form/:idPaciente', component: PacienteFormComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/:idPaciente', component: PacienteComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/anamnesis/:idPaciente', component: AnamnesisFormComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/ficha-tratamiento/:idPaciente', component: FichaTratamientoFormComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/ficha-tratamiento/nueva-sesion/:idPaciente', component: SesionTerapiaFormComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/ficha-tratamiento/modificar-sesion/:idSesion', component: SesionTerapiaFormComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/ficha-tratamiento/sesiones/:idPaciente', component: ListaSesionesComponent, canActivate: [AuthGuard] },
+  { path: 'pacientes/atenciones/:idPaciente', component: AtencionesPacienteComponent, canActivate: [AuthGuard] },
+  { path: 'horario/pago/:idAtencion', component: PagoFormComponent, canActivate: [AuthGuard] },
+  { path: 'horario/pago/:idAtencion/:idPago', component: PagoFormComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent }
 ];
 
