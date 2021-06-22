@@ -72,8 +72,9 @@ export class SesionTerapiaFormComponent implements OnInit {
   // Para crear una nueva sesión
   createSesion() {
     this.sesion.fichaTratamiento = this.paciente.fichaTratamiento;
+
     this.sesionTerapiaService.createSession(this.sesion).subscribe(sesionCreada => {
-      console.log(sesionCreada);
+      console.log(sesionCreada);  
 
       swal.fire(
         "Sesión registrada!",

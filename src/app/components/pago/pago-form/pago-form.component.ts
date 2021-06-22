@@ -57,10 +57,11 @@ export class PagoFormComponent implements OnInit {
       this.location.back();
     },
       error => {
-        if (error.status == 404) {
+        console.log(error);
+        if (error.status == 400) {
           swal.fire(
-            'Horario no encontrado',
-            'El horario de atención a pagar no ha sido encontrado en los registros',
+            'Falta un dato!',
+            `${error.error.details[0]}`,
             'error'
           );
         }
