@@ -1,9 +1,9 @@
 .login-navbar {
     height: 150px;
-    border-radius: 10px;
     width: 35vw;
     margin: 0 auto;
     margin-top: 20px;
+    border-bottom: 5px solid #fff;
 }
 
 .navbar-brand {
