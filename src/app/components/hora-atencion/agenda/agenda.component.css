@@ -1,3 +1,7 @@
+#agenda-title {
+    padding-top: 40px;
+}
+
 #button-div {
     padding-top: 30px;
 }
@@ -6,10 +10,14 @@
     margin-bottom: 25px;
 }
 
-#main {
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+#journal {
+    font-size: 100px;
+    color: #284b63;
     background-color: #fff;
-    border-radius: 15px;
+}
+
+#main {
+    background-color: #fff;
     padding-top: 20px;
     padding-left: 80px;
     padding-right: 80px;
@@ -47,6 +55,10 @@
     margin-top: 30px;
 }
 
+.float {
+    float: left;
+}
+
 .form { 
     margin-right: 0%;
 }
@@ -69,6 +81,10 @@
 button, button:disabled, button:focus, button:hover {
     background-color: #284b63;
     border-color: #284b63;
+}
+
+h1 {
+    font-size: 3rem;
 }
 
 i, span {

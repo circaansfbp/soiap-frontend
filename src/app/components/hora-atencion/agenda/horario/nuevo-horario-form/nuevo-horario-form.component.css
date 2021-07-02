@@ -3,9 +3,7 @@
 }
 
 #main {
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     background-color: #fff;
-    border-radius: 15px;
     padding-top: 20px;
     padding-left: 80px;
     padding-right: 80px;
@@ -53,7 +51,7 @@
     font-size: 160px;
     background-color: #fff;
     color: #284b63;
-    margin-left: 35px;
+    margin-left: 5.4vw;
 }
 
 .on-display-icon {

@@ -1,10 +1,10 @@
-<div class="container" id="main">
+<div id="main">
 
     <!-- Título -->
     <div class="row" id="title">
         <div class="col-lg-6" id="date">
             <h2>{{paciente.nombre + " " + paciente.apellido}}</h2>
-            <h5>El paciente registra las siguientes sesiones de terapia.</h5>
+            <h4>El paciente registra las siguientes sesiones de terapia.</h4>
         </div>
         <div class="col-lg-6">
             <app-busqueda-fecha (searchDateEvent)="searchBySpecificDate($event)"></app-busqueda-fecha>

@@ -1,8 +1,6 @@
 #main {
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     background-color: #fff;
-    border-radius: 15px;
-    padding: 60px 80px;
+    padding: 60px 200px;
 }
 
 #title {
@@ -43,7 +41,7 @@ i, span {
 }
 
 select {
-    width: 538px;
+    width: 94%;
     border-radius: 5px;
     border: 1px solid #d9d9d9;
 }
