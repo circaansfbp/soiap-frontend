@@ -1,6 +1,13 @@
 <div class="container" id="main">
     <div class="row">
-        <div class="col-lg-12 text-center">
+        <!-- Si no hay horarios de atención para mostrar -->
+        <div *ngIf="horasFechaDelDia.length == 0" class="col-lg-12 text-center">
+            <i class="bi bi-journal-x" id="no-appointments"></i>
+            <h3>No hay horarios de atención registrados para este día!</h3>
+        </div>
+
+        <!-- Si se encuentran horarios de atención para desplegar -->
+        <div *ngIf="horasFechaDelDia.length != 0" class="col-lg-12 text-center">
             <div class="table-responsive-lg">
                 <table class="table table-bordered">
                     <thead class="table-dark">

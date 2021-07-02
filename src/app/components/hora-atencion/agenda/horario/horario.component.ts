@@ -44,8 +44,6 @@ export class HorarioComponent implements OnInit, OnChanges {
   getAtencionesFechaActual(fechaActual: string) {
     return this.horarioAtencionService.obtenerHorariosDelDía(fechaActual).subscribe((res: any) => {
       res.forEach((horario: HorarioAtencion) => this.horasFechaDelDia.push(horario));
-
-      console.log(this.horasFechaDelDia);
     });
   }
 

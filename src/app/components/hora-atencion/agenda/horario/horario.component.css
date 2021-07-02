@@ -1,3 +1,7 @@
+#no-appointments {
+    font-size: 80px;
+}
+
 #options {
     border-top: 5px solid #284b63;
     border-bottom: 5px solid #284b63;
@@ -11,7 +15,6 @@
 
 .container {
     padding: 20px 0px;
-    border-bottom: 5px solid #284b63;
 }
 
 .icon-confirm {
@@ -52,6 +55,10 @@ button, button:focus, button:hover {
     background-color: #284b63;
     border-color: #284b63;
     margin: 0px 5px;
+}
+
+h3 {
+    color: #284b63;
 }
 
 i {
