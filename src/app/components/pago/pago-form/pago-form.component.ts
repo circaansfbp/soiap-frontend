@@ -28,7 +28,6 @@ export class PagoFormComponent implements OnInit {
   constructor(private horarioAtencionService: HorarioAtencionService,
     private pagoService: PagoService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private location: Location) { }
 
   ngOnInit(): void {
@@ -39,7 +38,7 @@ export class PagoFormComponent implements OnInit {
 
   // Registra el pago
   pay() {
-    console.log(this.pago);
+    console.log(this.pago.medioPago);
 
     if (this.afiliacion == undefined) this.pago.afiliacionPaciente = this.horarioAtencion.paciente.afiliacionSalud;
     else this.pago.afiliacionPaciente = this.afiliacion;
@@ -76,6 +75,7 @@ export class PagoFormComponent implements OnInit {
       if (idAtencion) {
         this.horarioAtencionService.obtenerHorario(idAtencion).subscribe(horario => {
           this.horarioAtencion = horario;
+          console.log(this.horarioAtencion);
           if (horario.pago) {
             this.pago = horario.pago;
             // CUIDADO, NO SE DEBE ACTUALIZAR LA INFO DEL PACIENTE

@@ -13,32 +13,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="medio-pago">Afiliación de salud asociada a este pago:</label>
+                            <label for="medio-pago">Afiliación de salud del paciente:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-file-medical-fill"></i></span>
-                                <input required [readOnly]="!modificarAfiliacion.checked"
-                                    value="{{horarioAtencion.paciente.afiliacionSalud}}" type="text" ngModel
+                                <input readonly value="{{horarioAtencion.paciente.afiliacionSalud}}" type="text" ngModel
                                     #afiliacionPaciente="ngModel" class="form-control" id="afiliacion-pago"
-                                    name="afiliacion-pago" [(ngModel)]="afiliacion" maxlength="30"
-                                    pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$">
-                            </div>
-                            <div class="col-lg-12 text-left">
-                                <input class="form-check-input" type="checkbox" name="modificar-afiliacion"
-                                    id="modificar-afiliacion" ngModel #modificarAfiliacion>
-                                <label for="modificar-afiliacion" class="form-check-label">Modificar afiliación</label>
-                            </div>
-
-                            <!-- Manejo de errores -->
-                            <div class="col-lg-12"
-                                *ngIf="afiliacionPaciente.invalid && (afiliacionPaciente.touched || afiliacionPaciente.dirty)">
-                                <div *ngIf="afiliacionPaciente.errors?.required">
-                                    <small class="text-danger">Se debe ingresar la afiliación asociada a este
-                                        pago.</small>
-                                </div>
-                                <div *ngIf="afiliacionPaciente.errors?.pattern">
-                                    <small class="text-danger">No se permite ingresar dígitos ni caracteres
-                                        especiales.</small>
-                                </div>
+                                    name="afiliacion-pago" [(ngModel)]="afiliacion" maxlength="30">
                             </div>
                         </div>
                     </div>
@@ -51,15 +31,26 @@
                             <label for="medio-pago">Medio de pago:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                                <select required maxlength="30" name="medio-pago" id="medio-pago" class="form-select"
-                                    ngModel #medioPago="ngModel" [(ngModel)]="pago.medioPago">
+                                <select required name="medio-pago" id="medio-pago" class="form-select" ngModel
+                                    #medioPago="ngModel" [(ngModel)]="pago.medioPago">
                                     <option value="Bono(s)">Bono(s)</option>
                                     <option value="Programa">Programa</option>
                                     <option value="Bonos/Programa">Bonos y programa</option>
-                                    <option
-                                        *ngIf="afiliacionPaciente.value == 'particular' || afiliacionPaciente.value == 'Particular'"
-                                        value="Efectivo">Efectivo</option>
+                                    <option value="Efectivo">Efectivo</option>
                                 </select>
+                            </div>
+
+                            <!-- Manejo de errores -->
+                            <div *ngIf="horarioAtencion.paciente.afiliacionSalud?.toLowerCase() == 'particular' && medioPago.value != 'Efectivo'"
+                                class="col-lg-12">
+                                <small class="text-danger">Para pago particular se debe seleccionar 'Efectivo' como
+                                    medio de pago.</small>
+                            </div>
+                            <div *ngIf="horarioAtencion.paciente.afiliacionSalud?.toLowerCase() != 'particular' && medioPago.value == 'Efectivo'"
+                                class="col-lg-12">
+                                <small class="text-danger">Para pago mediante
+                                    {{horarioAtencion.paciente.afiliacionSalud}} no se debe seleccionar 'Efectivo' como
+                                    medio de pago.</small>
                             </div>
                         </div>
                     </div>
@@ -72,11 +63,12 @@
                             <label for="monto-pago">Monto:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
-                                <input [value]="medioPago.value != 'Efectivo' ? '' : montoPago.value"
-                                    [readOnly]="medioPago.value != 'Efectivo'"
-                                    [required]="medioPago.value == 'Efectivo'" pattern="^[0-9]+$" ngModel
-                                    #montoPago="ngModel" type="number" class="form-control" [(ngModel)]="pago.montoPago"
-                                    id="monto-pago" name="monto-pago">
+                                <input
+                                    [value]="horarioAtencion.paciente.afiliacionSalud?.toLowerCase() != 'particular' ? '' : montoPago.value"
+                                    [readOnly]="horarioAtencion.paciente.afiliacionSalud?.toLowerCase() != 'particular'"
+                                    [required]="horarioAtencion.paciente.afiliacionSalud?.toLowerCase() == 'particular' "
+                                    pattern="^[0-9]+$" ngModel #montoPago="ngModel" type="number" class="form-control"
+                                    [(ngModel)]="pago.montoPago" id="monto-pago" name="monto-pago">
                                 <div class="col-lg-12">
                                     <small class="form-text text-secondary">Si el paciente paga con efectivo, debe
                                         ingresar el
@@ -103,13 +95,16 @@
                 <div class="row">
                     <div class="col-lg-6 text-left">
                         <button *ngIf="!horarioAtencion.pago?.idPago; else updateButton" (click)="pay()"
-                            [disabled]="afiliacionPaciente.errors?.pattern || medioPago.invalid || montoPago.invalid"
-                            class="btn btn-primary" type="button" data-dismiss="modal">Registrar pago</button>
+                            [disabled]="medioPago.invalid || montoPago.invalid || 
+                            (horarioAtencion.paciente.afiliacionSalud?.toLowerCase() == 'particular' && medioPago.value != 'Efectivo') || 
+                            (horarioAtencion.paciente.afiliacionSalud?.toLowerCase() != 'particular' && medioPago.value == 'Efectivo')" class="btn btn-primary" type="button"
+                            data-dismiss="modal">Registrar pago</button>
 
                         <ng-template #updateButton>
                             <button (click)="updatePayment()" class="btn btn-primary" type="button"
-                                [disabled]="afiliacionPaciente.errors?.pattern || afiliacionPaciente.invalid || medioPago.invalid || montoPago.invalid"
-                                data-dismiss="modal">Guardar
+                                [disabled]="medioPago.invalid || montoPago.invalid || 
+                                (horarioAtencion.paciente.afiliacionSalud?.toLowerCase() == 'particular' && medioPago.value != 'Efectivo') || 
+                                (horarioAtencion.paciente.afiliacionSalud?.toLowerCase() != 'particular' && medioPago.value == 'Efectivo')" data-dismiss="modal">Guardar
                                 cambios</button>
                         </ng-template>
                     </div>
