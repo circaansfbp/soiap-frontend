@@ -5,6 +5,9 @@ import { Paciente } from 'src/app/classes/paciente/paciente';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 import { DictadoService } from 'src/app/services/dictado/dictado.service';
 
+import * as moment from 'moment';
+moment.locale("es");
+
 import swal from 'sweetalert2';
 
 @Component({
@@ -13,6 +16,8 @@ import swal from 'sweetalert2';
   styleUrls: ['./paciente-form.component.css']
 })
 export class PacienteFormComponent implements OnInit {
+  // Para verificar que la fecha de nacimiento seleccionada no sea una futura
+  fechaActual: string = moment().format("YYYY[-]MM[-]DD");
 
   title: string = "Modificar datos";
   subtitle: string = "A continuación, puede realizar los cambios necesarios:";
@@ -50,6 +55,16 @@ export class PacienteFormComponent implements OnInit {
   }
 
   updatePaciente() {
+    if (!this.paciente.familiaNuclear.trim()) {
+      swal.fire(
+        'Dato inválido!',
+        'El campo que corresponde a la familia nuclear del paciente no puede quedar vacío.',
+        'error'
+      );
+
+      return;
+    }
+
     swal.fire({
       title: '¿Guardar cambios?',
       text: '¿Estás seguro/a de que deseas guardar los cambios ingresados?',
@@ -71,8 +86,6 @@ export class PacienteFormComponent implements OnInit {
               'La información ha sido actualizada exitosamente.',
               'success'
             );
-
-            console.log(pacienteActualizado);
           });
         }
       }

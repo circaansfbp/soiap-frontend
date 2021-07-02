@@ -6,6 +6,8 @@ import { HorarioAtencionService } from 'src/app/services/horario-atencion/horari
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import * as moment from 'moment';
+moment.locale("es");
+
 import swal from 'sweetalert2';
 
 
