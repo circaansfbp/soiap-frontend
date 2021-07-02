@@ -8,11 +8,13 @@
 
 .navbar-brand {
     font-size: 30px;
+    color: #fff;
 }
 
 a {
-    font-size: 25px;
+    font-size: 20px;
     cursor: pointer;
+    margin: 0 25px;
 }
 
 h1, h3 {

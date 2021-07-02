@@ -66,7 +66,7 @@
                             <!-- Opciones -->
                             <td *ngIf="atencion.pago">
                                 <button (click)="detallePago(atencion)" data-toggle="modal" data-target="#detallePago"
-                                    class="btn btn-primary multiple-payment-btn-add" type="button">Ver detalle pago</button>
+                                    class="btn btn-primary" type="button">Ver detalle pago</button>
                             </td>
                             <td *ngIf="!atencion.pago && !selected">
                                 <button [disabled]="atencion.asistencia == -1"

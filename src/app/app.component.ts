@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  activeLink: boolean[] = [false, false];
   title: string = 'Sistema de organización de info. y atención psicológica';
   fixNav: boolean = false;
 
@@ -32,6 +33,17 @@ export class AppComponent {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  clickNavLink(link: number) {
+    if (link == 0) {
+      this.activeLink[0] = true;
+      this.activeLink[1] = false;
+    }
+    else if (link == 1) {
+      this.activeLink[0] = false;
+      this.activeLink[1] = true;
+    } 
   }
 }
 

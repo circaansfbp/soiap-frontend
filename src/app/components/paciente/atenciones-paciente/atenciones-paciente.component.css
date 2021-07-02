@@ -58,12 +58,12 @@
     border-bottom: 5px solid #284b63;
 }
 
-.multiple-payment-btn-add, .multiple-payment-btn-add:hover, .multiple-payment-btn-add:disabled {
+.multiple-payment-btn-add, .multiple-payment-btn-add:hover, .multiple-payment-btn-add:disabled, .multiple-payment-btn-add:focus {
     background-color: #007f5f;
     border-color: #007f5f;
 }
 
-.multiple-payment-btn-remove, .multiple-payment-btn-remove:hover {
+.multiple-payment-btn-remove, .multiple-payment-btn-remove:hover, .multiple-payment-btn-remove:disabled, .multiple-payment-btn-remove:focus {
     background-color: #d33;
     border-color: #d33;
 }
