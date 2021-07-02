@@ -15,10 +15,11 @@
                         <label for="motivo-consulta-paciente" class="form-label">Motivo de la consulta:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
-                            <textarea name="motivo-consulta-paciente" id="motivo-consulta-paciente" cols="12" rows="6"
+                            <textarea
+                                [ngStyle]="(motivoConsulta.touched || motivoConsulta.dirty) && !motivoConsulta.value?.trim() ? {'border': '2px solid red'} : {}"
+                                name="motivo-consulta-paciente" id="motivo-consulta-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #motivoConsulta="ngModel"
-                                [(ngModel)]="anamnesis.motivoConsultaPaciente" required maxlength="2000"
-                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                                [(ngModel)]="anamnesis.motivoConsultaPaciente" required maxlength="2000"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -40,13 +41,15 @@
                             <div *ngIf="motivoConsulta.errors?.required">
                                 <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
                             </div>
-                            <div *ngIf="motivoConsulta.errors?.pattern">
-                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
-                            </div>
                             <div
                                 *ngIf="motivoConsulta.errors && !motivoConsulta.errors.required && !motivoConsulta.errors.pattern">
                                 <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
+                        </div>
+
+                        <div *ngIf="!motivoConsulta.value?.trim() && !motivoConsulta.errors?.required"
+                            class="col-lg-12">
+                            <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -64,10 +67,11 @@
                         <label for="antecedentes-paciente" class="form-label">Antecedentes del paciente:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                            <textarea name="antecedentes-paciente" id="antecedentes-paciente" cols="12" rows="6"
+                            <textarea
+                                [ngStyle]="(antecedentesPaciente.touched || antecedentesPaciente.dirty) && !antecedentesPaciente.value?.trim() ? {'border': '2px solid red'} : {}"
+                                name="antecedentes-paciente" id="antecedentes-paciente" cols="12" rows="6"
                                 class="form-control" ngModel #antecedentesPaciente="ngModel"
-                                [(ngModel)]="anamnesis.antecedentesPaciente" required maxlength="2000"
-                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                                [(ngModel)]="anamnesis.antecedentesPaciente" required maxlength="2000"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -90,14 +94,15 @@
                                 <small class="text-danger">Se deben ingresar los antecedentes del paciente.</small>
                             </div>
 
-                            <div *ngIf="antecedentesPaciente.errors?.pattern">
-                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
-                            </div>
-
                             <div
                                 *ngIf="antecedentesPaciente.errors && !antecedentesPaciente.errors.required && antecedentesPaciente.errors.pattern">
                                 <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
+                        </div>
+
+                        <div *ngIf="!antecedentesPaciente.value?.trim() && !antecedentesPaciente.errors?.required"
+                            class="col-lg-12">
+                            <small class="text-danger">Se deben ingresar los antecedentes del paciente.</small>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -116,11 +121,11 @@
                             paciente:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
-                            <textarea name="antecedentes-familiares-paciente" id="antecedentes-familiares-paciente"
-                                cols="12" rows="6" class="form-control" ngModel
-                                #antecedentesFamiliaresPaciente="ngModel" [(ngModel)]="anamnesis.antecedentesFamiliares"
-                                required maxlength="2000"
-                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                            <textarea
+                                [ngStyle]="(antecedentesFamiliaresPaciente.touched || antecedentesFamiliaresPaciente.dirty) && !antecedentesFamiliaresPaciente.value?.trim() ? {'border': '2px solid red'} : {}"
+                                name="antecedentes-familiares-paciente" id="antecedentes-familiares-paciente" cols="12"
+                                rows="6" class="form-control" ngModel #antecedentesFamiliaresPaciente="ngModel"
+                                [(ngModel)]="anamnesis.antecedentesFamiliares" required maxlength="2000"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -144,14 +149,16 @@
                                     paciente.</small>
                             </div>
 
-                            <div *ngIf="antecedentesFamiliaresPaciente.errors?.pattern">
-                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
-                            </div>
-
                             <div
                                 *ngIf="antecedentesFamiliaresPaciente.errors && !antecedentesFamiliaresPaciente.errors?.required && !antecedentesFamiliaresPaciente.errors.pattern">
                                 <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
+                        </div>
+
+                        <div *ngIf="!antecedentesFamiliaresPaciente.value?.trim() && !antecedentesFamiliaresPaciente.errors?.required"
+                            class="col-lg-12">
+                            <small class="text-danger">Se deben ingresar los antecedentes familiares del
+                                paciente.</small>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -209,13 +216,15 @@
                     <!-- Guardar/actualizar la anamnesis -->
                     <div class="col-lg-7 text-right">
                         <button *ngIf="!anamnesis.idAnamnesis; else updateButton" (click)="createAnamnesis()"
-                            [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid"
+                            [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid
+                            || !motivoConsulta.value?.trim() || !antecedentesPaciente.value?.trim() || !antecedentesFamiliaresPaciente.value?.trim()"
                             class="btn btn-primary" type="submit">Registrar anamnesis</button>
 
                         <ng-template #updateButton>
                             <button (click)="updateAnamnesis()"
-                                [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid"
-                                class="btn btn-primary" type="submit">Guardar cambios</button>
+                                [disabled]="motivoConsulta.invalid || antecedentesPaciente.invalid || antecedentesFamiliaresPaciente.invalid
+                                || !motivoConsulta.value?.trim() || !antecedentesPaciente.value?.trim() || !antecedentesFamiliaresPaciente.value?.trim()"
+                                class=" btn btn-primary" type="submit">Guardar cambios</button>
                         </ng-template>
                     </div>
 

@@ -57,6 +57,18 @@ export class FichaTratamientoFormComponent implements OnInit {
 
   // Para guardar la ficha de tratamiento
   createFichaTratamiento() {
+    if (!this.fichaTratamiento.motivoConsultaProfesional?.trim() || !this.fichaTratamiento.resultadoDiagnostico?.trim()
+      || !this.fichaTratamiento.sugerenciaTratamiento?.trim() || !this.fichaTratamiento.objetivosTerapia?.trim()) {
+      
+      swal.fire(
+        'Datos faltantes!',
+        'Es obligatorio completar todos los campos presentes en el formulario.',
+        'error'
+      );
+
+      return;
+    }
+
     this.paciente.fichaTratamiento = this.fichaTratamiento;
 
     this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
@@ -75,6 +87,18 @@ export class FichaTratamientoFormComponent implements OnInit {
 
   // Para actualizar la ficha de tratamiento
   updateFichaTratamiento() {
+    if (!this.fichaTratamiento.motivoConsultaProfesional?.trim() || !this.fichaTratamiento.resultadoDiagnostico?.trim()
+      || !this.fichaTratamiento.sugerenciaTratamiento?.trim() || !this.fichaTratamiento.objetivosTerapia?.trim()) {
+      
+      swal.fire(
+        'Datos faltantes!',
+        'Es obligatorio completar todos los campos presentes en el formulario.',
+        'error'
+      );
+
+      return;
+    }
+
     swal.fire({
       title: 'Guardar cambios',
       text: '¿Desea guardar los cambios registrados?',

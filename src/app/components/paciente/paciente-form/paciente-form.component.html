@@ -307,6 +307,7 @@
 
                                 </span>
                             </div>
+                            <!-- Manejo de errores -->
                             <div *ngIf="familiaNuclear?.invalid && (familiaNuclear?.touched || familiaNuclear?.dirty)"
                                 class="col-lg-12">
                                 <div *ngIf="familiaNuclear.errors?.required">
@@ -316,6 +317,12 @@
                                     <small class="text-danger">Sólo se permite un máximo de 1000 caracteres!</small>
                                 </div>
                             </div>
+
+                            <div *ngIf="!familiaNuclear.value?.trim() && !familiaNuclear.errors?.required" class="col-lg-12">
+                                <small class="text-danger">Se debe ingresar el grupo familiar del paciente!</small>
+                            </div>
+
+                            <!-- Para mostrar los caracteres restantes -->
                             <div *ngIf="familiaNuclear && familiaNuclear.value?.length > 900 && familiaNuclear.value?.length < 1000"
                                 class="col-lg-12">
                                 <small class="text-secondary">Quedan {{1000 -

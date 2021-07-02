@@ -56,6 +56,16 @@ export class AnamnesisFormComponent implements OnInit {
 
   // Guardar la anamnesis de un paciente
   createAnamnesis() {
+    if (!this.anamnesis.motivoConsultaPaciente?.trim() || !this.anamnesis.antecedentesPaciente?.trim() || !this.anamnesis.antecedentesFamiliares?.trim()) {
+      swal.fire(
+        'Daltos faltantes!',
+        'Es obligatorio ingresar el motivo de la consulta del paciente, sus antecedentes personales y familiares.',
+        'error'
+      );
+
+      return;
+    }
+
     if (this.anamnesis.observaciones == undefined) this.anamnesis.observaciones = "-";
     this.paciente.anamnesis = this.anamnesis;
 
@@ -75,6 +85,16 @@ export class AnamnesisFormComponent implements OnInit {
 
   // Actualizar la anamnesis de un paciente
   updateAnamnesis() {
+    if (!this.anamnesis.motivoConsultaPaciente?.trim() || !this.anamnesis.antecedentesPaciente?.trim() || !this.anamnesis.antecedentesFamiliares?.trim()) {
+      swal.fire(
+        'Daltos faltantes!',
+        'Es obligatorio ingresar el motivo de la consulta del paciente, sus antecedentes personales y familiares.',
+        'error'
+      );
+
+      return;
+    }
+
     if (this.anamnesis.observaciones == "") this.anamnesis.observaciones = "-";
 
     swal.fire({

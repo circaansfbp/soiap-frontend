@@ -16,10 +16,12 @@
                         <label for="motivo-consulta-profesional" class="form-label">Motivo de la consulta:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
-                            <textarea name="motivo-consulta-profesional" id="motivo-consulta-profesional" cols="12"
-                                rows="6" class="form-control" ngModel #motivoConsulta="ngModel"
-                                [(ngModel)]="fichaTratamiento.motivoConsultaProfesional" required maxLength="2000"
-                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                            <textarea
+                                [ngStyle]="(motivoConsulta.touched || motivoConsulta.dirty) && !motivoConsulta.value?.trim() ? {'border': 'solid 2px red'} : {}"
+                                name="motivo-consulta-profesional" id="motivo-consulta-profesional" cols="12" rows="6"
+                                class="form-control" ngModel #motivoConsulta="ngModel"
+                                [(ngModel)]="fichaTratamiento.motivoConsultaProfesional" required
+                                maxLength="2000"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -41,13 +43,15 @@
                             <div *ngIf="motivoConsulta.errors?.required">
                                 <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
                             </div>
-                            <div *ngIf="motivoConsulta.errors?.pattern">
-                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
-                            </div>
                             <div
                                 *ngIf="motivoConsulta.errors && !motivoConsulta.errors.required && !motivoConsulta.errors.pattern">
                                 <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
+                        </div>
+
+                        <div *ngIf="!motivoConsulta.value?.trim() && !motivoConsulta.errors?.required"
+                            class="col-lg-12">
+                            <small class="text-danger">Se debe ingresar el motivo de la consulta.</small>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -65,10 +69,12 @@
                         <label for="resultado-diagnostico" class="form-label">Resultado del diagnóstico:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-check-fill"></i></span>
-                            <textarea name="resultado-diagnostico" id="resultado-diagnostico" cols="12" rows="6"
+                            <textarea
+                                [ngStyle]="(resultadoDiagnostico.touched || resultadoDiagnostico.dirty) && !resultadoDiagnostico.value?.trim() ? {'border': 'solid 2px red'} : {}"
+                                name="resultado-diagnostico" id="resultado-diagnostico" cols="12" rows="6"
                                 class="form-control" ngModel #resultadoDiagnostico="ngModel"
-                                [(ngModel)]="fichaTratamiento.resultadoDiagnostico" required maxLength="2000"
-                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                                [(ngModel)]="fichaTratamiento.resultadoDiagnostico" required
+                                maxLength="2000"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -91,13 +97,16 @@
                                 <small class="text-danger">Se debe ingresar el resultado del diagnóstico del
                                     paciente.</small>
                             </div>
-                            <div *ngIf="resultadoDiagnostico.errors?.pattern">
-                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
-                            </div>
                             <div
                                 *ngIf="resultadoDiagnostico.errors && !resultadoDiagnostico.errors.required && !resultadoDiagnostico.errors.pattern">
                                 <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
+                        </div>
+
+                        <div *ngIf="!resultadoDiagnostico.value?.trim() && !resultadoDiagnostico.errors?.required"
+                            class="col-lg-12">
+                            <small class="text-danger">Se debe ingresar el resultado del diagnóstico del
+                                paciente.</small>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -115,10 +124,12 @@
                         <label for="sugerencia-tratamiento" class="form-label">Sugerencia de tratamiento:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-chat-dots-fill"></i></span>
-                            <textarea name="sugerencia-tratamiento" id="sugerencia-tratamiento" cols="12" rows="6"
+                            <textarea
+                                [ngStyle]="(sugerenciaTratamiento.touched || sugerenciaTratamiento.dirty) && !sugerenciaTratamiento.value?.trim() ? {'border': 'solid 2px red'} : {}"
+                                name="sugerencia-tratamiento" id="sugerencia-tratamiento" cols="12" rows="6"
                                 class="form-control" ngModel #sugerenciaTratamiento="ngModel"
-                                [(ngModel)]="fichaTratamiento.sugerenciaTratamiento" required maxLength="2000"
-                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                                [(ngModel)]="fichaTratamiento.sugerenciaTratamiento" required
+                                maxLength="2000"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -140,13 +151,16 @@
                             <div *ngIf="sugerenciaTratamiento.errors?.required">
                                 <small class="text-danger">Se debe ingresar la sugerencia de tratamiento.</small>
                             </div>
-                            <div *ngIf="sugerenciaTratamiento.errors?.pattern">
-                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
-                            </div>
                             <div
                                 *ngIf="sugerenciaTratamiento.errors && !sugerenciaTratamiento.errors.required && !sugerenciaTratamiento.errors.pattern">
                                 <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
+                        </div>
+
+                        <div *ngIf="!sugerenciaTratamiento.value?.trim() && !sugerenciaTratamiento.errors?.required"
+                            class="col-lg-12">
+                            <small class="text-danger">Se debe ingresar la sugerencia de tratamiento del
+                                paciente.</small>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -164,10 +178,11 @@
                         <label for="objetivos-terapia" class="form-label">Objetivos de la terapia:</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-check2-circle"></i></span>
-                            <textarea name="objetivos-terapia" id="objetivos-terapia" cols="12" rows="6"
-                                class="form-control" ngModel #objetivosTerapia="ngModel"
-                                [(ngModel)]="fichaTratamiento.objetivosTerapia" required maxLength="2000"
-                                pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                            <textarea
+                                [ngStyle]="(objetivosTerapia.touched || objetivosTerapia.dirty) && !objetivosTerapia.value?.trim() ? {'border': 'solid 2px red'} : {}"
+                                name="objetivos-terapia" id="objetivos-terapia" cols="12" rows="6" class="form-control"
+                                ngModel #objetivosTerapia="ngModel" [(ngModel)]="fichaTratamiento.objetivosTerapia"
+                                required maxLength="2000"></textarea>
 
                             <!-- Para manejar el dictado por voz -->
                             <span class="input-group-text">
@@ -190,13 +205,15 @@
                                 <small class="text-danger">Se deben ingresar los objetivos de la terapia a
                                     realizar.</small>
                             </div>
-                            <div *ngIf="objetivosTerapia.errors?.pattern">
-                                <small class="text-danger">El texto no puede comenzar con un espacio en blanco.</small>
-                            </div>
                             <div
                                 *ngIf="objetivosTerapia.errors && !objetivosTerapia.errors.required && !objetivosTerapia.errors.pattern">
                                 <small class="text-danger">Solo se permite un máximo de 2000 caracteres.</small>
                             </div>
+                        </div>
+
+                        <div *ngIf="!objetivosTerapia.value?.trim() && !objetivosTerapia.errors?.required"
+                            class="col-lg-12">
+                            <small class="text-danger">Se deben ingresar los objetivos de la terapia a realizar.</small>
                         </div>
 
                         <!-- Para mostrar los caracteres restantes -->
@@ -213,12 +230,14 @@
                     <div class="col-lg-7 text-right">
                         <button *ngIf="!fichaTratamiento.idFichaTratamiento; else updateButton"
                             (click)="createFichaTratamiento()"
-                            [disabled]="motivoConsulta.invalid || resultadoDiagnostico.invalid || sugerenciaTratamiento.invalid || objetivosTerapia.invalid"
+                            [disabled]="motivoConsulta.invalid || resultadoDiagnostico.invalid || sugerenciaTratamiento.invalid || objetivosTerapia.invalid
+                            || !motivoConsulta.value?.trim() || !resultadoDiagnostico.value?.trim() || !sugerenciaTratamiento.value?.trim() || !objetivosTerapia.value?.trim()"
                             class="btn btn-primary" type="submit">Registrar ficha</button>
 
                         <ng-template #updateButton>
                             <button (click)="updateFichaTratamiento()"
-                                [disabled]="motivoConsulta.invalid || resultadoDiagnostico.invalid || sugerenciaTratamiento.invalid || objetivosTerapia.invalid"
+                                [disabled]="motivoConsulta.invalid || resultadoDiagnostico.invalid || sugerenciaTratamiento.invalid || objetivosTerapia.invalid
+                                || !motivoConsulta.value?.trim() || !resultadoDiagnostico.value?.trim() || !sugerenciaTratamiento.value?.trim() || !objetivosTerapia.value?.trim()"
                                 class="btn btn-primary" type="submit">Guardar cambios</button>
                         </ng-template>
                     </div>
