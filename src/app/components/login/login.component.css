@@ -13,7 +13,7 @@
     width: 35vw;
     height: 60vh;
     padding: 40px 90px;
-    
+    border-radius: 10px;
 }
 
 .form-control.ng-touched.ng-invalid {

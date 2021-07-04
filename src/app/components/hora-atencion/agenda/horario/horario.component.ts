@@ -23,6 +23,7 @@ export class HorarioComponent implements OnInit, OnChanges {
   horasFechaDelDia: Array<HorarioAtencion> = new Array();
 
   horario: HorarioAtencion = new HorarioAtencion();
+  paciente: Paciente = new Paciente();
 
   // Para manejar la fecha y hora de la atención al ver el detalle de esta
   fecha!: string;
@@ -48,8 +49,9 @@ export class HorarioComponent implements OnInit, OnChanges {
   }
 
   // Permite ver el detalle de las atenciones del día
-  verDetalle(horarioAtencion: HorarioAtencion) {
+  verDetalle(horarioAtencion: HorarioAtencion, pacienteAsociado: Paciente){
     this.horario = horarioAtencion;
+    this.paciente = pacienteAsociado;
     this.fecha = moment(this.horario.fechaAtencion).format("dddd Do MMMM YYYY");
     this.hora = `${this.horario.horaAtencion.slice(0, 5)} hrs.`;
   }
@@ -197,10 +199,10 @@ export class HorarioComponent implements OnInit, OnChanges {
         else if (moment(hourToDelete.fechaAtencion).isAfter(moment().subtract(1, 'days')) && hourToDelete.pago) {
           swal.fire({
             title: 'Horario de atención pagado!',
-            text: 'El horario de atención que desea eliminar ya está pagado, por lo que no es posible eliminarlo. Sin embargo, puede asignarle un nuevo horario de atención al paciente.',
+            text: 'El horario de atención que desea eliminar ya está pagado, por lo que no es posible eliminarlo. Sin embargo, puede modificarlo.',
             icon: 'warning',
             confirmButtonColor: '#007f5f',
-            confirmButtonText: 'Asignar nuevo horario',
+            confirmButtonText: 'Modificar horario',
             showCancelButton: true,
             cancelButtonColor: '#d33',
             cancelButtonText: 'Cancelar'

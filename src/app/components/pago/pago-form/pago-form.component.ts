@@ -22,9 +22,6 @@ export class PagoFormComponent implements OnInit {
   // Para manejar el pago
   pago: Pago = new Pago();
 
-  // Afiliación asociada al pago
-  afiliacion!: string;
-
   constructor(private horarioAtencionService: HorarioAtencionService,
     private pagoService: PagoService,
     private activatedRoute: ActivatedRoute,
@@ -38,11 +35,6 @@ export class PagoFormComponent implements OnInit {
 
   // Registra el pago
   pay() {
-    console.log(this.pago.medioPago);
-
-    if (this.afiliacion == undefined) this.pago.afiliacionPaciente = this.horarioAtencion.paciente.afiliacionSalud;
-    else this.pago.afiliacionPaciente = this.afiliacion;
-
     this.pago.cantidadHorasPagadas = 1;
     this.horarioAtencion.pago = this.pago;
 
@@ -75,13 +67,12 @@ export class PagoFormComponent implements OnInit {
       if (idAtencion) {
         this.horarioAtencionService.obtenerHorario(idAtencion).subscribe(horario => {
           this.horarioAtencion = horario;
-          console.log(this.horarioAtencion);
+
           if (horario.pago) {
             this.pago = horario.pago;
-            // CUIDADO, NO SE DEBE ACTUALIZAR LA INFO DEL PACIENTE
-            this.horarioAtencion.paciente.afiliacionSalud = this.pago.afiliacionPaciente;
           } 
           else this.pago = new Pago();
+
         });
       }
     })
@@ -89,9 +80,6 @@ export class PagoFormComponent implements OnInit {
 
   // Actualizar el pago
   updatePayment() {
-    if (this.afiliacion == undefined) this.pago.afiliacionPaciente = this.horarioAtencion.paciente.afiliacionSalud;
-    else this.pago.afiliacionPaciente = this.afiliacion;
-
     this.pagoService.updatePayment(this.pago, this.pago.idPago).subscribe(pago => {
       this.horarioAtencion.pago = pago;
       swal.fire(

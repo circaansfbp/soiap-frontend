@@ -57,9 +57,6 @@ export class AtencionesPacienteComponent implements OnInit {
   // Para manejar el pago
   pago: Pago = new Pago();
 
-  // Afiliación asociada al pago
-  afiliacion!: string;
-
   // Para mostrar el detalle de un pago
   horario: HorarioAtencion = new HorarioAtencion();
 
@@ -215,8 +212,6 @@ export class AtencionesPacienteComponent implements OnInit {
   // Para registrar el pago de los horarios de atención contenidos en el array
   confirmPayment() {
     if (this.appointmentsToPay.length > 0) {
-      if (this.afiliacion == undefined) this.pago.afiliacionPaciente = this.paciente.afiliacionSalud;
-      else this.pago.afiliacionPaciente = this.afiliacion;
 
       this.pago.cantidadHorasPagadas = this.appointmentsToPay.length;
 
@@ -265,6 +260,7 @@ export class AtencionesPacienteComponent implements OnInit {
 
   // Mostrar el detalle de un pago
   detallePago(horarioAtencion: HorarioAtencion) {
+    console.log(horarioAtencion);
     this.horario = horarioAtencion;
   }
 
