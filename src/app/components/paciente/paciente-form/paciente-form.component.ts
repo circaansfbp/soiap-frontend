@@ -47,8 +47,6 @@ export class PacienteFormComponent implements OnInit {
         this.pacienteService.obtenerPacientePorId(idPaciente).subscribe(paciente => {
           paciente.telefono = paciente.telefono.slice(4, 12);
           this.paciente = paciente;
-
-          console.log(paciente);
         });
       }
     })

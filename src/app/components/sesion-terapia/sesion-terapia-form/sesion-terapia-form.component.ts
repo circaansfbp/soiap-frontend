@@ -74,8 +74,6 @@ export class SesionTerapiaFormComponent implements OnInit {
     this.sesion.fichaTratamiento = this.paciente.fichaTratamiento;
 
     this.sesionTerapiaService.createSession(this.sesion).subscribe(sesionCreada => {
-      console.log(sesionCreada);  
-
       swal.fire(
         "Sesión registrada!",
         `La sesión de terapia con fecha ${this.fechaActual} ha sido creada exitosamente.`,
@@ -100,7 +98,6 @@ export class SesionTerapiaFormComponent implements OnInit {
     }).then(result => {
       if (result.isConfirmed) {
         this.sesionTerapiaService.updateSesion(this.sesion, this.sesion.idSesion).subscribe(sesionActualizada => {
-          console.log(sesionActualizada);
 
           swal.fire(
             'Datos actualizados!',

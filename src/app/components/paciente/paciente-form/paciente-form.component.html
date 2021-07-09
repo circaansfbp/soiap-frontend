@@ -288,7 +288,8 @@
                             <label for="grupo-familiar-paciente">Grupo familiar del paciente:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-people-fill"></i></span>
-                                <textarea [ngStyle]="!familiaNuclear.value?.trim() ? {'border': '2px solid red'} : {}"
+                                <textarea
+                                    [ngStyle]="(!familiaNuclear.value?.trim() && (familiaNuclear.touched || familiaNuclear.dirty)) ? {'border': '2px solid red'} : {}"
                                     name="grupo-familiar-paciente" id="grupo-familiar-paciente" cols="12" rows="3"
                                     class="form-control" ngModel [(ngModel)]="paciente.familiaNuclear"
                                     #familiaNuclear="ngModel" required maxlength="1000"></textarea>
@@ -318,7 +319,8 @@
                                 </div>
                             </div>
 
-                            <div *ngIf="!familiaNuclear.value?.trim() && !familiaNuclear.errors?.required" class="col-lg-12">
+                            <div *ngIf="!familiaNuclear.value?.trim() && !familiaNuclear.errors?.required"
+                                class="col-lg-12">
                                 <small class="text-danger">Se debe ingresar el grupo familiar del paciente!</small>
                             </div>
 

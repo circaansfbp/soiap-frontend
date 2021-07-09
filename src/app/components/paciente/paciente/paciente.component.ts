@@ -53,8 +53,6 @@ export class PacienteComponent implements OnInit {
           if (this.paciente.fichaTratamiento != undefined) this.fechaCreacionFichaTratamiento = moment(this.paciente.fichaTratamiento.fechaDiagnostico).format("dddd Do MMMM YYYY");
 
           if (this.paciente.email == null) this.paciente.email = "-";
-
-          console.log(this.paciente);
         });
       }
     });
@@ -103,7 +101,6 @@ export class PacienteComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.pacienteService.eliminarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
-          console.log(paciente);
 
           swal.fire(
             'Paciente eliminado!',
@@ -138,7 +135,6 @@ export class PacienteComponent implements OnInit {
           );
 
           this.router.navigate(['/pacientes/page/0']);
-          console.log(paciente);
         });
       }
     });

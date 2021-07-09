@@ -73,8 +73,6 @@ export class HorarioComponent implements OnInit, OnChanges {
           this.horario.confirmaAsistencia = 1;
 
           this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
-            console.log(updatedHorario);
-
             swal.fire(
               'Confirmación de asistencia registrada!',
               'La confirmación de asistencia por parte del paciente se ha registrado exitosamente.',
@@ -98,8 +96,6 @@ export class HorarioComponent implements OnInit, OnChanges {
           this.horario.confirmaAsistencia = -1;
 
           this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
-            console.log(updatedHorario);
-
             swal.fire(
               'Falta de confirmación registrada',
               'La falta de confirmación de asistencia por parte del paciente ha sido registrada.',
@@ -138,8 +134,6 @@ export class HorarioComponent implements OnInit, OnChanges {
           this.horario.asistencia = 1;
 
           this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
-            console.log(updatedHorario);
-
             swal.fire(
               "Asistencia registrada!",
               "La asistencia del paciente a su hora de atención ha sido registrada exitosamente",
@@ -163,8 +157,6 @@ export class HorarioComponent implements OnInit, OnChanges {
           this.horario.asistencia = -1;
 
           this.horarioAtencionService.modificarHorario(this.horario).subscribe(updatedHorario => {
-            console.log(updatedHorario);
-
             swal.fire(
               "Falta de asistencia registrada",
               "La falta de asistencia a su hora de atención por parte del paciente ha sido registrada",
@@ -242,8 +234,6 @@ export class HorarioComponent implements OnInit, OnChanges {
     }).then((result) => {
       if (result.isConfirmed) {
         this.horarioAtencionService.eliminarHorario(idAtencion).subscribe(res => {
-          console.log(res);
-
           // Para que el horario eliminado sea removido de la vista.
           this.horasFechaDelDia = [];
           this.getAtencionesFechaActual(this.fechaActual);

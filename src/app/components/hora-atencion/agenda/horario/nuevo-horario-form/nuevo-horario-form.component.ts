@@ -63,10 +63,7 @@ export class NuevoHorarioFormComponent implements OnInit {
   // Crear un nuevo horario de atención
   guardarNuevoHorario() {
     this.horarioAtencion.paciente = this.paciente;
-    console.log(this.horarioAtencion);
-
     this.horarioAtencionService.crearNuevoHorarioAtencion(this.horarioAtencion).subscribe(horario => {
-      console.log(horario);
       this.router.navigate(['']);
       swal.fire('Horario creado!', 'La hora de atención ha sido guardada exitosamente.', 'success');
     },
@@ -107,8 +104,6 @@ export class NuevoHorarioFormComponent implements OnInit {
       "anamnesis": null!,
       "fichaTratamiento": null!
     }
-
-    console.log(this.paciente.email);
 
     this.pacienteService.crearPaciente(this.paciente).subscribe(paciente => {
       this.paciente = paciente;
@@ -156,8 +151,6 @@ export class NuevoHorarioFormComponent implements OnInit {
       if (result.isConfirmed) {
         this.horarioAtencionService.modificarHorario(this.horarioAtencion).subscribe(horario => {
           this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
-            console.log(horario);
-            console.log(paciente);
             this.router.navigate(['']);
 
             swal.fire(
@@ -166,6 +159,14 @@ export class NuevoHorarioFormComponent implements OnInit {
               'success'
             );
           })
+        }, error => {
+          if (error.status == 409) {
+            swal.fire(
+              'Conflicto de horarios!',
+              'La fecha y hora de atención seleccionados ya se encuentran asignados a otro paciente. Por favor, intente nuevamente con una fecha u hora distinta.',
+              'error'
+            );
+          }
         });
       }
     });
@@ -178,7 +179,6 @@ export class NuevoHorarioFormComponent implements OnInit {
     if (values.nombre && values.apellido == "") {
       this.pacienteService.obtenerPacientesPorNombreSinPaginar(values.nombre).subscribe(res => {
         this.pacientes = res as Paciente[];
-        console.log(this.pacientes);
       }, error => {
         if (error.status == 404) {
           swal.fire(
@@ -193,7 +193,6 @@ export class NuevoHorarioFormComponent implements OnInit {
     else if (values.nombre == "" && values.apellido) {
       this.pacienteService.obtenerPacientesPorApellidoSinPaginar(values.apellido).subscribe(res => {
         this.pacientes = res as Paciente[];
-        console.log(this.pacientes);
       },
         error => {
           if (error.status == 404) {
@@ -209,7 +208,6 @@ export class NuevoHorarioFormComponent implements OnInit {
     else if (values.nombre && values.apellido) {
       this.pacienteService.obtenerPacientesPorNombreApellidoSinPaginar(values.nombre, values.apellido).subscribe(res => {
         this.pacientes = res as Paciente[];
-        console.log(this.pacientes);
       },
         error => {
           if (error.status == 404) {

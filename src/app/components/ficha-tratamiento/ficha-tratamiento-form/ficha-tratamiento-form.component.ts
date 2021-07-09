@@ -73,7 +73,6 @@ export class FichaTratamientoFormComponent implements OnInit {
 
     this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
       this.paciente = paciente;
-      console.log(this.paciente);
 
       this.router.navigate(['pacientes/', this.paciente.idPaciente]);
 
@@ -121,8 +120,6 @@ export class FichaTratamientoFormComponent implements OnInit {
             'Los datos de la ficha de tratamiento del paciente han sido actualizados exitosamente.',
             'success'
           );
-
-          console.log(this.fichaTratamiento);
         });
       }
     });

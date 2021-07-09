@@ -45,7 +45,7 @@ export class PacienteService {
     return this.http.get<any>(`${this.url}pacientes/get/page/${page}`, { headers: this.addAuthorization() }).pipe(tap(
       (response: any) => {
         // Verificar correcto funcionamiento
-        (response.content as Paciente[]).forEach(paciente => console.log(paciente.nombre));
+        (response.content as Paciente[]).forEach(paciente => {});
       }
     ));
   }
@@ -53,24 +53,6 @@ export class PacienteService {
   // Obtener todos los pacientes inactivos, paginados
   obtenerPacientesInactivos(page: number): Observable<any> {
     return this.http.get<any>(`${this.url}pacientes/get/inactive/page/${page}`, { headers: this.addAuthorization() });
-  }
-
-  // Buscar pacientes por nombre entre todos los pacientes (activos e inactivos) 
-  searchAllPatientsByName(nombre: string, page: number): Observable<any> {
-    let params = new HttpParams().set('nombre', nombre);
-    return this.http.get<any>(`${this.url}pacientes/get/all/by-name/page/${page}`, { params, headers: this.addAuthorization() });
-  }
-
-  // Buscar pacientes por apellido entre todos los pacientes (activos e inactivos)
-  searchAllPatientsByLastname(apellido: string, page: number): Observable<any> {
-    let params = new HttpParams().set('apellido', apellido);
-    return this.http.get<any>(`${this.url}pacientes/get/all/by-lastname/page/${page}`, { params, headers: this.addAuthorization() });
-  }
-
-  // Buscar pacientes por nombre y apellido entre todos los pacientes (activos e inactivos)
-  searchAllPatientsByNameAndLastname(nombre: string, apellido: string, page: number): Observable<any> {
-    let params = new HttpParams().set('nombre', nombre).set('apellido', apellido);
-    return this.http.get<any>(`${this.url}pacientes/get/all/by-name-lastname/page/${page}`, { params, headers: this.addAuthorization() });
   }
 
   // Obtener pacientes activos por nombre, paginados

@@ -71,7 +71,6 @@ export class AnamnesisFormComponent implements OnInit {
 
     this.pacienteService.actualizarPaciente(this.paciente).subscribe(paciente => {
       this.paciente = paciente;
-      console.log(this.paciente);
 
       this.router.navigate(['pacientes/', paciente.idPaciente]);
 
@@ -118,8 +117,6 @@ export class AnamnesisFormComponent implements OnInit {
             'Los datos de la anamnesis del paciente han sido actualizados exitosamente.',
             'success'
           );
-
-          console.log(anamnesis);
         });
       }
     });

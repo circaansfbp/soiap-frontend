@@ -44,11 +44,9 @@ export class PagoFormComponent implements OnInit {
         'El pago del horario de atención ha sido registrado exitosamente.',
         'success'
       );
-      console.log(horario);
       this.location.back();
     },
       error => {
-        console.log(error);
         if (error.status == 400) {
           swal.fire(
             'Falta un dato!',

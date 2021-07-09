@@ -26,8 +26,6 @@ export class PaginadorComponent implements OnInit, OnChanges {
     if (updatedPaginator.previousValue) {
       this.initPaginator();
     }
-
-    console.log(updatedPaginator);
   }
 
   initPaginator() {

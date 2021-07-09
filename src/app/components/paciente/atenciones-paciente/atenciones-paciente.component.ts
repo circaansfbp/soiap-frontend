@@ -218,7 +218,7 @@ export class AtencionesPacienteComponent implements OnInit {
       this.pagoService.registerPayment(this.pago).subscribe(pagoRegistrado => {
         this.appointmentsToPay.forEach(atencion => {
           atencion.pago = pagoRegistrado;
-          this.horarioAtencionService.modificarHorario(atencion).subscribe(atencionPagada => console.log(atencionPagada));
+          this.horarioAtencionService.modificarHorario(atencion).subscribe(atencionPagada => { });
         });
 
         this.appointmentsToPay = [];
@@ -260,7 +260,6 @@ export class AtencionesPacienteComponent implements OnInit {
 
   // Mostrar el detalle de un pago
   detallePago(horarioAtencion: HorarioAtencion) {
-    console.log(horarioAtencion);
     this.horario = horarioAtencion;
   }
 

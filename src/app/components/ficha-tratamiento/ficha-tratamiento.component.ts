@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FichaTratamiento } from 'src/app/classes/ficha-tratamiento/ficha-tratamiento';
 import { Paciente } from 'src/app/classes/paciente/paciente';
 
 @Component({

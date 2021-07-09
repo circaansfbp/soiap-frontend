@@ -48,8 +48,6 @@ export class ListaSesionesComponent implements OnInit {
           this.paciente = paciente;
           this.sesiones = paciente.fichaTratamiento.sesionesDeTerapia;
 
-          console.log(this.sesiones);
-
           this.sesiones.sort((firstDate, secondDate) => {
             return +new Date(secondDate.fechaSesion) - +new Date(firstDate.fechaSesion);
           });

@@ -51,8 +51,6 @@ export class ListaPacientesComponent implements OnInit {
         this.title = "Pacientes";
         this.subtitle = "Los siguientes pacientes se atienden, actualmente, en la consulta."
       });
-
-      console.log(this.pacientes);
     });
   }
 
