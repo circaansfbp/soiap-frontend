@@ -90,6 +90,13 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-hash"></i>
+                        <h4>Sesión número: {{horario.nroConsulta}}</h4>
+                    </div>
+                </div>
+
                 <!-- Opciones -->
                 <div class="row" id="options">
                     <div class="col-lg-12 text-left">
@@ -112,6 +119,10 @@
                             <h5 *ngIf="horario.confirmaAsistencia == -1">
                                 El paciente no confirmó su asistencia
                             </h5>
+                            <button (click)="modifyConfirmation()"
+                                [ngClass]="horario.confirmaAsistencia == 1 ? 'confirmacion' : 'no-confirma'"
+                                *ngIf="horario.confirmaAsistencia == 1 || horario.confirmaAsistencia == -1"
+                                class="btn btn-primary my-2" type="button">Modificar</button>
                         </div>
                     </div>
                     <div class="row">
@@ -149,6 +160,12 @@
                             <i class="bi bi-x-circle-fill icon-fail"></i>
                             <h5>El paciente no asistió a su sesión de terapia.
                             </h5>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <button (click)="modifyAsistencia()"
+                                [ngClass]="horario.asistencia == 1 ? 'confirmacion' : 'no-confirma'"
+                                *ngIf="horario.asistencia == 1 || horario.asistencia == -1" class="btn btn-primary my-2"
+                                type="button">Modificar</button>
                         </div>
                     </div>
                 </div>

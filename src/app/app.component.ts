@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 
 import swal from 'sweetalert2';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnChanges {
   activeLink: boolean[] = [false, false];
   title: string = 'Sistema de organización de info. y atención psicológica';
   fixNav: boolean = false;
@@ -18,6 +18,10 @@ export class AppComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit(): void {
+    this.activeLink = [false, false];
+  }
+
+  ngOnChanges(): void {
     this.activeLink = [false, false];
   }
 

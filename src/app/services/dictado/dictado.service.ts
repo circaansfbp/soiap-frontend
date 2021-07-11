@@ -22,7 +22,7 @@ export class DictadoService {
 
   // Iniciar grabación 
   start() {
-    this.toastr.info('Ahora puede comenzar a dictar la información que desea registrar. Recuerde esperar al menos 2 segundos antes de comenzar para asegurar el correcto registro de esta.', 'Escuchando...');
+    this.toastr.info('Ahora puede comenzar a dictar la información que desea registrar. Recuerde esperar al menos 3 segundos antes de comenzar para asegurar el correcto registro de esta.', 'Escuchando...');
 
     this.transcript = '';
     this.recognition.start();

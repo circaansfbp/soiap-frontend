@@ -81,7 +81,7 @@ export class PacienteFormComponent implements OnInit {
 
             swal.fire(
               'Datos actualizados!',
-              'La información ha sido actualizada exitosamente.',
+              'La información del paciente ha sido actualizada exitosamente.',
               'success'
             );
           });

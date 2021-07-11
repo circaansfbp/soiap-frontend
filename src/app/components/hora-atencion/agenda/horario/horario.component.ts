@@ -168,6 +168,106 @@ export class HorarioComponent implements OnInit, OnChanges {
     }
   }
 
+  // Para modificar la confirmación de la asistencia del paciente
+  modifyConfirmation() {
+    if (this.horario.confirmaAsistencia == 1) {
+      swal.fire({
+        title: 'Modificar confirmación de asistencia',
+        text: '¿El paciente no confirmó su asistencia previamente?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#007f5f',
+        confirmButtonText: 'No, el paciente no confirmó previamente',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.horario.confirmaAsistencia = -1;
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(horarioModificado => {
+            swal.fire(
+              'Confirmación modificada!',
+              'El paciente no confirmó su horario de atención.',
+              'success'
+            );
+          });
+        }
+      });
+    }
+    else if (this.horario.confirmaAsistencia == -1) {
+      swal.fire({
+        title: 'Modificar confirmación de asistencia',
+        text: '¿El paciente sí confirmó su asistencia previamente?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#007f5f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, el paciente confirmó previamente',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.horario.confirmaAsistencia = 1;
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(horarioModificado => {
+            swal.fire(
+              'Confirmación modificada!',
+              'El paciente confirmó su horario de atención.',
+              'success'
+            );
+          });
+        }
+      });
+    }
+  }
+
+  // Para modificar la asistencia del paciente
+  modifyAsistencia() {
+    if (this.horario.asistencia == 1) {
+      swal.fire({
+        title: 'Modificar registro de asistencia',
+        text: '¿El paciente no asistió a su sesión?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#007f5f',
+        confirmButtonText: 'No, el paciente no asistió a su sesión',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.horario.asistencia = -1;
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(horarioModificado => {
+            swal.fire(
+              'Asistencia modificada!',
+              'El paciente no asistió a su sesión de terapia.',
+              'success'
+            );
+          });
+        }
+      });
+    }
+    else if (this.horario.asistencia == -1) {
+      swal.fire({
+        title: 'Modificar registro de asistencia',
+        text: '¿El paciente sí asistió a su sesión?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#007f5f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, el paciente asistió a su sesión',
+        cancelButtonText: 'Cancelar'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.horario.asistencia = 1;
+          this.horarioAtencionService.modificarHorario(this.horario).subscribe(horarioModificado => {
+            swal.fire(
+              'Asistencia modificada!',
+              'El paciente sí asistió a su sesión de terapia.',
+              'success'
+            );
+          });
+        }
+      });
+    }
+  }
+
   // Método para verificar la viabilidad de eliminar un horario
   verifyDeletion(idAtencion: number) {
     this.horarioAtencionService.obtenerHorario(idAtencion).subscribe(horario => {
