@@ -19,7 +19,9 @@
                             <label for="nro-sesion" class="form-label">N° Sesión:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-hash"></i></span>
-                                <input required type="number" class="form-control" id="nro-sesion" name="nro-sesion"
+                                <input 
+                                [ngStyle]="(nroSesion.touched || nroSesion.dirty) && (nroSesion.value > 8 || nroSesion.value < 1) ? {'border': '2px solid red'} : {}"
+                                required type="number" class="form-control" id="nro-sesion" name="nro-sesion"
                                     ngModel [(ngModel)]="sesion.nroSesion" #nroSesion="ngModel" pattern="^[0-9]{1}$"
                                     min="1" max="8">
                             </div>
@@ -50,10 +52,11 @@
                             <label for="observaciones-sesion" class="form-label">Observaciones de la sesión:</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-question-circle"></i></span>
-                                <textarea name="observaciones-sesionl" id="observaciones-sesion" cols="12" rows="10"
+                                <textarea
+                                    [ngStyle]="(observacionesSesion.touched || observacionesSesion.dirty) && !observacionesSesion.value?.trim() ? {'border': '2px solid red'} : {}"
+                                    name="observaciones-sesionl" id="observaciones-sesion" cols="12" rows="10"
                                     class="form-control" ngModel #observacionesSesion="ngModel"
-                                    [(ngModel)]="sesion.observaciones" required maxLength="3000"
-                                    pattern="^(?!\s)^[0-9a-zA-ZÀ-ÿ!¡¿?.,;:\-\\\_@'()=+*/#$&%\[\]\{\}\u00f1\u00d1\s]+$"></textarea>
+                                    [(ngModel)]="sesion.observaciones" required maxlength="3000"></textarea>
 
                                 <!-- Para manejar el dictado por voz -->
                                 <span class="input-group-text">
@@ -78,9 +81,14 @@
                                 <div *ngIf="observacionesSesion.errors?.required">
                                     <small class="text-danger">Se deben ingresar las observaciones.</small>
                                 </div>
-                                <div *ngIf="observacionesSesion.errors?.pattern">
-                                    <small class="text-danger">La sesión de terapia no puede quedar en blanco!</small>
+                                <div *ngIf="observacionesSesion.errors && !observacionesSesion.errors?.required">
+                                    <small class="text-danger">Se deben ingresar un máximo de 3000 caracteres.</small>
                                 </div>
+                            </div>
+
+                            <div *ngIf="(!observacionesSesion.value?.trim() && !observacionesSesion.errors?.required) && (observacionesSesion.touched || observacionesSesion.dirty)"
+                                class="col-lg-12">
+                                <small class="text-danger">Se deben ingresar las observaciones de la sesión.</small>
                             </div>
 
                             <!-- Para mostrar los caracteres restantes -->
@@ -97,13 +105,13 @@
                     <!-- Guardar/actualizar la ficha de tratamiento -->
                     <div class="col-lg-7 text-right">
                         <button *ngIf="!sesion.idSesion; else updateButton" (click)="createSesion()"
-                            [disabled]="observacionesSesion.invalid || nroSesion.invalid || nroSesion.value < 1 || nroSesion.value > 8"
+                            [disabled]="observacionesSesion.invalid || nroSesion.invalid || nroSesion.value < 1 || nroSesion.value > 8 || !observacionesSesion.value?.trim()"
                             class="btn btn-primary" type="submit">Registrar
                             sesión</button>
 
                         <ng-template #updateButton>
                             <button (click)="updateSesion()"
-                                [disabled]="observacionesSesion.invalid || nroSesion.invalid || nroSesion.value < 1 || nroSesion.value > 8"
+                                [disabled]="observacionesSesion.invalid || nroSesion.invalid || nroSesion.value < 1 || nroSesion.value > 8 || !observacionesSesion.value?.trim()"
                                 class="btn btn-primary" type="submit">Guardar cambios</button>
                         </ng-template>
                     </div>
