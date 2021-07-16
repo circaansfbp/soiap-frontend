@@ -221,6 +221,17 @@ export class HorarioComponent implements OnInit, OnChanges {
   // Para modificar la asistencia del paciente
   modifyAsistencia() {
     if (this.horario.asistencia == 1) {
+
+      if (this.horario.pago) {
+        swal.fire(
+          'Horario pagado!',
+          'No es posible modificar la asistencia de este horario, ya que este fue pagado.',
+          'error'
+        );
+
+        return;
+      }
+
       swal.fire({
         title: 'Modificar registro de asistencia',
         text: '¿El paciente no asistió a su sesión?',

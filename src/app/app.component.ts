@@ -1,28 +1,29 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from './services/auth/auth.service';
 
 import swal from 'sweetalert2';
-import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnChanges {
-  activeLink: boolean[] = [false, false];
+export class AppComponent {
+  
   title: string = 'Sistema de organización de info. y atención psicológica';
   fixNav: boolean = false;
 
+  currentRoute!: string;
+
   constructor(public auth: AuthService,
-    public router: Router) { }
+    public router: Router) {
 
-  ngOnInit(): void {
-    this.activeLink = [false, false];
-  }
-
-  ngOnChanges(): void {
-    this.activeLink = [false, false];
+    router.events.pipe(
+      filter((event: any) => event instanceof NavigationEnd)
+    ).subscribe(event => this.currentRoute = event.url);
   }
 
   logout() {
@@ -41,17 +42,6 @@ export class AppComponent implements OnInit, OnChanges {
         this.router.navigate(['/login']);
       }
     });
-  }
-
-  clickNavLink(link: number) {
-    if (link == 0) {
-      this.activeLink[0] = true;
-      this.activeLink[1] = false;
-    }
-    else if (link == 1) {
-      this.activeLink[0] = false;
-      this.activeLink[1] = true;
-    } 
   }
 }
 

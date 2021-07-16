@@ -69,12 +69,17 @@ export class PacienteComponent implements OnInit {
   // Permite la eliminación lógica de un paciente
   deletePatient() {
     let debt = 0;
-
+    let atencionesFuturasPagadas = 0;
     // Si el paciente tiene deudas pendientes, no debiese ser eliminado.
     if (this.paciente.atenciones.length > 0) {
       this.paciente.atenciones.forEach(atencion => {
-        if (atencion.pago == null) {
+        if (atencion.pago == null && atencion.asistencia == 1) {
           debt++;
+        }
+
+        // Si tiene atenciones agendadas
+        if (atencion.asistencia == 0 && atencion.pago) {
+          atencionesFuturasPagadas++;
         }
       });
 
@@ -82,6 +87,16 @@ export class PacienteComponent implements OnInit {
         swal.fire(
           "No es posible eliminar al paciente!",
           "El/La paciente presenta un total de " + debt + " atenciones no pagadas, por lo que no puede ser eliminado/a.",
+          "info"
+        );
+
+        return;
+      }
+
+      if (atencionesFuturasPagadas > 0) {
+        swal.fire(
+          "Paciente en tratamiento!",
+          "El/la paciente tiene " + atencionesFuturasPagadas + " atenciones agendadas y pagadas, por lo que no es posible eliminar su registro.",
           "info"
         );
 
@@ -111,7 +126,7 @@ export class PacienteComponent implements OnInit {
           this.router.navigate(['pacientes/page/0']);
         });
       }
-    })
+    });
   }
 
   // Para reintegrar un paciente a la consulta

@@ -16,11 +16,15 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul *ngIf="auth.isAuthenticated()" class="navbar-nav ml-auto">
-            <li (click)="clickNavLink(0)" [ngClass]="{'active': activeLink[0]}" class="nav-item">
-                <a class="nav-link" [routerLink]="['/agenda']">Agenda<span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/agenda']" [ngClass]="currentRoute?.includes('agenda') || 
+                           currentRoute?.includes('horario') || 
+                           currentRoute?.includes('nuevo-horario') ? 'active' : ''">Agenda<span
+                        class="sr-only">(current)</span></a>
             </li>
-            <li (click)="clickNavLink(1)" [ngClass]="{'active': activeLink[1]}" class="nav-item">
-                <a class="nav-link" [routerLink]="['/pacientes/page/0']">Pacientes</a>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/pacientes/page/0']"
+                    [ngClass]="currentRoute?.includes('pacientes') ? 'active' : ''">Pacientes</a>
             </li>
         </ul>
         <ul *ngIf="auth.isAuthenticated()" class="navbar-nav navbar-right">
