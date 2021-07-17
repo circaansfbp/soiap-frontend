@@ -58,7 +58,8 @@
                 type="button">Mostrar todas las sesiones</button>
         </div>
         <div class="col-lg-6 text-right">
-            <button [routerLink]="['../../../ficha-tratamiento/nueva-sesion', paciente.idPaciente]"
+            <button *ngIf="paciente.estado == 'Activo'"
+                [routerLink]="['../../../ficha-tratamiento/nueva-sesion', paciente.idPaciente]"
                 class="btn btn-primary mx-4" type="button">Registrar nueva sesión</button>
             <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
         </div>

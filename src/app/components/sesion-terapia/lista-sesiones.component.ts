@@ -69,7 +69,7 @@ export class ListaSesionesComponent implements OnInit {
 
   // Búsqueda mediante input fecha
   searchBySpecificDate(date: string) {
-    this.sesiones = this.sesiones.filter(sesion => moment(sesion.fechaSesion).isSame(moment(date)));
+    this.sesiones = this.paciente.fichaTratamiento.sesionesDeTerapia.filter(sesion => moment(sesion.fechaSesion).isSame(moment(date)));
 
     if (this.sesiones.length == 0) {
       swal.fire(

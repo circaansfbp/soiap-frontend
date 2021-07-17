@@ -5,6 +5,7 @@ import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import swal from 'sweetalert2';
 import * as moment from 'moment';
+import { HorarioAtencionService } from 'src/app/services/horario-atencion/horario-atencion.service';
 moment.locale('es');
 
 @Component({
@@ -30,7 +31,8 @@ export class PacienteComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
-    private pacienteService: PacienteService) { }
+    private pacienteService: PacienteService,
+    private horarioAtencionService: HorarioAtencionService) { }
 
   ngOnInit(): void {
     this.getPatient();
@@ -70,6 +72,8 @@ export class PacienteComponent implements OnInit {
   deletePatient() {
     let debt = 0;
     let atencionesFuturasPagadas = 0;
+    let atencionesAgendadas = 0;
+
     // Si el paciente tiene deudas pendientes, no debiese ser eliminado.
     if (this.paciente.atenciones.length > 0) {
       this.paciente.atenciones.forEach(atencion => {
@@ -77,28 +81,59 @@ export class PacienteComponent implements OnInit {
           debt++;
         }
 
-        // Si tiene atenciones agendadas
+        // Si tiene atenciones agendadas y pagadas
         if (atencion.asistencia == 0 && atencion.pago) {
           atencionesFuturasPagadas++;
+        }
+
+        // Si tiene atenciones agendadas, pero no pagadas
+        if (moment(atencion.fechaAtencion).isAfter(moment()) && !atencion.pago) {
+          atencionesAgendadas++;
         }
       });
 
       if (debt > 0) {
         swal.fire(
           "No es posible eliminar al paciente!",
-          "El/La paciente presenta un total de " + debt + " atenciones no pagadas, por lo que no puede ser eliminado/a.",
+          "El/La paciente presenta un total de " + debt + " atenciones asistidas y no pagadas, por lo que no puede ser eliminado/a.",
           "info"
         );
 
         return;
       }
 
-      if (atencionesFuturasPagadas > 0) {
+      else if (atencionesFuturasPagadas > 0) {
         swal.fire(
           "Paciente en tratamiento!",
           "El/la paciente tiene " + atencionesFuturasPagadas + " atenciones agendadas y pagadas, por lo que no es posible eliminar su registro.",
           "info"
         );
+
+        return;
+      }
+
+      else if (atencionesAgendadas > 0) {
+
+        swal.fire({
+          title: 'Paciente en tratamiento!',
+          text: 'El paciente tiene atenciones agendadas, pero no pagadas.\n¿Desea eliminar su registro?\nEsta acción eliminará sus horarios de atención futuros.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí',
+          cancelButtonText: 'Cancelar'
+        }).then(result => {
+          if (result.isConfirmed) {
+            this.realDelete();
+
+            this.paciente.atenciones.forEach(atencion => {
+              if (moment(atencion.fechaAtencion).isAfter(moment())) {
+                this.horarioAtencionService.eliminarHorario(atencion.idAtencion).subscribe(atencionEliminada => console.log(atencionEliminada));
+              }
+            });
+          }
+        });
 
         return;
       }
@@ -115,17 +150,21 @@ export class PacienteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.pacienteService.eliminarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
-
-          swal.fire(
-            'Paciente eliminado!',
-            'El registro del paciente ha sido eliminado.',
-            'success'
-          );
-
-          this.router.navigate(['pacientes/page/0']);
-        });
+        this.realDelete();
       }
+    });
+  }
+
+  realDelete() {
+    this.pacienteService.eliminarPaciente(this.paciente, this.paciente.idPaciente).subscribe(paciente => {
+
+      swal.fire(
+        'Paciente eliminado!',
+        'El registro del paciente ha sido eliminado.',
+        'success'
+      );
+
+      this.router.navigate(['pacientes/page/0']);
     });
   }
 

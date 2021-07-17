@@ -14,7 +14,9 @@ export class PaginadorComponent implements OnInit, OnChanges {
   from!: number;
   until!: number;
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit(): void {
     this.initPaginator();

@@ -12,7 +12,7 @@ import { HorarioComponent } from './components/hora-atencion/agenda/horario/hora
 import { NuevoHorarioFormComponent } from './components/hora-atencion/agenda/horario/nuevo-horario-form/nuevo-horario-form.component';
 import { AgendaComponent } from './components/hora-atencion/agenda/agenda.component';
 import { ListaPacientesComponent } from './components/paciente/lista-pacientes.component';
-import { PaginadorComponent } from './components/paginador/paginador.component';
+import { PaginadorComponent } from './components/paginador/paginador/paginador.component';
 import { PacienteFormComponent } from './components/paciente/paciente-form/paciente-form.component';
 import { BusquedaPacienteComponent } from './components/busqueda/busqueda-pacientes/busqueda-paciente.component';
 import { PacienteComponent } from './components/paciente/paciente/paciente.component';
@@ -32,6 +32,7 @@ import { LoginComponent } from './components/login/login.component';
 
 import { AuthGuard } from './guards/auth/auth.guard';
 import { RoleGuard } from './guards/role/role.guard';
+import { HistorialPaginadorComponent } from './components/paginador/historial-paginador/historial-paginador/historial-paginador.component';
 
 const routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -76,7 +77,8 @@ const routes = [
     SesionTerapiaFormComponent,
     ListaSesionesComponent,
     BusquedaFechaComponent,
-    LoginComponent
+    LoginComponent,
+    HistorialPaginadorComponent
   ],
 
   imports: [

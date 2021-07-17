@@ -55,6 +55,7 @@
         </div>
 
         <!-- Sesiones de terapia -->
+        <!-- Paciente activo, y sin sesiones de terapia -->
         <div *ngIf="paciente.fichaTratamiento.sesionesDeTerapia.length == 0 && paciente.estado == 'Activo'" class="row sesion-terapia">
             <div class="col-lg-12">
                 <i class="bi bi-person-x-fill icons"></i>
@@ -65,7 +66,16 @@
             </div>
         </div>
 
-        <div *ngIf="paciente.estado == 'Activo' && paciente.fichaTratamiento.sesionesDeTerapia.length > 0" class="row datos-anamnesis">
+        <!-- Paciente inactivo, y sin sesiones de terapia -->
+        <div *ngIf="paciente.estado == 'Inactivo' && paciente.fichaTratamiento.sesionesDeTerapia.length == 0" class="row sesion-terapia">
+            <div class="col-lg-12">
+                <i class="bi bi-person-x-fill icons"></i>
+                <h4>Reintegre al paciente para registrar sus sesiones de terapia.</h4>
+            </div>
+        </div>
+
+        <!-- Paciente activo, para dirigir a sus sesiones de terapia -->
+        <div *ngIf="paciente.fichaTratamiento.sesionesDeTerapia.length > 0" class="row datos-anamnesis">
             <div class="col-lg-12">
                 <button [routerLink]="['../ficha-tratamiento/sesiones', paciente.idPaciente]" class="btn btn-primary" type="button">Ver sesiones de terapia</button>
             </div>
