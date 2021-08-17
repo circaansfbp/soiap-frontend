@@ -5,7 +5,34 @@
             <h4>{{subtitle}}</h4>
         </div>
         <div class="col-lg-6" id="search-by-name-input">
-            <app-busqueda-paciente (searchPatientEvent)="getPatients($event)"></app-busqueda-paciente>
+            <form>
+                <div class="form-group">
+                    <label for="nombre-paciente">Buscar paciente:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
+                        <input required maxlength="30" pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" type="text"
+                            class="form-control" id="nombre-paciente" ngModel name="nombre-paciente"
+                            #nombrePaciente="ngModel" placeholder="Nombre(s)">
+                        <input required type="text" class="form-control" name="apellido-paciente" id="apellido-paciente"
+                            maxlength="30" pattern="^(?!\s)^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]+$" ngModel
+                            #apellidoPaciente="ngModel" placeholder="Apellido(s)">
+                    </div>
+
+                    <!-- Manejo de posibles errores -->
+                    <div *ngIf="(nombrePaciente.invalid && (nombrePaciente.touched || nombrePaciente.dirty)) 
+                || (apellidoPaciente.invalid && (apellidoPaciente.touched || apellidoPaciente.dirty))"
+                        class="col-lg-12">
+                        <div *ngIf="nombrePaciente.errors?.pattern || apellidoPaciente.errors?.pattern">
+                            <small class="text-danger">Búsqueda inválida.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <button [disabled]="(nombrePaciente.errors?.required && apellidoPaciente.errors?.required) 
+                    || (nombrePaciente.errors?.pattern || apellidoPaciente.errors?.pattern)" type="submit"
+                    class="btn btn-primary" (click)="getPatients(nombrePaciente.value, apellidoPaciente.value)"
+                    data-toggle="modal" data-target="#busqueda-pacientes">Buscar</button>
+            </form>
         </div>
     </div>
 
@@ -18,7 +45,6 @@
                             <th>Nombre</th>
                             <th>Número de contacto</th>
                             <th>Afiliación de salud</th>
-                            <th>Estado</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -27,11 +53,11 @@
                             <td>{{paciente.nombre + " " + paciente.apellido}}</td>
                             <td>{{paciente.telefono}}</td>
                             <td>{{paciente.afiliacionSalud}}</td>
-                            <td>{{paciente.estado}}</td>
                             <td>
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
-                                        <button *ngIf="auth.hasRole('ROLE_PSICOLOGO_TRATANTE')" [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary"
+                                        <button *ngIf="auth.hasRole('ROLE_PSICOLOGO_TRATANTE')"
+                                            [routerLink]="['../../', paciente.idPaciente]" class="btn btn-primary"
                                             type="button">Ver detalle</button>
                                         <button [routerLink]="['../../atenciones', paciente.idPaciente]"
                                             class="btn btn-primary" type="button">Ver
@@ -47,8 +73,9 @@
                         <app-paginador *ngIf="paginador" [paginador]='paginador'></app-paginador>
                     </div>
                     <div class="col-lg-6 text-right">
-                        <button *ngIf="auth.hasRole('ROLE_PSICOLOGO_TRATANTE')" [routerLink]="['../../historial/page/0']" class="btn btn-primary"
-                            type="button">Historial de pacientes</button>
+                        <button *ngIf="auth.hasRole('ROLE_PSICOLOGO_TRATANTE')"
+                            [routerLink]="['../../historial/page/0']" class="btn btn-primary" type="button">Historial de
+                            pacientes</button>
                     </div>
                 </div>
                 <div class="row">
@@ -56,6 +83,71 @@
                         <button (click)="back()" class="btn btn-primary" type="button">Volver</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para desplegar los resultados de la búsqueda de pacientes -->
+<div class="modal fade" id="busqueda-pacientes" tabindex="-1" role="dialog" aria-labelledby="busqueda-pacientes"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-lg-12">
+                    <h2 class="color">Resultados de la búsqueda.</h2>
+                    <h5 *ngIf="nombrePaciente.value != ''" class="color">Nombre(s) buscado(s): {{nombrePaciente.value}}</h5>
+                    <h5 *ngIf="apellidoPaciente.value != ''" class="color">Apellido(s) buscado(s): {{apellidoPaciente.value}}</h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Si no se encuentran resultados -->
+                    <div *ngIf="searchedPatients.length == 0" class="col-lg-12 text-center">
+                        <i class="bi bi-person-x-fill icons"></i>
+                        <h4>No se han encontrado pacientes con los parámetros de búsqueda ingresados.</h4>
+                        <h4>Por favor, intente nuevamente.</h4>
+                    </div>
+
+                    <!-- Si se encuentran resultados, se muestra la tabla -->
+                    <div *ngIf="searchedPatients.length > 0" class="col-lg-12">
+                        <div class="table-responsive-lg text-center">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Número de contacto</th>
+                                        <th>Afiliación de salud</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let paciente of searchedPatients">
+                                        <td>{{paciente.nombre + " " + paciente.apellido}}</td>
+                                        <td>{{paciente.telefono}}</td>
+                                        <td>{{paciente.afiliacionSalud}}</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-lg-12 text-center">
+                                                    <button *ngIf="auth.hasRole('ROLE_PSICOLOGO_TRATANTE')"
+                                                        [routerLink]="['../../', paciente.idPaciente]"
+                                                        class="btn btn-primary" type="button" data-dismiss="modal">Ver
+                                                        detalle</button>
+                                                    <button [routerLink]="['../../atenciones', paciente.idPaciente]"
+                                                        class="btn btn-primary" type="button" data-dismiss="modal">Ver
+                                                        atenciones</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" modal-footer">
+                <button (click)="clearSearch()" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

@@ -86,6 +86,14 @@ export class AtencionesPacienteComponent implements OnInit {
             }
           });
 
+          this.atenciones.sort((firstDate, secondDate) => {
+            return +new Date(secondDate.fechaAtencion) - +new Date(firstDate.fechaAtencion);
+          });
+
+          this.filtered.sort((firstDate, secondDate) => {
+            return +new Date(secondDate.fechaAtencion) - +new Date(firstDate.fechaAtencion);
+          });
+
           // Setea el total de registros
           this.total = this.atenciones.length;
         });

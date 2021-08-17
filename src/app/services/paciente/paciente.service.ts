@@ -55,28 +55,16 @@ export class PacienteService {
     return this.http.get<any>(`${this.url}pacientes/get/inactive/page/${page}`, { headers: this.addAuthorization() });
   }
 
-  // Obtener pacientes activos por nombre, paginados
-  obtenerPacientesPorNombre(nombre: string, page: number): Observable<any> {
-    let params = new HttpParams().set('nombre', nombre);
-    return this.http.get<any>(`${this.url}pacientes/get/by-name/page/${page}`, { params, headers: this.addAuthorization() });
-  }
-
   // Obtener pacientes por nombre, sin paginar
   obtenerPacientesPorNombreSinPaginar(nombre: string): Observable<Paciente[]> {
     let params = new HttpParams().set('nombre', nombre);
     return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-name`, { params, headers: this.addAuthorization() });
   }
 
-  // Obtener pacientes inactivos por nombre, paginados
-  obtenerPacientesInactivosPorNombre(nombre: string, page: number): Observable<any> {
+  // Obtener pacientes inactivos por nombre, sin paginar
+  obtenerPacientesInactivosPorNombre(nombre: string): Observable<any> {
     let params = new HttpParams().set('nombre', nombre);
-    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-name/page/${page}`, { params, headers: this.addAuthorization() });
-  }
-
-  // Obtener pacientes por apellido, paginados
-  obtenerPacientesPorApellido(apellido: string, page: number): Observable<any> {
-    let params = new HttpParams().set('apellido', apellido);
-    return this.http.get<any>(`${this.url}pacientes/get/by-lastname/page/${page}`, { params, headers: this.addAuthorization() });
+    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-name`, { params, headers: this.addAuthorization() });
   }
 
   // Obtener pacientes por apellido, sin paginar
@@ -85,16 +73,10 @@ export class PacienteService {
     return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-lastname/`, { params, headers: this.addAuthorization() });
   }
 
-  // Obtener pacientes inactivos por apellido
-  obtenerPacientesInactivosPorApellido(apellido: string, page: number): Observable<any> {
+  // Obtener pacientes inactivos por apellido, sin paginar
+  obtenerPacientesInactivosPorApellido(apellido: string): Observable<any> {
     let params = new HttpParams().set('apellido', apellido);
-    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-lastname/page/${page}`, { params, headers: this.addAuthorization() });
-  }
-
-  // Obtener pacientes por nombre y apellido, paginados 
-  obtenerPacientesPorNombreApellido(nombre: string, apellido: string, page: number): Observable<any> {
-    let params = new HttpParams().set('nombre', nombre).set('apellido', apellido);
-    return this.http.get<any>(`${this.url}pacientes/get/by-name-lastname/page/${page}`, { params, headers: this.addAuthorization() });
+    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-lastname`, { params, headers: this.addAuthorization() });
   }
 
   // Obtener pacientes por nombre y apellido, sin paginar
@@ -103,10 +85,10 @@ export class PacienteService {
     return this.http.get<Paciente[]>(`${this.url}pacientes/get/by-name-lastname`, { params, headers: this.addAuthorization() });
   }
 
-  // Obtener pacientes inactivos por nombre y apellido, paginados
-  obtenerPacientesInactivosPorNombreApellido(nombre: string, apellido: string, page: number): Observable<any> {
+  // Obtener pacientes inactivos por nombre y apellido, sin paginar
+  obtenerPacientesInactivosPorNombreApellido(nombre: string, apellido: string): Observable<any> {
     let params = new HttpParams().set('nombre', nombre).set('apellido', apellido);
-    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-name-lastname/page/${page}`, { params, headers: this.addAuthorization() });
+    return this.http.get<any>(`${this.url}pacientes/get/inactive/by-name-lastname`, { params, headers: this.addAuthorization() });
   }
 
   // Actualizar un paciente

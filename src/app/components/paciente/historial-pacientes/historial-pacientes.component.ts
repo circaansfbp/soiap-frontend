@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Paciente } from 'src/app/classes/paciente/paciente';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PacienteService } from 'src/app/services/paciente/paciente.service';
 
 import swal from 'sweetalert2';
@@ -15,6 +16,9 @@ export class HistorialPacientesComponent implements OnInit {
   // Pacientes inactivos
   pacientesInactivos: Paciente[] = new Array();
 
+  // Pacientes buscados
+  inactiveSearchedPatients: Paciente[] = new Array();
+
   // Paginador
   paginador!: any;
 
@@ -22,7 +26,8 @@ export class HistorialPacientesComponent implements OnInit {
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
-    private pacienteService: PacienteService) { }
+    private pacienteService: PacienteService,
+    public auth: AuthService) { }
 
   ngOnInit(): void {
     this.getInactivePatients();
@@ -43,66 +48,34 @@ export class HistorialPacientesComponent implements OnInit {
   }
 
   // Para buscar pacientes por nombre, apellido o ambos parámetros
-  searchInactivePatients(values: any) {
-    this.activatedRoute.paramMap.subscribe(params => {
-      let page: number = +params.get('page')!;
+  searchInactivePatients(nombre: string, apellido: string) {
+    // Búsqueda por nombre
+    if (nombre && apellido == "") {
+      this.pacienteService.obtenerPacientesInactivosPorNombre(nombre).subscribe(res => {
+        this.inactiveSearchedPatients = res as Paciente[];
+      });
+    }
 
-      if (!page) page = 0;
+    // Búsqueda por apellido
+    else if (nombre == "" && apellido) {
+      this.pacienteService.obtenerPacientesInactivosPorApellido(apellido).subscribe(res => {
+        this.inactiveSearchedPatients = res as Paciente[];
+      });
+    }
 
-      // Búsqueda por nombre
-      if (values.nombre && values.apellido == "") {
-        this.pacienteService.obtenerPacientesInactivosPorNombre(values.nombre, page).subscribe(res => {
-          this.pacientesInactivos = res.content as Paciente[];
-          this.paginador = res;
-        },
-          error => {
-            if (error.status == 404) {
-              this.router.navigate(['pacientes/historial/page/0']);
-              swal.fire(
-                "No encontrado!",
-                "No se han encontrado pacientes con el nombre ingresado. Intente nuevamente.",
-                "error"
-              );
-            }
-          });
-      }
+    // Búsqueda por nombre y apellido
+    else if (nombre && apellido) {
+      this.pacienteService.obtenerPacientesInactivosPorNombreApellido(nombre, apellido).subscribe(res => {
+        this.inactiveSearchedPatients = res as Paciente[];
+      });
+    }
 
-      // Búsqueda por apellido
-      else if (values.nombre == "" && values.apellido) {
-        this.pacienteService.obtenerPacientesInactivosPorApellido(values.apellido, page).subscribe(res => {
-          this.pacientesInactivos = res.content as Paciente[];
-          this.paginador = res;
-        },
-          error => {
-            if (error.status == 404) {
-              this.router.navigate(['pacientes/historial/page/0']);
-              swal.fire(
-                "No encontrado!",
-                "No se han encontrado pacientes con el apellido ingresado. Intente nuevamente.",
-                "error"
-              );
-            }
-          });
-      }
+    this.clearSearch();
+  }
 
-      // Búsqueda por nombre y apellido
-      else if (values.nombre && values.apellido) {
-        this.pacienteService.obtenerPacientesInactivosPorNombreApellido(values.nombre, values.apellido, page).subscribe(res => {
-          this.pacientesInactivos = res.content as Paciente[];
-          this.paginador = res;
-        },
-          error => {
-            if (error.status == 404) {
-              this.router.navigate(['pacientes/historial/page/0']);
-              swal.fire(
-                "No encontrado!",
-                "No se han encontrado pacientes con el nombre completo ingresado. Intente nuevamente.",
-                "error"
-              );
-            }
-          });
-      }
-    })
+  // Para limpiar los parámetros de búsqueda
+  clearSearch() {
+    this.inactiveSearchedPatients = [];
   }
 
   // Para volver atrás

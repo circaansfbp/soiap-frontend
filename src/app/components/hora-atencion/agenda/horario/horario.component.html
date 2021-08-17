@@ -54,28 +54,37 @@
             </div>
             <div class="modal-body">
                 <!-- Nombre del paciente asociado al horario de atención -->
-                <div class="row">
+                <div class="row margin">
                     <div class="col-lg-12 text-center">
                         <i class="bi bi-person-fill"></i>
                         <h4>{{horario.paciente.nombre + " " + horario.paciente.apellido}}</h4>
                     </div>
                 </div>
                 <!-- Teléfono del paciente -->
-                <div class="row">
+                <div class="row margin">
                     <div class="col-lg-12 text-center">
                         <i class="bi bi-telephone-forward-fill resized-icons"></i>
                         <h4>{{horario.paciente.telefono}}</h4>
                     </div>
                 </div>
                 <!-- Afiliación de salud del paciente -->
-                <div class="row">
+                <div class="row margin">
                     <div class="col-lg-12 text-center">
                         <i class="bi bi-file-medical-fill resized-icons"></i>
                         <h4>{{horario.paciente.afiliacionSalud}}</h4>
                     </div>
                 </div>
+
+                <!-- Correo electrónico del paciente -->
+                <div *ngIf="horario.paciente.email" class="row margin">
+                    <div class="col-lg-12 text-center">
+                        <i class="bi bi-at resized-icons"></i>
+                        <h4>{{horario.paciente.email}}</h4>
+                    </div>
+                </div>
+
                 <!-- Fecha de la atención -->
-                <div class="row">
+                <div class="row margin">
                     <div class="col-lg-12 text-center">
                         <i class="bi bi-calendar2-check-fill resized-icons"></i>
                         <h4>{{fecha}}</h4>
@@ -83,14 +92,15 @@
                 </div>
 
                 <!-- Hora de la atención -->
-                <div class="row">
+                <div class="row margin">
                     <div class="col-lg-12 text-center">
                         <i class="bi bi-clock-fill resized-icons"></i>
                         <h4>{{hora}}</h4>
                     </div>
                 </div>
 
-                <div class="row">
+                <!-- Número de sesión -->
+                <div class="row margin">
                     <div class="col-lg-12 text-center">
                         <i class="bi bi-hash"></i>
                         <h4>Sesión número: {{horario.nroConsulta}}</h4>

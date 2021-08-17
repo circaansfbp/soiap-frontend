@@ -10,8 +10,18 @@
     margin-top: 7px;
 }
 
+.color {
+    color: #284b63;
+}
+
 .date {
     padding-top: 30px;
+}
+
+.icons {
+    font-size: 40px;
+    background-color: #fff;
+    color: #284b63;
 }
 
 .modal-content {

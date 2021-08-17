@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class=" modal-footer">
-                <button [routerLink]="['../../modificar-sesion', sesion.idSesion]" data-dismiss="modal"
+                <button *ngIf="paciente.estado == 'Activo'" [routerLink]="['../../modificar-sesion', sesion.idSesion]" data-dismiss="modal"
                     class="btn btn-primary" type="button">Modificar observaciones</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
